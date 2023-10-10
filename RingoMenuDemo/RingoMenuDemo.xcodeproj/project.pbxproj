@@ -3,97 +3,82 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BBAB59062AD520FA00208A22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAB59052AD520FA00208A22 /* AppDelegate.swift */; };
-		BBAB59082AD520FA00208A22 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAB59072AD520FA00208A22 /* SceneDelegate.swift */; };
-		BBAB590A2AD520FA00208A22 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAB59092AD520FA00208A22 /* ViewController.swift */; };
-		BBAB590F2AD520FA00208A22 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBAB590E2AD520FA00208A22 /* Assets.xcassets */; };
-		BBAB59122AD520FA00208A22 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBAB59102AD520FA00208A22 /* LaunchScreen.storyboard */; };
-		BBAB591D2AD5211B00208A22 /* RingoMenu in Frameworks */ = {isa = PBXBuildFile; productRef = BBAB591C2AD5211B00208A22 /* RingoMenu */; };
+		BBD51D2B2AD65BB600E32C44 /* RingoMenuDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD51D2A2AD65BB600E32C44 /* RingoMenuDemoApp.swift */; };
+		BBD51D2D2AD65BB600E32C44 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD51D2C2AD65BB600E32C44 /* ContentView.swift */; };
+		BBD51D2F2AD65BB700E32C44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBD51D2E2AD65BB700E32C44 /* Assets.xcassets */; };
+		BBD51D322AD65BB700E32C44 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBD51D312AD65BB700E32C44 /* Preview Assets.xcassets */; };
+		BBD51D3A2AD65BE000E32C44 /* RingoMenu in Frameworks */ = {isa = PBXBuildFile; productRef = BBD51D392AD65BE000E32C44 /* RingoMenu */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BBAB59022AD520FA00208A22 /* RingoMenuDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RingoMenuDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		BBAB59052AD520FA00208A22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BBAB59072AD520FA00208A22 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		BBAB59092AD520FA00208A22 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		BBAB590E2AD520FA00208A22 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		BBAB59112AD520FA00208A22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		BBAB59132AD520FA00208A22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BBAB591A2AD5211200208A22 /* RingoMenu */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = RingoMenu; path = ..; sourceTree = "<group>"; };
+		BBD51D272AD65BB600E32C44 /* RingoMenuDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RingoMenuDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBD51D2A2AD65BB600E32C44 /* RingoMenuDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingoMenuDemoApp.swift; sourceTree = "<group>"; };
+		BBD51D2C2AD65BB600E32C44 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BBD51D2E2AD65BB700E32C44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BBD51D312AD65BB700E32C44 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		BBAB58FF2AD520FA00208A22 /* Frameworks */ = {
+		BBD51D242AD65BB600E32C44 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBAB591D2AD5211B00208A22 /* RingoMenu in Frameworks */,
+				BBD51D3A2AD65BE000E32C44 /* RingoMenu in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BBAB58F92AD520FA00208A22 = {
+		BBD51D1E2AD65BB600E32C44 = {
 			isa = PBXGroup;
 			children = (
-				BBAB59192AD5211200208A22 /* Packages */,
-				BBAB59042AD520FA00208A22 /* RingoMenuDemo */,
-				BBAB59032AD520FA00208A22 /* Products */,
-				BBAB591B2AD5211B00208A22 /* Frameworks */,
+				BBD51D292AD65BB600E32C44 /* RingoMenuDemo */,
+				BBD51D282AD65BB600E32C44 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		BBAB59032AD520FA00208A22 /* Products */ = {
+		BBD51D282AD65BB600E32C44 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BBAB59022AD520FA00208A22 /* RingoMenuDemo.app */,
+				BBD51D272AD65BB600E32C44 /* RingoMenuDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BBAB59042AD520FA00208A22 /* RingoMenuDemo */ = {
+		BBD51D292AD65BB600E32C44 /* RingoMenuDemo */ = {
 			isa = PBXGroup;
 			children = (
-				BBAB59052AD520FA00208A22 /* AppDelegate.swift */,
-				BBAB59072AD520FA00208A22 /* SceneDelegate.swift */,
-				BBAB59092AD520FA00208A22 /* ViewController.swift */,
-				BBAB590E2AD520FA00208A22 /* Assets.xcassets */,
-				BBAB59102AD520FA00208A22 /* LaunchScreen.storyboard */,
-				BBAB59132AD520FA00208A22 /* Info.plist */,
+				BBD51D2A2AD65BB600E32C44 /* RingoMenuDemoApp.swift */,
+				BBD51D2C2AD65BB600E32C44 /* ContentView.swift */,
+				BBD51D2E2AD65BB700E32C44 /* Assets.xcassets */,
+				BBD51D302AD65BB700E32C44 /* Preview Content */,
 			);
 			path = RingoMenuDemo;
 			sourceTree = "<group>";
 		};
-		BBAB59192AD5211200208A22 /* Packages */ = {
+		BBD51D302AD65BB700E32C44 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				BBAB591A2AD5211200208A22 /* RingoMenu */,
+				BBD51D312AD65BB700E32C44 /* Preview Assets.xcassets */,
 			);
-			name = Packages;
-			sourceTree = "<group>";
-		};
-		BBAB591B2AD5211B00208A22 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BBAB59012AD520FA00208A22 /* RingoMenuDemo */ = {
+		BBD51D262AD65BB600E32C44 /* RingoMenuDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BBAB59162AD520FA00208A22 /* Build configuration list for PBXNativeTarget "RingoMenuDemo" */;
+			buildConfigurationList = BBD51D352AD65BB700E32C44 /* Build configuration list for PBXNativeTarget "RingoMenuDemo" */;
 			buildPhases = (
-				BBAB58FE2AD520FA00208A22 /* Sources */,
-				BBAB58FF2AD520FA00208A22 /* Frameworks */,
-				BBAB59002AD520FA00208A22 /* Resources */,
+				BBD51D232AD65BB600E32C44 /* Sources */,
+				BBD51D242AD65BB600E32C44 /* Frameworks */,
+				BBD51D252AD65BB600E32C44 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -101,28 +86,28 @@
 			);
 			name = RingoMenuDemo;
 			packageProductDependencies = (
-				BBAB591C2AD5211B00208A22 /* RingoMenu */,
+				BBD51D392AD65BE000E32C44 /* RingoMenu */,
 			);
 			productName = RingoMenuDemo;
-			productReference = BBAB59022AD520FA00208A22 /* RingoMenuDemo.app */;
+			productReference = BBD51D272AD65BB600E32C44 /* RingoMenuDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		BBAB58FA2AD520FA00208A22 /* Project object */ = {
+		BBD51D1F2AD65BB600E32C44 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
-					BBAB59012AD520FA00208A22 = {
-						CreatedOnToolsVersion = 14.3.1;
+					BBD51D262AD65BB600E32C44 = {
+						CreatedOnToolsVersion = 15.0;
 					};
 				};
 			};
-			buildConfigurationList = BBAB58FD2AD520FA00208A22 /* Build configuration list for PBXProject "RingoMenuDemo" */;
+			buildConfigurationList = BBD51D222AD65BB600E32C44 /* Build configuration list for PBXProject "RingoMenuDemo" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -130,57 +115,49 @@
 				en,
 				Base,
 			);
-			mainGroup = BBAB58F92AD520FA00208A22;
-			productRefGroup = BBAB59032AD520FA00208A22 /* Products */;
+			mainGroup = BBD51D1E2AD65BB600E32C44;
+			packageReferences = (
+				BBD51D382AD65BE000E32C44 /* XCLocalSwiftPackageReference ".." */,
+			);
+			productRefGroup = BBD51D282AD65BB600E32C44 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BBAB59012AD520FA00208A22 /* RingoMenuDemo */,
+				BBD51D262AD65BB600E32C44 /* RingoMenuDemo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		BBAB59002AD520FA00208A22 /* Resources */ = {
+		BBD51D252AD65BB600E32C44 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBAB59122AD520FA00208A22 /* LaunchScreen.storyboard in Resources */,
-				BBAB590F2AD520FA00208A22 /* Assets.xcassets in Resources */,
+				BBD51D322AD65BB700E32C44 /* Preview Assets.xcassets in Resources */,
+				BBD51D2F2AD65BB700E32C44 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		BBAB58FE2AD520FA00208A22 /* Sources */ = {
+		BBD51D232AD65BB600E32C44 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBAB590A2AD520FA00208A22 /* ViewController.swift in Sources */,
-				BBAB59062AD520FA00208A22 /* AppDelegate.swift in Sources */,
-				BBAB59082AD520FA00208A22 /* SceneDelegate.swift in Sources */,
+				BBD51D2D2AD65BB600E32C44 /* ContentView.swift in Sources */,
+				BBD51D2B2AD65BB600E32C44 /* RingoMenuDemoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		BBAB59102AD520FA00208A22 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BBAB59112AD520FA00208A22 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		BBAB59142AD520FA00208A22 /* Debug */ = {
+		BBD51D332AD65BB700E32C44 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -213,7 +190,8 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -227,20 +205,22 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		BBAB59152AD520FA00208A22 /* Release */ = {
+		BBD51D342AD65BB700E32C44 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -273,7 +253,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -281,32 +262,31 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		BBAB59172AD520FA00208A22 /* Debug */ = {
+		BBD51D362AD65BB700E32C44 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HVL7839YB5;
+				DEVELOPMENT_ASSET_PATHS = "\"RingoMenuDemo/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RingoMenuDemo/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
-				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -320,22 +300,21 @@
 			};
 			name = Debug;
 		};
-		BBAB59182AD520FA00208A22 /* Release */ = {
+		BBD51D372AD65BB700E32C44 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HVL7839YB5;
+				DEVELOPMENT_ASSET_PATHS = "\"RingoMenuDemo/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RingoMenuDemo/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
-				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -352,32 +331,39 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BBAB58FD2AD520FA00208A22 /* Build configuration list for PBXProject "RingoMenuDemo" */ = {
+		BBD51D222AD65BB600E32C44 /* Build configuration list for PBXProject "RingoMenuDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BBAB59142AD520FA00208A22 /* Debug */,
-				BBAB59152AD520FA00208A22 /* Release */,
+				BBD51D332AD65BB700E32C44 /* Debug */,
+				BBD51D342AD65BB700E32C44 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BBAB59162AD520FA00208A22 /* Build configuration list for PBXNativeTarget "RingoMenuDemo" */ = {
+		BBD51D352AD65BB700E32C44 /* Build configuration list for PBXNativeTarget "RingoMenuDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BBAB59172AD520FA00208A22 /* Debug */,
-				BBAB59182AD520FA00208A22 /* Release */,
+				BBD51D362AD65BB700E32C44 /* Debug */,
+				BBD51D372AD65BB700E32C44 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		BBD51D382AD65BE000E32C44 /* XCLocalSwiftPackageReference ".." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ..;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
-		BBAB591C2AD5211B00208A22 /* RingoMenu */ = {
+		BBD51D392AD65BE000E32C44 /* RingoMenu */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RingoMenu;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = BBAB58FA2AD520FA00208A22 /* Project object */;
+	rootObject = BBD51D1F2AD65BB600E32C44 /* Project object */;
 }
