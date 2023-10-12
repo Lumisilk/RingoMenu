@@ -7,7 +7,7 @@
 
 import UIKit
 import SwiftUI
-import RingoMenu
+import RingoMenuSwiftUI
 
 let buttonTitles: [String] = [
     "Button",
@@ -29,7 +29,7 @@ final class DemoViewController: UITableViewController {
         let actions: [UIAction] = buttonTitles.map { UIAction(title: $0, handler: { _ in }) }
         systemMenuButton.showsMenuAsPrimaryAction = true
         systemMenuButton.menu = UIMenu(children: actions)
-        systemMenuButton.setTitle("Sytem's Menu", for: .normal)
+        systemMenuButton.setTitle("UIMenu", for: .normal)
         
         view.addSubview(systemMenuButton)
         systemMenuButton.center = .init(x: 30, y: 30)
@@ -41,7 +41,7 @@ final class DemoViewController: UITableViewController {
     
     func setupRingoMenuButton() {
         view.addSubview(ringoMenuButton)
-        ringoMenuButton.setTitle("Ringo Menu", for: .normal)
+        ringoMenuButton.setTitle("Ringo Popover", for: .normal)
         ringoMenuButton.frame.origin = .init(x: 230, y: 30)
         ringoMenuButton.sizeToFit()
         ringoMenuButton.addTarget(self, action: #selector(presentRingo), for: .touchUpInside)
@@ -51,13 +51,16 @@ final class DemoViewController: UITableViewController {
     }
     
     @objc func presentRingo(_ sender: UIButton) {
-        let view = ScrollView {
-            Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sollicitudin turpis et est gravida dapibus. Duis interdum sem vel felis venenatis, vitae rutrum leo faucibus. Cras elementum lorem metus, a lobortis risus mattis ac. Quisque nunc ante, pulvinar sed tortor vitae, tristique pellentesque urna. Morbi elementum elit vitae leo varius, a tincidunt mauris fermentum. Morbi auctor, eros vitae dapibus dapibus, dolor eros malesuada velit, et maximus ligula dui at libero. Curabitur tristique ac mi ut molestie. Nunc sollicitudin, ante sed condimentum aliquet, ipsum metus aliquet nunc, vitae dapibus libero sapien quis dolor. Mauris dictum consequat ipsum vel maximus. Donec quis mi ac velit ullamcorper maximus a id diam. Donec ornare venenatis accumsan. Integer non erat elit. Vestibulum pharetra sem in erat varius rutrum in vitae lorem. Suspendisse sed purus turpis.")
-        }
-            .padding(.horizontal)
-        
-        let controller = RingoHostingController(sourceView: sender, rootView: view)
+        let controller = RingoHostingController(sourceView: sender, rootView: AnyView(contentView))
         present(controller, animated: true)
+    }
+    
+    @ViewBuilder
+    private var contentView: some View {
+        ScrollView {
+            Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sollicitudin turpis et est gravida dapibus. Duis interdum sem vel felis venenatis, vitae rutrum leo faucibus. Cras elementum lorem metus, a lobortis risus mattis ac. Quisque nunc ante, pulvinar sed tortor vitae, tristique pellentesque urna. Morbi elementum elit vitae leo varius, a tincidunt mauris fermentum. Morbi auctor, eros vitae dapibus dapibus, dolor eros malesuada velit, et maximus ligula dui at libero. Curabitur tristique ac mi ut molestie. Nunc sollicitudin, ante sed condimentum aliquet, ipsum metus aliquet nunc, vitae dapibus libero sapien quis dolor. Mauris dictum consequat ipsum vel maximus. Donec quis mi ac velit ullamcorper maximus a id diam. Donec ornare venenatis accumsan. Integer non erat elit. Vestibulum pharetra sem in erat varius rutrum in vitae lorem. Suspendisse sed purus turpis.")
+                .padding(.horizontal)
+        }
     }
     
     @objc func didDrapButton(_ gesture: UIPanGestureRecognizer) {

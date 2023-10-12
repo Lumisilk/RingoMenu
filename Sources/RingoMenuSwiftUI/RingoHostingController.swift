@@ -1,18 +1,18 @@
 //
-//  RingoPopover.swift
-//  RingoMenuDemo
+//  RingoHostingController.swift
 //
-//  Created by Lumisilk on 2023/10/11.
+//
+//  Created by Lumisilk on 2023/10/12.
 //
 
-import SwiftUI
 import RingoMenu
+import SwiftUI
+import SwiftUIPresent
 
-class RingoHostingController<Content: View>: UIHostingController<Content>, RingoPopoverSizingDelegate {
-    
+public final class RingoHostingController: UIHostingController<AnyView>, RingoPopoverSizingDelegate {
     private let ringoPopover: RingoPopoverController
     
-    init(sourceView: UIView, rootView: Content) {
+    public init(sourceView: UIView, rootView: AnyView) {
         ringoPopover = RingoPopoverController(sourceView: sourceView)
         super.init(rootView: rootView)
         
@@ -24,7 +24,7 @@ class RingoHostingController<Content: View>: UIHostingController<Content>, Ringo
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = nil
     }

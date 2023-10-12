@@ -13,7 +13,6 @@
 		BB7DEA082AD660FA00A62380 /* RingoMenu in Frameworks */ = {isa = PBXBuildFile; productRef = BB7DEA072AD660FA00A62380 /* RingoMenu */; };
 		BB7DEA0A2AD66BD800A62380 /* UIViewControllerAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7DEA092AD66BD800A62380 /* UIViewControllerAdaptor.swift */; };
 		BB7DEA0C2AD66C1E00A62380 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7DEA0B2AD66C1E00A62380 /* DemoViewController.swift */; };
-		BB7DEA0E2AD66DE900A62380 /* RingoPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7DEA0D2AD66DE900A62380 /* RingoPopover.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,7 +23,6 @@
 		BB7DEA052AD660C400A62380 /* RingoMenu */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = RingoMenu; path = ..; sourceTree = "<group>"; };
 		BB7DEA092AD66BD800A62380 /* UIViewControllerAdaptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerAdaptor.swift; sourceTree = "<group>"; };
 		BB7DEA0B2AD66C1E00A62380 /* DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
-		BB7DEA0D2AD66DE900A62380 /* RingoPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingoPopover.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +60,6 @@
 			children = (
 				BB7DE9F62AD660B600A62380 /* RingoMenuDemoApp.swift */,
 				BB7DEA092AD66BD800A62380 /* UIViewControllerAdaptor.swift */,
-				BB7DEA0D2AD66DE900A62380 /* RingoPopover.swift */,
 				BB7DEA0B2AD66C1E00A62380 /* DemoViewController.swift */,
 				BB7DE9FA2AD660B700A62380 /* Assets.xcassets */,
 				BB7DE9FC2AD660B700A62380 /* Preview Content */,
@@ -166,7 +163,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB7DEA0E2AD66DE900A62380 /* RingoPopover.swift in Sources */,
 				BB7DEA0A2AD66BD800A62380 /* UIViewControllerAdaptor.swift in Sources */,
 				BB7DE9F72AD660B600A62380 /* RingoMenuDemoApp.swift in Sources */,
 				BB7DEA0C2AD66C1E00A62380 /* DemoViewController.swift in Sources */,

@@ -62,6 +62,9 @@ final class RingoPresenter: UIPresentationController {
         if let backgroundView {
             backgroundView.frame = foregroundContainerView.bounds
             backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            backgroundView.clipsToBounds = true
+            backgroundView.layer.cornerRadius = 13
+            backgroundView.layer.cornerCurve = .circular
             foregroundContainerView.addSubview(backgroundView)
         }
         
