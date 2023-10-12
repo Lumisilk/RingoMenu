@@ -11,7 +11,9 @@ import SwiftUI
 struct RingoMenuDemoApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            UIViewControllerAdaptor {
+                DemoViewController(style: .plain)
+            }
         }
     }
 }
