@@ -33,7 +33,6 @@ class RingoAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             
             let finalFrame = transitionContext.finalFrame(for: toVC)
             toView.layer.anchorPoint = calculateAnchorPoint(sourceCenter: sourceView.frameOnWindow.center, targetRect: finalFrame)
-
             toView.alpha = 0
             toView.frame = finalFrame
             toView.bounds.size.height *= 0.2
@@ -57,8 +56,9 @@ class RingoAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                 self?.presentingAnimator = nil
             }
             animator.startAnimation()
-            transitionContext.completeTransition(true)
             
+            transitionContext.finishInteractiveTransition()
+            transitionContext.completeTransition(true)
         } else {
             guard let fromView = transitionContext.view(forKey: .from)
             else { return }
@@ -76,7 +76,8 @@ class RingoAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                 if !isCancelled {
                     fromView.removeFromSuperview()
                 }
-                transitionContext.completeTransition(!isCancelled)
+                transitionContext.finishInteractiveTransition()
+                transitionContext.completeTransition(true)
             }
             animator.startAnimation()
         }

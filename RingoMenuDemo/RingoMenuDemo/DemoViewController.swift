@@ -14,7 +14,7 @@ let buttonTitles: [String] = [
     "Button Title"
 ] + (0..<30).map { "Very very very long button title \($0)" }
 
-final class DemoViewController: UITableViewController {
+final class DemoViewController: UITableViewController, UITextFieldDelegate {
 
     let systemMenuButton = UIButton(configuration: .borderedTinted())
     let ringoMenuButton = UIButton(configuration: .borderedTinted())
@@ -23,6 +23,7 @@ final class DemoViewController: UITableViewController {
         super.viewDidLoad()
         setupSystemMenuButton()
         setupRingoMenuButton()
+        tableView.keyboardDismissMode = .onDrag
     }
     
     func setupSystemMenuButton() {
@@ -58,6 +59,9 @@ final class DemoViewController: UITableViewController {
     @ViewBuilder
     private var contentView: some View {
         ScrollView {
+            Button("Dismiss") { [weak self] in
+                self?.dismiss(animated: true)
+            }
             Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sollicitudin turpis et est gravida dapibus. Duis interdum sem vel felis venenatis, vitae rutrum leo faucibus. Cras elementum lorem metus, a lobortis risus mattis ac. Quisque nunc ante, pulvinar sed tortor vitae, tristique pellentesque urna. Morbi elementum elit vitae leo varius, a tincidunt mauris fermentum. Morbi auctor, eros vitae dapibus dapibus, dolor eros malesuada velit, et maximus ligula dui at libero. Curabitur tristique ac mi ut molestie. Nunc sollicitudin, ante sed condimentum aliquet, ipsum metus aliquet nunc, vitae dapibus libero sapien quis dolor. Mauris dictum consequat ipsum vel maximus. Donec quis mi ac velit ullamcorper maximus a id diam. Donec ornare venenatis accumsan. Integer non erat elit. Vestibulum pharetra sem in erat varius rutrum in vitae lorem. Suspendisse sed purus turpis.")
                 .padding(.horizontal)
         }
@@ -74,9 +78,24 @@ final class DemoViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "")
-        var config = cell.defaultContentConfiguration()
-        config.text = String(indexPath.row)
-        cell.contentConfiguration = config
-        return cell
+        if indexPath.row == 0 {
+            let textField = UITextField()
+            textField.delegate = self
+            textField.returnKeyType = .done
+            textField.frame = cell.contentView.bounds
+            textField.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            cell.contentView.addSubview(textField)
+            return cell
+        } else {
+            var config = cell.defaultContentConfiguration()
+            config.text = String(indexPath.row)
+            cell.contentConfiguration = config
+            return cell
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
