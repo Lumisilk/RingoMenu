@@ -16,18 +16,17 @@ final class RingoPresenter: UIPresentationController {
     let gestureFallbackView: GestureFallbackView
     
     let frameCalculator: FrameCalculator = UIMenuFrameCalculator()
-    weak var sizingDelegate: RingoPopoverSizingDelegate?
+    
+    var observation: NSKeyValueObservation?
     
     init(
         sourceView: UIView,
         backgroundView: UIView?,
-        sizingDelegate: RingoPopoverSizingDelegate?,
         presentedViewController: UIViewController,
         presenting presentingViewController: UIViewController
     ) {
         self.sourceView = sourceView
         self.backgroundView = backgroundView
-        self.sizingDelegate = sizingDelegate
         gestureFallbackView = GestureFallbackView(
             targetView: presentingViewController.rootViewController.view!,
             action: { presentingViewController.dismiss(animated: true) }
@@ -44,12 +43,10 @@ final class RingoPresenter: UIPresentationController {
     
     override var frameOfPresentedViewInContainerView: CGRect {
         guard let containerView else { return .zero }
-        let availableSize = frameCalculator.availableSize(containerView: containerView)
-        let preferredSize = sizingDelegate?.sizeThatFits(in: availableSize) ?? presentedViewController.view.sizeThatFits(availableSize)
         return frameCalculator.calculateFrame(
             containerView: containerView,
             sourceView: sourceView,
-            preferredSize: preferredSize
+            preferredSize: presentedViewController.preferredContentSize
         )
     }
     
@@ -78,5 +75,30 @@ final class RingoPresenter: UIPresentationController {
         contentView.layer.cornerRadius = 13
         contentView.layer.cornerCurve = .circular
         foregroundContainerView.addSubview(contentView)
+    }
+    
+    override func presentationTransitionDidEnd(_ completed: Bool) {
+        observation = observe(\.presentedViewController.preferredContentSize, options: [.old, .new]) { presenter, change in
+            if let new = change.newValue, new != change.oldValue {
+                presenter.updateFrame(newPreferredSize: new)
+            }
+        }
+    }
+    
+    override func dismissalTransitionWillBegin() {
+        observation = nil
+    }
+    
+    func updateFrame(newPreferredSize: CGSize) {
+        guard let containerView else { return }
+        let animator = UIViewPropertyAnimator(duration: 0.6, dampingRatio: 0.9)
+        animator.addAnimations {
+            self.foregroundContainerView.frame = self.frameCalculator.calculateFrame(
+                containerView: containerView,
+                sourceView: self.sourceView,
+                preferredSize: newPreferredSize
+            )
+        }
+        animator.startAnimation()
     }
 }

@@ -15,8 +15,6 @@ public final class RingoPopoverController: NSObject, UIViewControllerTransitioni
     
     public var backgroundView: UIView? = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
     
-    public weak var sizingDelegate: RingoPopoverSizingDelegate?
-    
     public init(sourceView: UIView) {
         self.sourceView = sourceView
         animator = RingoAnimator(sourceView: sourceView)
@@ -44,7 +42,6 @@ public final class RingoPopoverController: NSObject, UIViewControllerTransitioni
         RingoPresenter(
             sourceView: sourceView,
             backgroundView: backgroundView,
-            sizingDelegate: sizingDelegate,
             presentedViewController: presented,
             presenting: presenting ?? source
         )

@@ -8,15 +8,10 @@
 import UIKit
 
 protocol FrameCalculator {
-    func availableSize(containerView: UIView) -> CGSize
     func calculateFrame(containerView: UIView, sourceView: UIView, preferredSize: CGSize) -> CGRect
 }
 
 struct UIMenuFrameCalculator: FrameCalculator {
-    func availableSize(containerView: UIView) -> CGSize {
-        CGSize(width: 250, height: availableHeight(containerView: containerView))
-    }
-    
     func calculateFrame(containerView: UIView, sourceView: UIView, preferredSize: CGSize) -> CGRect {
         let contentSize = CGSize(
             width: min(preferredSize.width, 250),
