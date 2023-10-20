@@ -10,18 +10,21 @@ import SwiftUI
 import SwiftUIPresent
 
 public final class RingoHostingController: UIHostingController<AnyView> {
-    private let ringoPopover: RingoPopoverController
+    private let ringoPopover: RingoPopover
     
-    public init(sourceView: UIView, rootView: some View) {
-        ringoPopover = RingoPopoverController(sourceView: sourceView)
+    public init(
+        sourceView: UIView,
+        onDismiss: (() -> Void)? = nil,
+        rootView: some View
+    ) {
+        ringoPopover = RingoPopover(
+            sourceView: sourceView,
+            config: RingoPopoverConfiguration(onDismiss: onDismiss)
+        )
         super.init(rootView: AnyView(rootView))
         
         modalPresentationStyle = .custom
         transitioningDelegate = ringoPopover
-    }
-    
-    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     public override func viewDidLoad() {
@@ -39,10 +42,14 @@ public final class RingoHostingController: UIHostingController<AnyView> {
         updatePreferredContentSizeIfNeeded()
     }
     
-    func updatePreferredContentSizeIfNeeded() {
+    private func updatePreferredContentSizeIfNeeded() {
         let newSize = sizeThatFits(in: UIView.layoutFittingExpandedSize)
         if preferredContentSize != newSize {
             preferredContentSize = newSize
         }
+    }
+    
+    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

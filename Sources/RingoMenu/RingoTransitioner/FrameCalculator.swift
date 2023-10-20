@@ -7,17 +7,19 @@
 
 import UIKit
 
-protocol FrameCalculator {
+public protocol FrameCalculator {
     func calculateFrame(containerView: UIView, sourceView: UIView, preferredSize: CGSize) -> CGRect
 }
 
-struct UIMenuFrameCalculator: FrameCalculator {
+public struct UIMenuFrameCalculator: FrameCalculator {
     
-    let horizontalPadding: CGFloat = 8
-    var maxWidth: CGFloat = 250
-    var maxHeight: CGFloat = 883.5
+    private let horizontalPadding: CGFloat = 8
+    public var maxWidth: CGFloat = 250
+    public var maxHeight: CGFloat = 883.5
     
-    func calculateFrame(containerView: UIView, sourceView: UIView, preferredSize: CGSize) -> CGRect {
+    public init() {}
+    
+    public func calculateFrame(containerView: UIView, sourceView: UIView, preferredSize: CGSize) -> CGRect {
         let contentSize = CGSize(
             width: min(preferredSize.width, availableWidth(containerView)),
             height: min(preferredSize.height, availableHeight(containerView))

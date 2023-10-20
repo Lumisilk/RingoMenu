@@ -7,16 +7,17 @@
 
 import UIKit
 
-public final class RingoPopoverController: NSObject, UIViewControllerTransitioningDelegate {
+public final class RingoPopover: NSObject, UIViewControllerTransitioningDelegate {
     
     private let sourceView: UIView
     private let animator: RingoAnimator
     private let interactiveTransition = UIPercentDrivenInteractiveTransition()
     
-    public var backgroundView: UIView? = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
+    public var config: RingoPopoverConfiguration
     
-    public init(sourceView: UIView) {
+    public init(sourceView: UIView, config: RingoPopoverConfiguration) {
         self.sourceView = sourceView
+        self.config = config
         animator = RingoAnimator(sourceView: sourceView)
     }
     
@@ -40,8 +41,8 @@ public final class RingoPopoverController: NSObject, UIViewControllerTransitioni
     
     public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         RingoPresenter(
+            config: config,
             sourceView: sourceView,
-            backgroundView: backgroundView,
             presentedViewController: presented,
             presenting: presenting ?? source
         )

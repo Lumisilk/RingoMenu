@@ -10,26 +10,29 @@ import UIKit
 final class RingoPresenter: UIPresentationController {
     
     let sourceView: UIView
-    let backgroundView: UIView?
     let foregroundContainerView = UIView()
     let shadowView = ShadowView()
     let gestureFallbackView: GestureFallbackView
     
-    let frameCalculator: FrameCalculator = UIMenuFrameCalculator()
+    public var config: RingoPopoverConfiguration
     
     private var observation: NSKeyValueObservation?
     
     init(
+        config: RingoPopoverConfiguration,
         sourceView: UIView,
-        backgroundView: UIView?,
         presentedViewController: UIViewController,
         presenting presentingViewController: UIViewController
     ) {
+        self.config = config
         self.sourceView = sourceView
-        self.backgroundView = backgroundView
         gestureFallbackView = GestureFallbackView(
             targetView: presentingViewController.rootViewController.view!,
-            action: { presentingViewController.dismiss(animated: true) }
+            action: {
+                presentingViewController.dismiss(animated: true) {
+                    config.onDismiss?()
+                }
+            }
         )
         
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
@@ -43,7 +46,7 @@ final class RingoPresenter: UIPresentationController {
     
     override var frameOfPresentedViewInContainerView: CGRect {
         guard let containerView else { return .zero }
-        return frameCalculator.calculateFrame(
+        return config.frameCalculator.calculateFrame(
             containerView: containerView,
             sourceView: sourceView,
             preferredSize: presentedViewController.preferredContentSize
@@ -56,7 +59,7 @@ final class RingoPresenter: UIPresentationController {
         gestureFallbackView.frame = containerView.bounds
         containerView.addSubview(gestureFallbackView)
         
-        if let backgroundView {
+        if let backgroundView = config.backgroundView {
             backgroundView.frame = foregroundContainerView.bounds
             backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             backgroundView.clipsToBounds = true
@@ -100,7 +103,7 @@ final class RingoPresenter: UIPresentationController {
         guard let containerView else { return }
         let animator = UIViewPropertyAnimator(duration: 0.6, dampingRatio: 0.9)
         animator.addAnimations {
-            self.foregroundContainerView.frame = self.frameCalculator.calculateFrame(
+            self.foregroundContainerView.frame = self.config.frameCalculator.calculateFrame(
                 containerView: containerView,
                 sourceView: self.sourceView,
                 preferredSize: newPreferredSize ?? self.presentedViewController.preferredContentSize

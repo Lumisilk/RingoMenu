@@ -14,6 +14,7 @@
 		BB7DE9FE2AD660B700A62380 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB7DE9FD2AD660B700A62380 /* Preview Assets.xcassets */; };
 		BB7DEA0A2AD66BD800A62380 /* UIViewControllerAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7DEA092AD66BD800A62380 /* UIViewControllerAdaptor.swift */; };
 		BB7DEA0C2AD66C1E00A62380 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7DEA0B2AD66C1E00A62380 /* DemoViewController.swift */; };
+		BBE289CA2AE2664200397F50 /* DemoSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE289C92AE2664200397F50 /* DemoSwiftUIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		BB7DEA052AD660C400A62380 /* RingoMenu */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = RingoMenu; path = ..; sourceTree = "<group>"; };
 		BB7DEA092AD66BD800A62380 /* UIViewControllerAdaptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerAdaptor.swift; sourceTree = "<group>"; };
 		BB7DEA0B2AD66C1E00A62380 /* DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
+		BBE289C92AE2664200397F50 /* DemoSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoSwiftUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				BB7DE9F62AD660B600A62380 /* RingoMenuDemoApp.swift */,
 				BB7DEA092AD66BD800A62380 /* UIViewControllerAdaptor.swift */,
 				BB7DEA0B2AD66C1E00A62380 /* DemoViewController.swift */,
+				BBE289C92AE2664200397F50 /* DemoSwiftUIView.swift */,
 				BB7DE9FA2AD660B700A62380 /* Assets.xcassets */,
 				BB7DE9FC2AD660B700A62380 /* Preview Content */,
 			);
@@ -169,6 +172,7 @@
 				BB7DEA0A2AD66BD800A62380 /* UIViewControllerAdaptor.swift in Sources */,
 				BB7DE9F72AD660B600A62380 /* RingoMenuDemoApp.swift in Sources */,
 				BB7DEA0C2AD66C1E00A62380 /* DemoViewController.swift in Sources */,
+				BBE289CA2AE2664200397F50 /* DemoSwiftUIView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,11 @@ import SwiftUIPresent
 
 public struct RingoPopoverStyle: PresentationStyle {
     public func makeHostingController(_ configuration: PresentationConfiguration) -> RingoHostingController {
-        RingoHostingController(sourceView: configuration.anchorView, rootView: configuration.content)
+        RingoHostingController(
+            sourceView: configuration.anchorView,
+            onDismiss: { configuration.isPresented.wrappedValue = false },
+            rootView: configuration.content
+        )
     }
     
     public func update(_ hostingController: RingoHostingController, configuration: PresentationConfiguration) {
