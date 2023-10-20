@@ -9,17 +9,12 @@ let package = Package(
         .library(
             name: "RingoMenu",
             targets: ["RingoMenu"]
-        ),
-        .library(
-            name: "RingoMenuSwiftUI",
-            targets: ["RingoMenuSwiftUI"]
         )
     ],
     dependencies: [
         .package(url: "https://github.com/Lumisilk/SwiftUIPresent.git", branch: "main")
     ],
     targets: [
-        .target(name: "RingoMenu"),
-        .target(name: "RingoMenuSwiftUI", dependencies: ["SwiftUIPresent"])
+        .target(name: "RingoMenu", dependencies: ["SwiftUIPresent"])
     ]
 )

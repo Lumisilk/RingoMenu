@@ -7,7 +7,7 @@
 
 import UIKit
 import SwiftUI
-import RingoMenuSwiftUI
+import RingoMenu
 
 let buttonTitles: [String] = [
     "Button",

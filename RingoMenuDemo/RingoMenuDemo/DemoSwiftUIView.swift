@@ -6,23 +6,39 @@
 //
 
 import SwiftUI
-import RingoMenuSwiftUI
+import RingoMenu
 
 struct DemoSwiftUIView: View {
     
-    @State private var isPresented = false
+    @State private var isCustomPresented = false
+    @State private var isMenuPresented = false
     
     var body: some View {
-        VStack {
-            Button("Present") {
-                isPresented = true
+        List {
+            TextField("", text: .constant("Fixed"))
+            
+            Button("Present Custom") {
+                isCustomPresented = true
             }
-            .present(isPresented: $isPresented, style: .ringoPopover) {
-                PopoverContent { isPresented = false }
+            .present(isPresented: $isCustomPresented, style: .ringoPopover) {
+                PopoverContent(dismissAction: { isCustomPresented = false })
             }
             
-            TextField("", text: .constant("Fixed"))
+            Button("Present Menu") {
+                isMenuPresented = true
+            }
+            .present(isPresented: $isMenuPresented, style: .ringoPopover) {
+                RingoMenu {
+                    ForEach(0..<10) { i in
+                        RingoMenuButton(title: i.description, image: Image(systemName: "star"), action: {})
+                            .ringoMenuItemAttributes(i.isMultiple(of: 2) ? .keepsMenuPresented : [])
+                        Divider()
+                    }
+                }
+            }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(UIColor.systemBackground), ignoresSafeAreaEdges: .all)
     }
 }
 
@@ -50,4 +66,5 @@ struct PopoverContent: View {
 
 #Preview {
     DemoSwiftUIView()
+        .environment(\.colorScheme, .dark)
 }

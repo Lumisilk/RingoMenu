@@ -5,12 +5,12 @@
 //  Created by Lumisilk on 2023/10/12.
 //
 
-import RingoMenu
 import SwiftUI
 import SwiftUIPresent
 
 public final class RingoHostingController: UIHostingController<AnyView> {
     private let ringoPopover: RingoPopover
+    private let coordinator = RingoPopoverCoordinator()
     
     public init(
         sourceView: UIView,
@@ -21,10 +21,20 @@ public final class RingoHostingController: UIHostingController<AnyView> {
             sourceView: sourceView,
             config: RingoPopoverConfiguration(onDismiss: onDismiss)
         )
-        super.init(rootView: AnyView(rootView))
+        let view = AnyView(
+            rootView
+                .environment(\.ringoPopoverCoordinator, coordinator)
+        )
+        super.init(rootView: view)
         
         modalPresentationStyle = .custom
         transitioningDelegate = ringoPopover
+        
+        coordinator.dismiss = { [weak self] in
+            self?.presentingViewController?.dismiss(animated: true) {
+                onDismiss?()
+            }
+        }
     }
     
     public override func viewDidLoad() {

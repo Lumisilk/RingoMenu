@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		BB4242C52AE1183E00ABBEA9 /* RingoMenu in Frameworks */ = {isa = PBXBuildFile; productRef = BB4242C42AE1183E00ABBEA9 /* RingoMenu */; };
-		BB4242C72AE1183E00ABBEA9 /* RingoMenuSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = BB4242C62AE1183E00ABBEA9 /* RingoMenuSwiftUI */; };
 		BB7DE9F72AD660B600A62380 /* RingoMenuDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7DE9F62AD660B600A62380 /* RingoMenuDemoApp.swift */; };
 		BB7DE9FB2AD660B700A62380 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB7DE9FA2AD660B700A62380 /* Assets.xcassets */; };
 		BB7DE9FE2AD660B700A62380 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB7DE9FD2AD660B700A62380 /* Preview Assets.xcassets */; };
@@ -34,7 +33,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB4242C52AE1183E00ABBEA9 /* RingoMenu in Frameworks */,
-				BB4242C72AE1183E00ABBEA9 /* RingoMenuSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,7 +111,6 @@
 			name = RingoMenuDemo;
 			packageProductDependencies = (
 				BB4242C42AE1183E00ABBEA9 /* RingoMenu */,
-				BB4242C62AE1183E00ABBEA9 /* RingoMenuSwiftUI */,
 			);
 			productName = RingoMenuDemo;
 			productReference = BB7DE9F32AD660B600A62380 /* RingoMenuDemo.app */;
@@ -382,10 +379,6 @@
 		BB4242C42AE1183E00ABBEA9 /* RingoMenu */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RingoMenu;
-		};
-		BB4242C62AE1183E00ABBEA9 /* RingoMenuSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RingoMenuSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
