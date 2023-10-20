@@ -17,7 +17,7 @@ final class RingoPresenter: UIPresentationController {
     
     let frameCalculator: FrameCalculator = UIMenuFrameCalculator()
     
-    var observation: NSKeyValueObservation?
+    private var observation: NSKeyValueObservation?
     
     init(
         sourceView: UIView,
@@ -89,14 +89,21 @@ final class RingoPresenter: UIPresentationController {
         observation = nil
     }
     
-    func updateFrame(newPreferredSize: CGSize) {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if observation != nil {
+            updateFrame()
+        }
+    }
+    
+    func updateFrame(newPreferredSize: CGSize? = nil) {
         guard let containerView else { return }
         let animator = UIViewPropertyAnimator(duration: 0.6, dampingRatio: 0.9)
         animator.addAnimations {
             self.foregroundContainerView.frame = self.frameCalculator.calculateFrame(
                 containerView: containerView,
                 sourceView: self.sourceView,
-                preferredSize: newPreferredSize
+                preferredSize: newPreferredSize ?? self.presentedViewController.preferredContentSize
             )
         }
         animator.startAnimation()

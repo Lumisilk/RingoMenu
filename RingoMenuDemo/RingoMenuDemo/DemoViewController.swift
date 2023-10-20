@@ -113,7 +113,7 @@ struct PopoverContent: View {
             }
             .padding(.horizontal)
         }
-        .frame(maxWidth: isExpand ? .infinity : 100, maxHeight: isExpand ? .infinity : 100)
+        .frame(maxWidth: isExpand ? .infinity : 200, maxHeight: isExpand ? .infinity : 200)
         .animation(.default, value: isExpand)
     }
 }

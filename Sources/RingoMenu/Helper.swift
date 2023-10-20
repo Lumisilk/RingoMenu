@@ -24,6 +24,10 @@ extension UIView {
         convert(bounds, to: nil)
     }
     
+    var safeAreaWidth: CGFloat {
+        bounds.width - safeAreaInsets.left - safeAreaInsets.right
+    }
+    
     var safeAreaHeight: CGFloat {
         bounds.height - safeAreaInsets.top - safeAreaInsets.bottom
     }
