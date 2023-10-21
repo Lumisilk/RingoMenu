@@ -7,12 +7,13 @@
 
 import UIKit
 
+/// RingoPresenter responsible for gesture interactions and view configurations.
 final class RingoPresenter: UIPresentationController {
     
     let sourceView: UIView
     let foregroundContainerView = UIView()
     let shadowView = ShadowView()
-    let gestureFallbackView: GestureFallbackView
+    var gestureFallbackView: GestureFallbackView!
     
     public var config: RingoPopoverConfiguration
     
@@ -26,18 +27,18 @@ final class RingoPresenter: UIPresentationController {
     ) {
         self.config = config
         self.sourceView = sourceView
-        gestureFallbackView = GestureFallbackView(
-            targetView: presentingViewController.rootViewController.view!,
-            action: {
-                presentingViewController.dismiss(animated: true) {
-                    config.onDismiss?()
-                }
-            }
-        )
         
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
         
         shadowView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        gestureFallbackView = GestureFallbackView(
+            backgroundView: presentingViewController.rootViewController.view!,
+            action: { [weak self] in self?.dismissWithConfigDismissClosure() }
+        )
+    }
+    
+    deinit {
+        print(Self.self, #function)
     }
     
     override var presentedView: UIView? {
@@ -81,6 +82,7 @@ final class RingoPresenter: UIPresentationController {
     }
     
     override func presentationTransitionDidEnd(_ completed: Bool) {
+        // Observe the presented view controller's `preferredContentSize`
         observation = observe(\.presentedViewController.preferredContentSize, options: [.old, .new]) { presenter, change in
             if let new = change.newValue, new != change.oldValue {
                 presenter.updateFrame(newPreferredSize: new)
@@ -99,7 +101,7 @@ final class RingoPresenter: UIPresentationController {
         }
     }
     
-    func updateFrame(newPreferredSize: CGSize? = nil) {
+    private func updateFrame(newPreferredSize: CGSize? = nil) {
         guard let containerView else { return }
         let animator = UIViewPropertyAnimator(duration: 0.6, dampingRatio: 0.9)
         animator.addAnimations {
@@ -110,5 +112,18 @@ final class RingoPresenter: UIPresentationController {
             )
         }
         animator.startAnimation()
+    }
+    
+    /// Dismiss then call the configuration's `onDismiss` closure.
+    func dismissWithConfigDismissClosure() {
+        presentingViewController.dismiss(animated: true) { [config] in
+            config.onDismiss?()
+        }
+    }
+    
+    /// Toggles the visibility of the background view and the shadow view behind the popover.
+    func setBackgroundViewHidden(_ isHidden: Bool) {
+        shadowView.isHidden = isHidden
+        config.backgroundView?.isHidden = isHidden
     }
 }

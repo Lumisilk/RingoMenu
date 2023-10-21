@@ -7,11 +7,16 @@
 
 import UIKit
 
-public final class RingoPopover: NSObject, UIViewControllerTransitioningDelegate {
+/// `RingoPopover` is a concrete implementation that provides
+/// both the `RingoAnimator`, which handles the transition animations,
+/// and the `RingoPresenter`, which manages gesture interactions and view configurations.
+///
+/// You set an instance of `RingoPopover` as the transitioning delegate of the view controller you wish to present as a popover.
+public class RingoPopover: NSObject, UIViewControllerTransitioningDelegate {
     
-    private let sourceView: UIView
-    private let animator: RingoAnimator
-    private let interactiveTransition = UIPercentDrivenInteractiveTransition()
+    var sourceView: UIView
+    var animator: RingoAnimator
+    var interactiveTransition = UIPercentDrivenInteractiveTransition()
     
     public var config: RingoPopoverConfiguration
     

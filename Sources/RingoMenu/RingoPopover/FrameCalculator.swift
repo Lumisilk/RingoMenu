@@ -7,15 +7,36 @@
 
 import UIKit
 
+/// Protocol used by RingoPopover to calculate the final frame of the popover.
 public protocol FrameCalculator {
+    /// RingoPopover uses this method to determine the final frame of the popover.
+    ///
+    /// - Parameters:
+    ///   - containerView: The container view provided by the presentation controller.
+    ///   - sourceView: The view containing the anchor rectangle for the popover.
+    ///   - preferredSize: The preferred size of the presented controller.
+    /// - Returns: The final frame on the container view for the popover.
     func calculateFrame(containerView: UIView, sourceView: UIView, preferredSize: CGSize) -> CGRect
 }
 
+/// A FrameCalculator that closely mimics the layout behavior of UIMenu.
 public struct UIMenuFrameCalculator: FrameCalculator {
     
-    private let horizontalPadding: CGFloat = 8
-    public var maxWidth: CGFloat = 250
+    /// The minimum horizontal margin that must be ensured between the popover and the containerView. The default value is 16.
+    public var horizontalPadding: CGFloat = 16
+    
+    /// The maximum width of the popover.
+    ///
+    /// The default value is 250. You can set this value to .infinity to indicate there is no width limitation.
+    public var maxWidth: CGFloat = .infinity
+    
+    /// The maximum height of the popover.
+    ///
+    /// The default value is 883.5. You can set this value to .infinity to indicate there is no width limitation.
     public var maxHeight: CGFloat = 883.5
+    
+    /// The vertical spacing between the popover and the sourceview.
+    public var spacingBetweenSourceView: CGFloat = 6
     
     public init() {}
     
@@ -56,8 +77,6 @@ public struct UIMenuFrameCalculator: FrameCalculator {
     ) -> CGPoint {
         let containerSize = containerView.bounds.size
         let sourceRect = sourceView.convert(sourceView.bounds, to: containerView)
-        // space between source view and content view
-        let spacing: CGFloat = 5.17
         let x: CGFloat
         let y: CGFloat
         
@@ -95,14 +114,14 @@ public struct UIMenuFrameCalculator: FrameCalculator {
         if sourceCenterYRatio < 0.5 {
             // Top alignment
             let safeAreaTop = containerView.safeAreaInsets.top
-            let sourceRectBottom = sourceRect.maxY + spacing
+            let sourceRectBottom = sourceRect.maxY + spacingBetweenSourceView
             let upperY = containerSize.height - containerView.safeAreaInsets.bottom - contentSize.height
             y = min(max(safeAreaTop, sourceRectBottom), upperY)
             
         } else {
             // Bottom alignment
             let safeAreaBottom = containerSize.height - containerView.safeAreaInsets.bottom
-            let sourceRectTop = sourceRect.minY - spacing
+            let sourceRectTop = sourceRect.minY - spacingBetweenSourceView
             let lowerY = containerView.safeAreaInsets.top + contentSize.height
             y = max(min(safeAreaBottom, sourceRectTop), lowerY) - contentSize.height
         }

@@ -7,16 +7,17 @@
 
 import UIKit
 
+/// A view that can receive gestures, pass them to the background view, and simultaneously detect tap and pan gestures to trigger actions.
 class GestureFallbackView: UIView, UIGestureRecognizerDelegate {
-    private var targetView: UIView
+    private var backgroundView: UIView
     private var action: () -> Void
     
     private let tapGesture = UITapGestureRecognizer()
     private let panGesture = UIPanGestureRecognizer()
     private let longPressGesture = UILongPressGestureRecognizer()
     
-    init(targetView: UIView, action: @escaping () -> Void) {
-        self.targetView = targetView
+    init(backgroundView: UIView, action: @escaping () -> Void) {
+        self.backgroundView = backgroundView
         self.action = action
         super.init(frame: .zero)
         
@@ -27,6 +28,7 @@ class GestureFallbackView: UIView, UIGestureRecognizerDelegate {
         tapGesture.delegate = self
         panGesture.delegate = self
         longPressGesture.delegate = self
+        
         tapGesture.addTarget(self, action: #selector(onAction))
         panGesture.addTarget(self, action: #selector(onAction))
     }
@@ -36,7 +38,8 @@ class GestureFallbackView: UIView, UIGestureRecognizerDelegate {
     }
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        guard let target = targetView.hitTest(point, with: event) else { return nil }
+        guard let target = backgroundView.hitTest(point, with: event) else { return nil }
+        // At the moment the finger touches the screen, add the gestures to the contacted view. But only once.
         if tapGesture.view == nil {
             target.addGestureRecognizer(tapGesture)
             target.addGestureRecognizer(panGesture)

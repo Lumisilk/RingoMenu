@@ -7,6 +7,10 @@
 
 import UIKit
 
+/// Animator responsible for the transition animation.
+///
+/// RingoAnimator will create an animation that moves the popover from the source view and expands it to its final frame.
+/// Note that the calculation of the popover's final frame is not handled by RingoAnimator, but by the frameCalculator in RingoPopoverConfiguration.
 class RingoAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     var sourceView: UIView
@@ -26,13 +30,14 @@ class RingoAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let container = transitionContext.containerView
         let duration = transitionDuration(using: transitionContext)
+        
         if isPresenting {
             guard let toView = transitionContext.view(forKey: .to),
                   let toVC = transitionContext.viewController(forKey: .to)
             else { return }
             
             let finalFrame = transitionContext.finalFrame(for: toVC)
-            toView.layer.anchorPoint = calculateAnchorPoint(sourceCenter: sourceView.frameOnWindow.center, targetRect: finalFrame)
+            toView.layer.anchorPoint = calculateAnchorPoint(sourceCenter: sourceView.convert(sourceView.center, to: container), targetRect: finalFrame)
             toView.alpha = 0
             toView.frame = finalFrame
             toView.bounds.size.height *= 0.2
@@ -45,8 +50,8 @@ class RingoAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             presentingAnimator = animator
             animator.addAnimations {
                 toView.alpha = 1
-                toView.transform = .identity
                 toView.bounds.size.height = finalFrame.height
+                toView.transform = .identity
                 toView.layer.sublayerTransform = CATransform3DMakeAffineTransform(.identity)
             }
             animator.addCompletion { [weak self] position in
@@ -56,9 +61,9 @@ class RingoAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                 self?.presentingAnimator = nil
             }
             animator.startAnimation()
-            
             transitionContext.finishInteractiveTransition()
             transitionContext.completeTransition(true)
+            
         } else {
             guard let fromView = transitionContext.view(forKey: .from)
             else { return }
