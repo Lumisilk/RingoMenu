@@ -123,7 +123,9 @@ final class RingoPresenter: UIPresentationController {
     
     /// Toggles the visibility of the background view and the shadow view behind the popover.
     func setBackgroundViewHidden(_ isHidden: Bool) {
-        shadowView.isHidden = isHidden
-        config.backgroundView?.isHidden = isHidden
+        UIView.animate(withDuration: 0.3) {
+            self.shadowView.alpha = isHidden ? 0 : 0.1
+            self.config.backgroundView?.alpha = isHidden ? 0 : 1
+        }
     }
 }

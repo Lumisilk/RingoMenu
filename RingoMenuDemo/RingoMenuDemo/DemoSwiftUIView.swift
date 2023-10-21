@@ -13,6 +13,8 @@ struct DemoSwiftUIView: View {
     @State private var isCustomPresented = false
     @State private var isMenuPresented = false
     
+    @State private var fontRatio: Int = 100
+    
     var body: some View {
         List {
             TextField("", text: .constant("Fixed"))
@@ -29,11 +31,22 @@ struct DemoSwiftUIView: View {
             }
             .present(isPresented: $isMenuPresented, style: .ringoPopover) {
                 RingoMenu {
-                    ForEach(0..<10) { i in
+                    
+                    
+                    ForEach(0..<5) { i in
+                        Divider()
                         RingoMenuButton(title: i.description, image: Image(systemName: "star"), action: {})
                             .ringoMenuItemAttributes(i.isMultiple(of: 2) ? .keepsMenuPresented : [])
-                        Divider()
                     }
+                    
+                    RingoMenuStepper(
+                        value: $fontRatio,
+                        bounds: 50...150,
+                        step: 10,
+                        contentText: { "\($0.description)%" },
+                        decrementText: "あ",
+                        incrementText: "あ"
+                    )
                 }
             }
         }

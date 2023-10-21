@@ -9,32 +9,24 @@ import SwiftUI
 import SwiftUIPresent
 
 public final class RingoHostingController: UIHostingController<AnyView> {
-    private let ringoPopover: RingoPopover
-    private let coordinator = RingoPopoverCoordinator()
+    let ringoPopover: RingoPopover
     
     public init(
         sourceView: UIView,
         onDismiss: (() -> Void)? = nil,
         rootView: some View
     ) {
-        ringoPopover = RingoPopover(
-            sourceView: sourceView,
-            config: RingoPopoverConfiguration(onDismiss: onDismiss)
-        )
-        let view = AnyView(
-            rootView
-                .environment(\.ringoPopoverCoordinator, coordinator)
-        )
+        let config = RingoPopoverConfiguration(onDismiss: onDismiss)
+        ringoPopover = RingoPopover(sourceView: sourceView, config: config)
+        let coordinator = RingoPopoverCoordinator()
+        let view = rootView
+            .environment(\.ringoPopoverCoordinator, coordinator)
+            .eraseToAnyView()
         super.init(rootView: view)
         
         modalPresentationStyle = .custom
         transitioningDelegate = ringoPopover
-        
-        coordinator.dismiss = { [weak self] in
-            self?.presentingViewController?.dismiss(animated: true) {
-                onDismiss?()
-            }
-        }
+        coordinator.hostingController = self
     }
     
     public override func viewDidLoad() {

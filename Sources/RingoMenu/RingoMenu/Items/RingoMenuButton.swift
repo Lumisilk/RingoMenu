@@ -49,26 +49,35 @@ public struct RingoMenuButton: View {
     }
 }
 
-private struct RingoMenuButtonStyle: ButtonStyle {
+struct RingoMenuButtonStyle: ButtonStyle {
     
     @Environment(\.isEnabled) var isEnabled
     
     func makeBody(configuration: Configuration) -> some View {
-        if #available(iOS 15, *) {
-            configuration.label
-                .foregroundStyle(isEnabled ? .primary : .secondary)
-                .background { background(highlighted: configuration.isPressed) }
-        } else {
-            configuration.label
-                .foregroundColor(isEnabled ? .primary : .secondary)
-                .background(background(highlighted: configuration.isPressed))
+        Group {
+            if #available(iOS 15, *) {
+                configuration.label
+                    .background { background(highlighted: configuration.isPressed) }
+                    .foregroundStyle(isEnabled ? .primary : .secondary)
+            } else {
+                configuration.label
+                    .background(background(highlighted: configuration.isPressed))
+                    .foregroundColor(isEnabled ? .primary : .secondary)
+            }
         }
+        .buttonStyle(.plain)
     }
     
     @ViewBuilder
     func background(highlighted: Bool) -> some View {
         if highlighted {
-            VisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemMaterial), style: UIVibrancyEffectStyle.tertiaryFill))
+            VisualEffectView(
+                effect: UIVibrancyEffect(
+                    blurEffect: UIBlurEffect(style: .systemMaterial),
+                    style: UIVibrancyEffectStyle.tertiaryFill
+                ),
+                backgroundColor: UIColor.white
+            )
         }
     }
 }

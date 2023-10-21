@@ -13,21 +13,20 @@ class InternalUIScrollView: UIScrollView {
     fileprivate init(@ViewBuilder content: () -> some View) {
         self.hostingController = .init(rootView: AnyView(content()))
         super.init(frame: .zero)
-        setContentHuggingPriority(.required, for: .vertical)
+        
+        setContentHuggingPriority(.defaultHigh, for: .vertical)
         setContentCompressionResistancePriority(.defaultLow, for: .vertical)
 
         let contentView = hostingController.view!
         contentView.backgroundColor = nil
         addSubview(contentView)
-        
         contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             contentView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
             contentView.topAnchor.constraint(equalTo: contentLayoutGuide.topAnchor),
             contentView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            contentView.heightAnchor.constraint(greaterThanOrEqualTo: self.heightAnchor)
+            contentView.widthAnchor.constraint(equalTo: frameLayoutGuide.widthAnchor)
         ])
     }
     
@@ -48,15 +47,43 @@ class InternalUIScrollView: UIScrollView {
 
 struct AutoShrinkScrollView<Content: View>: UIViewRepresentable {
     
-    @ViewBuilder let content: () -> Content
+    let content: Content
+    
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
 
     func makeUIView(context: Context) -> InternalUIScrollView {
-        InternalUIScrollView {
-            content().environment(\.self, context.environment)
+        return InternalUIScrollView {
+            content.environment(\.self, context.environment)
         }
     }
 
     func updateUIView(_ uiView: InternalUIScrollView, context: Context) {
-        uiView.hostingController.rootView = AnyView(content().environment(\.self, context.environment))
+        uiView.hostingController.rootView = AnyView(content.environment(\.self, context.environment))
+        uiView.hostingController.view.invalidateIntrinsicContentSize()
+    }
+}
+
+struct AutoShrinkScrollView_Preview: PreviewProvider {
+    struct Example: View {
+        @State private var count = 5
+        
+        var body: some View {
+            AutoShrinkScrollView {
+                VStack {
+                    Stepper("", value: $count)
+                    ForEach(Array(0..<count), id: \.self) { i in
+                        Text(i.description)
+                    }
+                }
+                .border(.blue)
+            }
+            .border(.red)
+        }
+    }
+    
+    static var previews: some View {
+        Example()
     }
 }

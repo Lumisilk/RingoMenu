@@ -1,5 +1,5 @@
 //
-//  Helper.swift
+//  UIKit+.swift
 //
 //
 //  Created by Lumisilk on 2023/10/11.
@@ -19,11 +19,7 @@ extension CGRect {
     }
 }
 
-extension UIView {
-    var frameOnWindow: CGRect {
-        convert(bounds, to: nil)
-    }
-    
+extension UIView {    
     var safeAreaWidth: CGFloat {
         bounds.width - safeAreaInsets.left - safeAreaInsets.right
     }
