@@ -30,3 +30,19 @@ extension View {
     }
 }
 
+struct Interleave<Content: View, Separator: View>: View {
+    @ViewBuilder let content: () -> Content
+    @ViewBuilder let separator: () -> Separator
+    
+    var body: some View {
+        content().variadic { children in
+            ForEach(children) { child in
+                child
+                
+                if child.id != children.last?.id {
+                    separator()
+                }
+            }
+        }
+    }
+}

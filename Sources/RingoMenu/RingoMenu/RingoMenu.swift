@@ -7,48 +7,52 @@
 
 import SwiftUI
 
-public struct RingoMenu<Content: View>: View {
+public struct RingoMenu<
+    Content: View,
+    Header: View,
+    Footer: View
+>: View {
     
-    @StateObject private var coordinator = RingoMenuCoordinator()
+    @StateObject internal var coordinator = RingoMenuCoordinator()
     
     let content: Content
+    let header: Header
+    let footer: Footer
     
-    public init(@ViewBuilder content: () -> Content) {
+    public init(
+        @ViewBuilder content: () -> Content,
+        @ViewBuilder header: () -> Header,
+        @ViewBuilder footer: () -> Footer
+    ) {
         self.content = content()
+        self.header = header()
+        self.footer = footer()
     }
     
     public var body: some View {
-        AutoShrinkScrollView {
-            VStack(spacing: 0) {
-                content.variadic { children in
-                    ForEach(children) { child in
-                        hideChildIfNeeded(child)
+        VStack(spacing: 0) {
+            hideViewIfNeeded(header)
+            
+            AutoShrinkScrollView {
+                VStack(spacing: 0) {
+                    content.variadic { children in
+                        let needDividerDict = needDividersAfterChild(children)
+                        
+                        ForEach(children) { child in
+                            hideChildIfNeeded(child)
+                            
+                            if needDividerDict[child.id] == true {
+                                hideViewIfNeeded(divider)
+                            }
+                        }
                     }
                 }
+                .environmentObject(coordinator)
             }
-            .environmentObject(coordinator)
+            
+            hideViewIfNeeded(footer)
         }
         .frame(maxWidth: 300)
-    }
-    
-    @ViewBuilder
-    func hideChildIfNeeded(_ child: _VariadicView_Children.Element) -> some View {
-        let shouldHidden: Bool =
-        if let focusItemID = coordinator.focusOnItemID {
-            child[FocusOnItemTraitKey.self] != focusItemID
-        } else {
-            false
-        }
-        
-        switch coordinator.focusMode {
-        case .removeOthers:
-            if !shouldHidden {
-                child
-            }
-        case .transparentOthers:
-            child
-                .opacity(shouldHidden ? 0 : 1)
-        }
     }
 }
 
@@ -65,7 +69,22 @@ public struct RingoMenu<Content: View>: View {
         
         ForEach(0..<10) { i in
             RingoMenuButton(title: i.description, image: Image(systemName: "star"), action: {})
-            Divider()
         }
+        RingoMenuSectionDivider()
+        ForEach(10..<20) { i in
+            RingoMenuButton(title: i.description, image: Image(systemName: "star"), action: {})
+        }
+    } footer: {
+        RingoMenuSectionDivider()
+        RingoMenuButton(title: "Button", action: {})
     }
+    .backport.background {
+        VisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .backport.background {
+        Color.black
+            .ignoresSafeArea()
+    }
+    .environment(\.colorScheme, .dark)
 }

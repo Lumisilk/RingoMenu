@@ -60,3 +60,40 @@ public extension View {
         modifier(FocusOnItemModifier(isOn: isOn, mode: mode))
     }
 }
+
+extension RingoMenu {
+    @ViewBuilder
+    internal func hideViewIfNeeded(_ view: some View) -> some View {
+        let shouldHidden = coordinator.focusOnItemID != nil
+        
+        switch coordinator.focusMode {
+        case .removeOthers:
+            if !shouldHidden {
+                view
+            }
+        case .transparentOthers:
+            view
+                .opacity(shouldHidden ? 0 : 1)
+        }
+    }
+    
+    @ViewBuilder
+    internal func hideChildIfNeeded(_ child: _VariadicView_Children.Element) -> some View {
+        let shouldHidden: Bool =
+        if let focusItemID = coordinator.focusOnItemID {
+            child[FocusOnItemTraitKey.self] != focusItemID
+        } else {
+            false
+        }
+        
+        switch coordinator.focusMode {
+        case .removeOthers:
+            if !shouldHidden {
+                child
+            }
+        case .transparentOthers:
+            child
+                .opacity(shouldHidden ? 0 : 1)
+        }
+    }
+}

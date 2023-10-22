@@ -32,9 +32,7 @@ struct DemoSwiftUIView: View {
             .present(isPresented: $isMenuPresented, style: .ringoPopover) {
                 RingoMenu {
                     
-                    
                     ForEach(0..<5) { i in
-                        Divider()
                         RingoMenuButton(title: i.description, image: Image(systemName: "star"), action: {})
                             .ringoMenuItemAttributes(i.isMultiple(of: 2) ? .keepsMenuPresented : [])
                     }

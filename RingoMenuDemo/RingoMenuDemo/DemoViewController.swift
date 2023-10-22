@@ -27,9 +27,23 @@ final class DemoViewController: UITableViewController, UITextFieldDelegate {
     }
     
     func setupSystemMenuButton() {
-        let actions: [UIAction] = buttonTitles.map { UIAction(title: $0, handler: { _ in }) }
+        var elements: [UIMenuElement] = [
+            UIAction(title: "Title", handler: { _ in }),
+            UIAction(title: "Title", image: UIImage(systemName: "house.fill"), handler: { _ in }),
+            UIAction(title: "Title", subtitle: "Subtitle", handler: { _ in }),
+            UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "house.fill"), handler: { _ in }),
+            UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "house.fill"), state: .on, handler: { _ in }),
+            UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "house.fill"), attributes: .destructive, state: .on, handler: { _ in }),
+            UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "house.fill"), attributes: .disabled, state: .on, handler: { _ in }),
+        ]
+        
+        let subMenu = UIMenu(title: "Sub", options: .displayInline, children: [UIAction(title: "Title", handler: { _ in }),])
+        elements.append(subMenu)
+        
+        let actions: [UIMenuElement] = buttonTitles.map { UIAction(title: $0, handler: { _ in }) }
+        
         systemMenuButton.showsMenuAsPrimaryAction = true
-        systemMenuButton.menu = UIMenu(children: actions)
+        systemMenuButton.menu = UIMenu(children: elements + actions)
         systemMenuButton.setTitle("UIMenu", for: .normal)
         
         view.addSubview(systemMenuButton)

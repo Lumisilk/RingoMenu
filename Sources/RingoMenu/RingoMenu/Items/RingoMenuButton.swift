@@ -35,13 +35,20 @@ public struct RingoMenuButton: View {
     }
     
     private var content: some View {
-        HStack {
+        HStack(spacing: 16) {
             Text(title)
                 .lineLimit(2)
                 .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            image
+            if let image {
+                Color.clear
+                    .frame(width: 12, height: 1)
+                    .backport.overlay(alignment: .leading) {
+                        image
+                            .alignmentGuide(.leading) { $0[HorizontalAlignment.center] }
+                    }
+            }
         }
         .padding(.vertical, 12)
         .padding(.horizontal, 16)
