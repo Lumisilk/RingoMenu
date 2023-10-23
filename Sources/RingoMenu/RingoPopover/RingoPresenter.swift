@@ -79,11 +79,13 @@ final class RingoPresenter: UIPresentationController {
     }
     
     override func presentationTransitionDidEnd(_ completed: Bool) {
-        animator.present(foregroundContainerView, finalFrame: frameOfPresentedViewInContainerView)
+        guard let containerView else { return }
+        animator.present(foregroundContainerView, containerView: containerView, finalFrame: frameOfPresentedViewInContainerView)
     }
     
     override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
-        animator.resize(foregroundContainerView, to: frameOfPresentedViewInContainerView)
+        guard let containerView else { return }
+        animator.resize(foregroundContainerView, containerView: containerView, to: frameOfPresentedViewInContainerView)
     }
     
     // MARK: - Custom methods

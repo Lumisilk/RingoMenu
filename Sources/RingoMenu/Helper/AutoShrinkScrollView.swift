@@ -67,19 +67,23 @@ struct AutoShrinkScrollView<Content: View>: UIViewRepresentable {
 
 struct AutoShrinkScrollView_Preview: PreviewProvider {
     struct Example: View {
-        @State private var count = 5
+        @State private var count = 10
         
         var body: some View {
-            AutoShrinkScrollView {
-                VStack {
-                    Stepper("", value: $count)
-                    ForEach(Array(0..<count), id: \.self) { i in
-                        Text(i.description)
+            VStack {
+                AutoShrinkScrollView {
+                    VStack {
+                        ForEach(Array(0..<count), id: \.self) { i in
+                            Text(i.description)
+                                .padding()
+                        }
                     }
                 }
-                .border(.blue)
+                .border(.red)
+                .frame(maxHeight: .infinity)
+                
+                Stepper("", value: $count)
             }
-            .border(.red)
         }
     }
     

@@ -37,12 +37,12 @@ public struct RingoMenu<
             AutoShrinkScrollView {
                 VStack(spacing: 0) {
                     content.variadic { children in
-                        let needDividerDict = needDividersAfterChild(children)
+                        let needDividersAfterChild = needDividersAfterChild(children)
                         
                         ForEach(children) { child in
                             hideChildIfNeeded(child)
                             
-                            if needDividerDict[child.id] == true {
+                            if needDividersAfterChild[child.id] == true {
                                 hideViewIfNeeded(divider)
                             }
                         }
@@ -53,7 +53,7 @@ public struct RingoMenu<
             
             hideViewIfNeeded(footer)
         }
-        .frame(maxWidth: 300)
+        .frame(maxWidth: 250)
         .onPreferenceChange(HasCheckmarkPreferenceKey.self) {
             if $0 { context.hasCheckmark = true }
         }

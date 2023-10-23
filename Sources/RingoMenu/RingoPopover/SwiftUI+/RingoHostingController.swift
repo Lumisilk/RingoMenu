@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUIPresent
 
 public final class RingoHostingController: UIHostingController<AnyView> {
     let ringoPopover: RingoPopover

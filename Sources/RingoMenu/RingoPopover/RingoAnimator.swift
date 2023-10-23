@@ -32,8 +32,8 @@ class RingoAnimator: NSObject {
     }
     
     /// Present view AFTER UIKit's presentation transition completion.
-    func present(_ presentedView: UIView, finalFrame: CGRect) {
-        setAnchorPoint(presentedView, finalFrame: finalFrame)
+    func present(_ presentedView: UIView, containerView: UIView, finalFrame: CGRect) {
+        setAnchorPoint(presentedView, containerView: containerView, finalFrame: finalFrame)
         presentedView.frame = finalFrame
         presentedView.bounds.size.height *= 0.2
         presentedView.transform = CGAffineTransform(scaleX: 0.2, y: 1)
@@ -56,8 +56,8 @@ class RingoAnimator: NSObject {
         animator.startAnimation()
     }
     
-    func resize(_ presentedView: UIView, to finalFrame: CGRect) {
-        setAnchorPoint(presentedView, finalFrame: finalFrame)
+    func resize(_ presentedView: UIView, containerView: UIView,  to finalFrame: CGRect) {
+        setAnchorPoint(presentedView, containerView: containerView, finalFrame: finalFrame)
         
         switch state {
         case .willTransition:
@@ -78,11 +78,10 @@ class RingoAnimator: NSObject {
         }
     }
     
-    private func setAnchorPoint(_ presentedView: UIView, finalFrame: CGRect) {
-        let sourceCenter = sourceView.convert(sourceView.center, to: nil)
-        let targetFrame = presentedView.convert(finalFrame, to: nil)
-        var x = (sourceCenter.x - targetFrame.minX) / targetFrame.width
-        var y = (sourceCenter.y - targetFrame.minY) / targetFrame.height
+    private func setAnchorPoint(_ presentedView: UIView, containerView: UIView, finalFrame: CGRect) {
+        let sourceCenter = sourceView.convert(sourceView.bounds.center, to: containerView)
+        var x = (sourceCenter.x - finalFrame.minX) / finalFrame.width
+        var y = (sourceCenter.y - finalFrame.minY) / finalFrame.height
         x = min(1, max(0, x))
         y = min(1, max(0, y))
         presentedView.layer.anchorPoint = CGPoint(x: x, y: y)
@@ -110,6 +109,7 @@ extension RingoAnimator: UIViewControllerAnimatedTransitioning {
         case .willDismiss:
             guard let fromView = transitionContext.view(forKey: .from) else { return }
             presentingAnimator?.stopAnimation(true)
+            setAnchorPoint(fromView, containerView: containerView, finalFrame: fromView.frame)
             
             let duration = transitionDuration(using: transitionContext)
             let animator = UIViewPropertyAnimator(duration: duration, curve: .easeOut)
