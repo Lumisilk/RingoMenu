@@ -20,6 +20,7 @@ class GestureFallbackView: UIView, UIGestureRecognizerDelegate {
         self.backgroundView = backgroundView
         self.action = action
         super.init(frame: .zero)
+        autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         tapGesture.delaysTouchesBegan = true
         panGesture.delaysTouchesBegan = true

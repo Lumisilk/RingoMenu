@@ -28,7 +28,17 @@ final class DemoViewController: UITableViewController, UITextFieldDelegate {
     
     func setupSystemMenuButton() {
         var elements: [UIMenuElement] = [
-            UIAction(title: "Title", handler: { _ in }),
+            UIAction(title: "Inspect", attributes: .keepsMenuPresented, handler: { [view] _ in
+                let window = view!.window!
+                let subviews = window.subviews
+                let rapidVC = (subviews[2].subviews[0].next as! UIViewController)
+                
+                let transitioning = rapidVC.transitioningDelegate!
+                let animator = transitioning as! UIViewControllerAnimatedTransitioning
+                let presenter = transitioning.presentationController!(forPresented: UIViewController(), presenting: nil, source: UIViewController())
+                
+                print("")
+            }),
             UIAction(title: "Title", image: UIImage(systemName: "house.fill"), handler: { _ in }),
             UIAction(title: "Title", subtitle: "Subtitle", handler: { _ in }),
             UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "house.fill"), handler: { _ in }),

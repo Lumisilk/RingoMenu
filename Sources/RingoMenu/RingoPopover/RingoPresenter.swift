@@ -14,19 +14,20 @@ final class RingoPresenter: UIPresentationController {
     let foregroundContainerView = UIView()
     let shadowView = ShadowView()
     var gestureFallbackView: GestureFallbackView!
+    let animator: RingoAnimator
     
     public var config: RingoPopoverConfiguration
-    
-    private var observation: NSKeyValueObservation?
     
     init(
         config: RingoPopoverConfiguration,
         sourceView: UIView,
+        animator: RingoAnimator,
         presentedViewController: UIViewController,
         presenting presentingViewController: UIViewController
     ) {
         self.config = config
         self.sourceView = sourceView
+        self.animator = animator
         
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
         
@@ -35,10 +36,6 @@ final class RingoPresenter: UIPresentationController {
             backgroundView: presentingViewController.rootViewController.view!,
             action: { [weak self] in self?.dismissWithConfigDismissClosure() }
         )
-    }
-    
-    deinit {
-        print(Self.self, #function)
     }
     
     override var presentedView: UIView? {
@@ -82,37 +79,14 @@ final class RingoPresenter: UIPresentationController {
     }
     
     override func presentationTransitionDidEnd(_ completed: Bool) {
-        // Observe the presented view controller's `preferredContentSize`
-        observation = observe(\.presentedViewController.preferredContentSize, options: [.old, .new]) { presenter, change in
-            if let new = change.newValue, new != change.oldValue {
-                presenter.updateFrame(newPreferredSize: new)
-            }
-        }
+        animator.present(foregroundContainerView, finalFrame: frameOfPresentedViewInContainerView)
     }
     
-    override func dismissalTransitionWillBegin() {
-        observation = nil
+    override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
+        animator.resize(foregroundContainerView, to: frameOfPresentedViewInContainerView)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if observation != nil {
-            updateFrame()
-        }
-    }
-    
-    private func updateFrame(newPreferredSize: CGSize? = nil) {
-        guard let containerView else { return }
-        let animator = UIViewPropertyAnimator(duration: 0.6, dampingRatio: 0.9)
-        animator.addAnimations {
-            self.foregroundContainerView.frame = self.config.frameCalculator.calculateFrame(
-                containerView: containerView,
-                sourceView: self.sourceView,
-                preferredSize: newPreferredSize ?? self.presentedViewController.preferredContentSize
-            )
-        }
-        animator.startAnimation()
-    }
+    // MARK: - Custom methods
     
     /// Dismiss then call the configuration's `onDismiss` closure.
     func dismissWithConfigDismissClosure() {

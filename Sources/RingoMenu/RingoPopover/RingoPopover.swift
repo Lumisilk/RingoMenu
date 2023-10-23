@@ -23,16 +23,16 @@ public class RingoPopover: NSObject, UIViewControllerTransitioningDelegate {
     public init(sourceView: UIView, config: RingoPopoverConfiguration) {
         self.sourceView = sourceView
         self.config = config
-        animator = RingoAnimator(sourceView: sourceView)
+        self.animator = RingoAnimator(sourceView: sourceView)
     }
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        animator.isPresenting = true
+        animator.state = .willTransition
         return animator
     }
     
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        animator.isPresenting = false
+        animator.state = .willDismiss
         return animator
     }
     
@@ -48,6 +48,7 @@ public class RingoPopover: NSObject, UIViewControllerTransitioningDelegate {
         RingoPresenter(
             config: config,
             sourceView: sourceView,
+            animator: animator,
             presentedViewController: presented,
             presenting: presenting ?? source
         )

@@ -12,13 +12,14 @@ struct RingoMenuDemoApp: App {
     var body: some Scene {
         WindowGroup {
             TabView {
+                DemoSwiftUIView()
+                    .tabItem { Text("SwiftUI") }
+                
                 UIViewControllerAdaptor {
                     DemoViewController(style: .plain)
                 }
                 .tabItem { Text("UIKit") }
                 
-                DemoSwiftUIView()
-                    .tabItem { Text("SwiftUI") }
             }
         }
     }

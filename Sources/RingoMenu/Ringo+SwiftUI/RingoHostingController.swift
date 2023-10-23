@@ -34,11 +34,6 @@ public final class RingoHostingController: UIHostingController<AnyView> {
         view.backgroundColor = nil
     }
     
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updatePreferredContentSizeIfNeeded()
-    }
-    
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updatePreferredContentSizeIfNeeded()
