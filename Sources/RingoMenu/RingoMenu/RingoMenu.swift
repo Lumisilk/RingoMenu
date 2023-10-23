@@ -14,6 +14,7 @@ public struct RingoMenu<
 >: View {
     
     @StateObject internal var coordinator = RingoMenuCoordinator()
+    @State private var context = RingoMenuContext()
     
     let content: Content
     let header: Header
@@ -53,6 +54,13 @@ public struct RingoMenu<
             hideViewIfNeeded(footer)
         }
         .frame(maxWidth: 300)
+        .onPreferenceChange(HasCheckmarkPreferenceKey.self) {
+            if $0 { context.hasCheckmark = true }
+        }
+        .onPreferenceChange(HasTrailingImagePreferenceKey.self) {
+            if $0 { context.hasTrailingImage = true }
+        }
+        .environment(\.ringoMenuContext, context)
     }
 }
 
@@ -67,8 +75,11 @@ public struct RingoMenu<
             incrementText: "あ"
         )
         
-        ForEach(0..<10) { i in
-            RingoMenuButton(title: i.description, image: Image(systemName: "star"), action: {})
+        RingoMenuButton(title: "Title", action: {})
+        RingoMenuButton(title: "Title", attributes: .checkmark, action: {})
+        
+        ForEach(1..<10) { i in
+            RingoMenuButton(title: String(repeating: "Long", count: i), image: Image(systemName: "house.fill"), action: {})
         }
         RingoMenuSectionDivider()
         ForEach(10..<20) { i in

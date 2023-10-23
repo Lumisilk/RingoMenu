@@ -31,20 +31,28 @@ struct DemoSwiftUIView: View {
             }
             .present(isPresented: $isMenuPresented, style: .ringoPopover) {
                 RingoMenu {
-                    
-                    ForEach(0..<5) { i in
-                        RingoMenuButton(title: i.description, image: Image(systemName: "star"), action: {})
-                            .ringoMenuItemAttributes(i.isMultiple(of: 2) ? .keepsMenuPresented : [])
-                    }
-                    
                     RingoMenuStepper(
-                        value: $fontRatio,
+                        value: .constant(100),
                         bounds: 50...150,
                         step: 10,
                         contentText: { "\($0.description)%" },
                         decrementText: "あ",
                         incrementText: "あ"
                     )
+                    
+                    RingoMenuButton(title: "Title", action: {})
+                    RingoMenuButton(title: "Title", attributes: .checkmark, action: {})
+                    
+                    ForEach(1..<10) { i in
+                        RingoMenuButton(title: String(repeating: "Title ", count: i), image: Image(systemName: "star"), action: {})
+                    }
+                    RingoMenuSectionDivider()
+                    ForEach(10..<20) { i in
+                        RingoMenuButton(title: i.description, image: Image(systemName: "star"), action: {})
+                    }
+                } footer: {
+                    RingoMenuSectionDivider()
+                    RingoMenuButton(title: "Button", action: {})
                 }
             }
         }

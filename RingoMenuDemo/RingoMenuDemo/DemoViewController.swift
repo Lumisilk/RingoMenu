@@ -42,9 +42,9 @@ final class DemoViewController: UITableViewController, UITextFieldDelegate {
             UIAction(title: "Title", image: UIImage(systemName: "house.fill"), handler: { _ in }),
             UIAction(title: "Title", subtitle: "Subtitle", handler: { _ in }),
             UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "house.fill"), handler: { _ in }),
-            UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "house.fill"), state: .on, handler: { _ in }),
-            UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "house.fill"), attributes: .destructive, state: .on, handler: { _ in }),
-            UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "house.fill"), attributes: .disabled, state: .on, handler: { _ in }),
+            UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "pencil.and.scribble"), state: .on, handler: { _ in }),
+            UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "house.fill"), attributes: .destructive, handler: { _ in }),
+            UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "house.fill"), attributes: .disabled, handler: { _ in }),
         ]
         
         let subMenu = UIMenu(title: "Sub", options: .displayInline, children: [UIAction(title: "Title", handler: { _ in }),])

@@ -10,10 +10,12 @@ import SwiftUI
 /// A separator with a height of 8.
 ///
 /// RingoMenu will not display dividers above and below a RingoMenuDivider.
-struct RingoMenuSectionDivider: View {
-    @Environment(\.colorScheme) var colorSceme
+public struct RingoMenuSectionDivider: View {
+    @Environment(\.colorScheme) private var colorSceme
     
-    var body: some View {
+    public init() {}
+    
+    public var body: some View {
         Color(
             UIColor(
                 white: 0,
