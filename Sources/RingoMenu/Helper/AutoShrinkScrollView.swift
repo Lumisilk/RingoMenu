@@ -8,35 +8,60 @@
 import SwiftUI
 
 class InternalUIScrollView: UIScrollView {
-    let hostingController: UIHostingController<AnyView>
-
+    private let hostingController: UIHostingController<AnyView>
+    private let contentView: UIView
+    private var needCheckContentViewFrame = true
+    
     fileprivate init(@ViewBuilder content: () -> some View) {
-        self.hostingController = .init(rootView: AnyView(content()))
+        hostingController = .init(rootView: content().eraseToAnyView())
+        contentView = hostingController.view!
+        
         super.init(frame: .zero)
         
         setContentHuggingPriority(.defaultHigh, for: .vertical)
+        setContentHuggingPriority(.defaultHigh, for: .horizontal)
         setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-
-        let contentView = hostingController.view!
+        setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        
         contentView.backgroundColor = nil
         addSubview(contentView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            contentView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
-            contentView.topAnchor.constraint(equalTo: contentLayoutGuide.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: frameLayoutGuide.widthAnchor)
-        ])
     }
     
-    override var contentSize: CGSize {
-        didSet { invalidateIntrinsicContentSize() }
+    override var frame: CGRect {
+        didSet {
+            needCheckContentViewFrame = true
+        }
     }
 
     override var intrinsicContentSize: CGSize {
-        layoutIfNeeded()
-        return contentSize
+        let width = contentView.sizeThatFits(UIView.layoutFittingExpandedSize).width
+        let height = contentView.intrinsicContentSize.height
+        return CGSize(width: width, height: height)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateLayoutIfNeeded()
+    }
+    
+    func updateContentView(_ content: some View) {
+        hostingController.rootView = content.eraseToAnyView()
+        needCheckContentViewFrame = true
+        setNeedsLayout()
+    }
+    
+    private func updateLayoutIfNeeded() {
+        guard needCheckContentViewFrame else { return }
+        defer { needCheckContentViewFrame = false }
+        let selfSize = bounds.size
+        let contentMaxWidth = contentView.sizeThatFits(UIView.layoutFittingExpandedSize).width
+        let contentMinHeight = contentView.intrinsicContentSize.height
+        let contentViewSize = CGSize(width: min(contentMaxWidth, selfSize.width), height: contentMinHeight)
+        if contentView.frame.size != contentViewSize {
+            contentView.frame = CGRect(origin: .zero, size: contentViewSize)
+            contentSize = contentViewSize
+            invalidateIntrinsicContentSize()
+        }
     }
     
     @available(*, unavailable)
@@ -54,14 +79,15 @@ struct AutoShrinkScrollView<Content: View>: UIViewRepresentable {
     }
 
     func makeUIView(context: Context) -> InternalUIScrollView {
-        return InternalUIScrollView {
+        InternalUIScrollView {
             content.environment(\.self, context.environment)
         }
     }
 
     func updateUIView(_ uiView: InternalUIScrollView, context: Context) {
-        uiView.hostingController.rootView = AnyView(content.environment(\.self, context.environment))
-        uiView.hostingController.view.invalidateIntrinsicContentSize()
+        uiView.updateContentView(
+            content.environment(\.self, context.environment)
+        )
     }
 }
 
@@ -73,17 +99,20 @@ struct AutoShrinkScrollView_Preview: PreviewProvider {
             VStack {
                 AutoShrinkScrollView {
                     VStack {
+                        Color.blue
                         ForEach(Array(0..<count), id: \.self) { i in
                             Text(i.description)
                                 .padding()
                         }
                     }
+                    .border(.green)
                 }
                 .border(.red)
                 .frame(maxHeight: .infinity)
                 
-                Stepper("", value: $count)
+                Stepper("Row", value: $count, in: 1...20)
             }
+            .padding()
         }
     }
     
