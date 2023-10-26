@@ -74,6 +74,7 @@ public struct RingoMenuPlainButtonLabel: View {
                     .frame(width: 4)
             }
         }
+        .backport.foregroundColor(attributes.contains(.destructive) ? Color.red: nil)
         .padding(EdgeInsets(top: 12, leading: 8, bottom: 12, trailing: 12))
         .contentShape(Rectangle())
         .fixedSize(horizontal: false, vertical: true)
@@ -147,7 +148,7 @@ struct RingoMenuButtonStyle: ButtonStyle {
                 title: "Title",
                 subtitle: "Subtitle",
                 image: Image(systemName: "star"),
-                attributes: .checkmark
+                attributes: [.destructive, .checkmark]
             )}
             
             RingoMenu { RingoMenuPlainButtonLabel(

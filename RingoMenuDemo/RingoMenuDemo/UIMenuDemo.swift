@@ -47,7 +47,7 @@ final class UIMenuDemo: UIViewController {
             UIAction(title: "Selected", state: .on, handler: { _ in }),
             UIAction(title: "Multi-selected", state: .mixed, handler: { _ in }),
             UIAction(title: "Multi-selected Image", image: UIImage(systemName: "filemenu.and.selection"), state: .mixed, handler: { _ in }),
-            UIAction(title: "Destructive", attributes: .destructive, handler: { _ in }),
+            UIAction(title: "Destructive", subtitle: "Subtitle", image: UIImage(systemName: "filemenu.and.selection"), attributes: .destructive, state: .on, handler: { _ in }),
             UIAction(title: "Disabled", attributes: .disabled, handler: { _ in }),
             UIAction(title: "Destructive and Disabled", attributes: [.disabled, .destructive], handler: { _ in }),
             

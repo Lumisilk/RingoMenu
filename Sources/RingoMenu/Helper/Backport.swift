@@ -29,8 +29,8 @@ struct Backport<Content: View> {
     }
     
     @ViewBuilder
-    func foregroundColor(_ color: Color) -> some View {
-        if #available(iOS 15, *) {
+    func foregroundColor(_ color: Color?) -> some View {
+        if #available(iOS 15, *), let color {
             selfContent.foregroundStyle(color)
         } else {
             selfContent.foregroundColor(color)
