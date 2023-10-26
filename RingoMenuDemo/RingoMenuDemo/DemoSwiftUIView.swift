@@ -67,7 +67,7 @@ struct PopoverContent: View {
     var dismissAction: () -> Void
     
     var body: some View {
-        CompressedScrollView {
+        ScrollView {
             VStack {
                 Button("Dismiss", action: dismissAction)
                 Button("Expand") {

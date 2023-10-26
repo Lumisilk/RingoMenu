@@ -109,12 +109,23 @@ struct RingoMenuButtonStyle: ButtonStyle {
 }
 
 #Preview {
-    RingoMenu {
-        RingoMenuPlainButtonLabel(
-            title: "Title",
-            image: Image(systemName: "star"),
-            attributes: .checkmark
-        )
+    VStack {
+        Group {
+            RingoMenu {
+                RingoMenuPlainButtonLabel(
+                    title: "Title"
+                )
+            }
+            
+            RingoMenu {
+                RingoMenuPlainButtonLabel(
+                    title: "Title",
+                    image: Image(systemName: "star"),
+                    attributes: .checkmark
+                )
+            }
+        }
+        .border(.red)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .backport.background {

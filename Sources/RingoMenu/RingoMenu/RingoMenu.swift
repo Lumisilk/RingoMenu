@@ -7,27 +7,6 @@
 
 import SwiftUI
 
-public struct CompressedScrollView<Content: View>: View {
-    @State private var contentHeight: CGFloat?
-    
-    let content: Content
-    
-    public init(@ViewBuilder content: () -> Content) {
-        self.content = content()
-    }
-    
-    public var body: some View {
-        ScrollView {
-            content
-                .readSize(of: \.height) {
-                    print("contentHeight: ", $0)
-                    contentHeight = $0
-                }
-        }
-        .frame(maxHeight: contentHeight, alignment: .top)
-    }
-}
-
 public struct RingoMenu<
     Content: View,
     Header: View,
@@ -56,7 +35,6 @@ public struct RingoMenu<
             hideViewIfNeeded(header)
             
             CompressedScrollView {
-//            AutoShrinkScrollView {
                 VStack(spacing: 0) {
                     content.variadic { children in
                         let needDividersAfterChild = needDividersAfterChild(children)
@@ -72,7 +50,6 @@ public struct RingoMenu<
                 }
                 .environmentObject(coordinator)
             }
-            .border(.red)
             
             hideViewIfNeeded(footer)
         }
