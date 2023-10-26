@@ -41,6 +41,7 @@ public struct RingoMenuButton<Label: View>: View {
 public extension RingoMenuButton where Label == RingoMenuPlainButtonLabel {
     init(
         title: String,
+        subtitle: String? = nil,
         image: Image? = nil,
         attributes: RingoMenuButtonAttributes = [],
         action: @escaping () -> Void

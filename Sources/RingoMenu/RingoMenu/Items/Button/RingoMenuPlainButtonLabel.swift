@@ -15,15 +15,18 @@ public struct RingoMenuPlainButtonLabel: View {
     @ScaledMetric(relativeTo: .body) var trailingImageWidth = 30
     
     let title: String
+    let subtitle: String?
     let image: Image?
     let attributes: RingoMenuButtonAttributes
     
     init(
         title: String,
+        subtitle: String? = nil,
         image: Image? = nil,
         attributes: RingoMenuButtonAttributes = []
     ) {
         self.title = title
+        self.subtitle = subtitle
         self.image = image
         self.attributes = attributes
     }
@@ -45,11 +48,16 @@ public struct RingoMenuPlainButtonLabel: View {
                     .frame(width: 8)
             }
             
-            
-            Text(title)
-                .lineLimit(2)
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                if let subtitle {
+                    Text(subtitle)
+                        .backport.foregroundColor(.secondary)
+                }
+            }
+            .lineLimit(2)
+            .multilineTextAlignment(.leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
             
             if context.hasTrailingImage {
                 Group {
@@ -111,21 +119,60 @@ struct RingoMenuButtonStyle: ButtonStyle {
 #Preview {
     VStack {
         Group {
-            RingoMenu {
-                RingoMenuPlainButtonLabel(
-                    title: "Title"
-                )
-            }
+            RingoMenu { RingoMenuPlainButtonLabel(
+                title: "Title"
+            )}
             
-            RingoMenu {
-                RingoMenuPlainButtonLabel(
-                    title: "Title",
-                    image: Image(systemName: "star"),
-                    attributes: .checkmark
-                )
-            }
+            RingoMenu { RingoMenuPlainButtonLabel(
+                title: "Title",
+                subtitle: "Subtitle"
+            )}
+            
+            RingoMenu { RingoMenuPlainButtonLabel(
+                title: String(repeating: "Title ", count: 20),
+                subtitle: String(repeating: "Subtitle ", count: 20)
+            )}
+            
+            RingoMenu { RingoMenuPlainButtonLabel(
+                title: "Title",
+                attributes: .checkmark
+            )}
+            
+            RingoMenu { RingoMenuPlainButtonLabel(
+                title: "Title",
+                image: Image(systemName: "star")
+            )}
+            
+            RingoMenu { RingoMenuPlainButtonLabel(
+                title: "Title",
+                subtitle: "Subtitle",
+                image: Image(systemName: "star"),
+                attributes: .checkmark
+            )}
+            
+            RingoMenu { RingoMenuPlainButtonLabel(
+                title: String(repeating: "Title ", count: 20),
+                subtitle: String(repeating: "Subtitle ", count: 20),
+                image: Image(systemName: "star"),
+                attributes: .checkmark
+            )}
         }
         .border(.red)
+    }
+}
+
+#Preview {
+    RingoMenu {
+        RingoMenuButton(
+            title: String(repeating: "Title ", count: 20),
+            subtitle: String(repeating: "Subtitle ", count: 20),
+            image: Image(systemName: "star"),
+            attributes: .checkmark,
+            action: {}
+        )
+    }
+    .backport.background {
+        VisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .backport.background {

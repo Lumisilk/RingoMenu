@@ -27,6 +27,15 @@ struct Backport<Content: View> {
             selfContent.overlay(content(), alignment: alignment)
         }
     }
+    
+    @ViewBuilder
+    func foregroundColor(_ color: Color) -> some View {
+        if #available(iOS 15, *) {
+            selfContent.foregroundStyle(color)
+        } else {
+            selfContent.foregroundColor(color)
+        }
+    }
 }
 
 extension View {
