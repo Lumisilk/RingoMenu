@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CompressedScrollView<Content: View>: View {
+    @State private var scrollViewHeight: CGFloat?
     @State private var contentHeight: CGFloat?
     
     let content: Content
@@ -17,14 +18,30 @@ struct CompressedScrollView<Content: View>: View {
     }
     
     var body: some View {
-        ScrollView {
-            content
-                .readSize(of: \.height) {
-                    print("contentHeight: ", $0)
-                    contentHeight = $0
-                }
+        if #available(iOS 16, *) {
+            ScrollView {
+                content
+                    .readSize(of: \.height) { contentHeight = $0 }
+            }
+            .frame(maxHeight: contentHeight, alignment: .top)
+            .readSize(of: \.height) { scrollViewHeight = $0 }
+            .scrollDisabled(scrollDisabled)
+        } else {
+            ScrollView(scrollDisabled ? [] : .vertical) {
+                content
+                    .readSize(of: \.height) { contentHeight = $0 }
+            }
+            .frame(maxHeight: contentHeight, alignment: .top)
+            .readSize(of: \.height) { scrollViewHeight = $0 }
         }
-        .frame(maxHeight: contentHeight, alignment: .top)
+    }
+    
+    private var scrollDisabled: Bool {
+        if let scrollViewHeight, let contentHeight {
+            scrollViewHeight >= contentHeight
+        } else {
+            false
+        }
     }
 }
 

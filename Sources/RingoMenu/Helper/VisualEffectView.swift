@@ -23,3 +23,29 @@ struct VisualEffectView: UIViewRepresentable {
         uiView.contentView.backgroundColor = backgroundColor
     }
 }
+
+extension VisualEffectView {
+    static var menuBackground: VisualEffectView {
+        VisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
+    }
+    
+    static var highlightedBackground: VisualEffectView {
+        VisualEffectView(
+            effect: UIVibrancyEffect(
+                blurEffect: UIBlurEffect(style: .systemMaterial),
+                style: UIVibrancyEffectStyle.tertiaryFill
+            ),
+            backgroundColor: UIColor.white
+        )
+    }
+    
+    static var divider: VisualEffectView {
+        VisualEffectView(
+            effect: UIVibrancyEffect(
+                blurEffect: UIBlurEffect(style: .systemMaterial),
+                style: .separator
+            ),
+            backgroundColor: .white
+        )
+    }
+}

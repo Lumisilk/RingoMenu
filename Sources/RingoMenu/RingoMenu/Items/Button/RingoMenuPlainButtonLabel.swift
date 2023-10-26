@@ -106,13 +106,7 @@ struct RingoMenuButtonStyle: ButtonStyle {
     @ViewBuilder
     func background(highlighted: Bool) -> some View {
         if highlighted {
-            VisualEffectView(
-                effect: UIVibrancyEffect(
-                    blurEffect: UIBlurEffect(style: .systemMaterial),
-                    style: UIVibrancyEffectStyle.tertiaryFill
-                ),
-                backgroundColor: UIColor.white
-            )
+            VisualEffectView.highlightedBackground
         }
     }
 }
@@ -173,7 +167,7 @@ struct RingoMenuButtonStyle: ButtonStyle {
         )
     }
     .backport.background {
-        VisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
+        VisualEffectView.menuBackground
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .backport.background {

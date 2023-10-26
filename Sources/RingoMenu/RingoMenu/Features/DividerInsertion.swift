@@ -21,13 +21,7 @@ extension RingoMenu {
     }
     
     internal var divider: some View {
-        VisualEffectView(
-            effect: UIVibrancyEffect(
-                blurEffect: UIBlurEffect(style: .systemMaterial),
-                style: .separator
-            ),
-            backgroundColor: .white
-        )
-        .frame(height: 1.0 / 3)
+        VisualEffectView.divider
+            .frame(height: 1.0 / 3)
     }
 }

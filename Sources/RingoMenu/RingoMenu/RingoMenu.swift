@@ -90,7 +90,7 @@ public struct RingoMenu<
         RingoMenuButton(title: "Button", action: {})
     }
     .backport.background {
-        VisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
+        VisualEffectView.menuBackground
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .backport.background {
