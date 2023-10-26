@@ -13,7 +13,7 @@ struct DemoSwiftUIView: View {
     @State private var isCustomPresented = false
     @State private var isMenuPresented = false
     
-    @State private var fontRatio: Int = 100
+    @State private var rowCount: Int = 5
     
     var body: some View {
         List {
@@ -32,10 +32,10 @@ struct DemoSwiftUIView: View {
             .present(isPresented: $isMenuPresented, style: .ringoPopover) {
                 RingoMenu {
                     RingoMenuStepper(
-                        value: .constant(100),
-                        bounds: 50...150,
-                        step: 10,
-                        contentText: { "\($0.description)%" },
+                        value: $rowCount,
+                        bounds: 1...20,
+                        step: 1,
+                        contentText: { "\($0.description)" },
                         decrementText: "あ",
                         incrementText: "あ"
                     )
@@ -43,13 +43,13 @@ struct DemoSwiftUIView: View {
                     RingoMenuButton(title: "Title", action: {})
                     RingoMenuButton(title: "Title", attributes: .checkmark, action: {})
                     
-                    ForEach(1..<10) { i in
+                    ForEach(Array(0..<rowCount), id: \.self) { i in
                         RingoMenuButton(title: String(repeating: "Title ", count: i), image: Image(systemName: "star"), action: {})
                     }
-                    RingoMenuSectionDivider()
-                    ForEach(10..<20) { i in
-                        RingoMenuButton(title: i.description, image: Image(systemName: "star"), action: {})
-                    }
+//                    RingoMenuSectionDivider()
+//                    ForEach(10..<20) { i in
+//                        RingoMenuButton(title: i.description, image: Image(systemName: "star"), action: {})
+//                    }
                 } footer: {
                     RingoMenuSectionDivider()
                     RingoMenuButton(title: "Button", action: {})
@@ -67,7 +67,7 @@ struct PopoverContent: View {
     var dismissAction: () -> Void
     
     var body: some View {
-        ScrollView {
+        CompressedScrollView {
             VStack {
                 Button("Dismiss", action: dismissAction)
                 Button("Expand") {
@@ -78,7 +78,7 @@ struct PopoverContent: View {
             }
             .padding(.horizontal)
         }
-        .frame(maxWidth: isExpanded ? .infinity : 200, maxHeight: isExpanded ? .infinity : 200)
+//        .frame(maxWidth: isExpanded ? .infinity : 200, maxHeight: isExpanded ? .infinity : 200)
         .animation(.default, value: isExpanded)
     }
 }

@@ -16,6 +16,11 @@ struct RingoMenuDemoApp: App {
                     .tabItem { Text("SwiftUI") }
                 
                 UIViewControllerAdaptor {
+                    UIMenuDemo()
+                }
+                .tabItem { Text("UImenu") }
+                
+                UIViewControllerAdaptor {
                     DemoViewController(style: .plain)
                 }
                 .tabItem { Text("UIKit") }

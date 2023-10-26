@@ -14,11 +14,13 @@ import UIKit
 /// You set an instance of `RingoPopover` as the transitioning delegate of the view controller you wish to present as a popover.
 public class RingoPopover: NSObject, UIViewControllerTransitioningDelegate {
     
-    var sourceView: UIView
-    var animator: RingoAnimator
-    var interactiveTransition = UIPercentDrivenInteractiveTransition()
+    private var sourceView: UIView
+    private var animator: RingoAnimator
+    private var interactiveTransition = UIPercentDrivenInteractiveTransition()
     
     public var config: RingoPopoverConfiguration
+    
+    public weak var ringoPopoverDelegate: RingoPopoverDelegate?
     
     public init(sourceView: UIView, config: RingoPopoverConfiguration) {
         self.sourceView = sourceView
@@ -49,6 +51,7 @@ public class RingoPopover: NSObject, UIViewControllerTransitioningDelegate {
             config: config,
             sourceView: sourceView,
             animator: animator,
+            ringoPopoverDelegate: ringoPopoverDelegate,
             presentedViewController: presented,
             presenting: presenting ?? source
         )

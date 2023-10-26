@@ -13,7 +13,10 @@ class InternalUIScrollView: UIScrollView {
     private var needCheckContentViewFrame = true
     
     fileprivate init(@ViewBuilder content: () -> some View) {
-        hostingController = .init(rootView: content().eraseToAnyView())
+        hostingController = .init(rootView: content()
+            .fixedSize(horizontal: false, vertical: true)
+            .eraseToAnyView()
+        )
         contentView = hostingController.view!
         
         super.init(frame: .zero)
@@ -30,13 +33,12 @@ class InternalUIScrollView: UIScrollView {
     override var frame: CGRect {
         didSet {
             needCheckContentViewFrame = true
+            updateLayoutIfNeeded()
         }
     }
-
+    
     override var intrinsicContentSize: CGSize {
-        let width = contentView.sizeThatFits(UIView.layoutFittingExpandedSize).width
-        let height = contentView.intrinsicContentSize.height
-        return CGSize(width: width, height: height)
+        CGSize(width: UIView.layoutFittingExpandedSize.width, height: contentSize.height)
     }
     
     override func layoutSubviews() {
@@ -45,7 +47,9 @@ class InternalUIScrollView: UIScrollView {
     }
     
     func updateContentView(_ content: some View) {
-        hostingController.rootView = content.eraseToAnyView()
+        hostingController.rootView = content
+            .fixedSize(horizontal: false, vertical: true)
+            .eraseToAnyView()
         needCheckContentViewFrame = true
         setNeedsLayout()
     }
@@ -53,10 +57,11 @@ class InternalUIScrollView: UIScrollView {
     private func updateLayoutIfNeeded() {
         guard needCheckContentViewFrame else { return }
         defer { needCheckContentViewFrame = false }
-        let selfSize = bounds.size
+        
         let contentMaxWidth = contentView.sizeThatFits(UIView.layoutFittingExpandedSize).width
-        let contentMinHeight = contentView.intrinsicContentSize.height
-        let contentViewSize = CGSize(width: min(contentMaxWidth, selfSize.width), height: contentMinHeight)
+        let contentWidth = min(contentMaxWidth, bounds.size.width)
+        let contentViewSize = contentView.sizeThatFits(CGSize(width: contentWidth, height: UIView.layoutFittingCompressedSize.height))
+        
         if contentView.frame.size != contentViewSize {
             contentView.frame = CGRect(origin: .zero, size: contentViewSize)
             contentSize = contentViewSize
@@ -99,10 +104,12 @@ struct AutoShrinkScrollView_Preview: PreviewProvider {
             VStack {
                 AutoShrinkScrollView {
                     VStack {
-                        Color.blue
+//                        Color.blue
                         ForEach(Array(0..<count), id: \.self) { i in
-                            Text(i.description)
+                            Text("\(i) " + String(repeating: "Title ", count: i))
+                                .fixedSize(horizontal: false, vertical: true)
                                 .padding()
+                                .lineLimit(nil)
                         }
                     }
                     .border(.green)

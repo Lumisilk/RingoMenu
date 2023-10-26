@@ -27,38 +27,18 @@ final class DemoViewController: UITableViewController, UITextFieldDelegate {
     }
     
     func setupSystemMenuButton() {
-        var elements: [UIMenuElement] = [
-            UIAction(title: "Inspect", attributes: .keepsMenuPresented, handler: { [view] _ in
-                let window = view!.window!
-                let subviews = window.subviews
-                let rapidVC = (subviews[2].subviews[0].next as! UIViewController)
-                
-                let transitioning = rapidVC.transitioningDelegate!
-                let animator = transitioning as! UIViewControllerAnimatedTransitioning
-                let presenter = transitioning.presentationController!(forPresented: UIViewController(), presenting: nil, source: UIViewController())
-                
-                print("")
-            }),
-            UIAction(title: "Title", image: UIImage(systemName: "house.fill"), handler: { _ in }),
-            UIAction(title: "Title", subtitle: "Subtitle", handler: { _ in }),
-            UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "house.fill"), handler: { _ in }),
-            UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "pencil.and.scribble"), state: .on, handler: { _ in }),
-            UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "house.fill"), attributes: .destructive, handler: { _ in }),
-            UIAction(title: "Title", subtitle: "Subtitle", image: UIImage(systemName: "house.fill"), attributes: .disabled, handler: { _ in }),
-        ]
+//        
+//        
+//        let subMenu = UIMenu(title: "Sub", options: .displayInline, children: [UIAction(title: "Title", handler: { _ in }),])
+//        elements.append(subMenu)
+//        
+//        let actions: [UIMenuElement] = buttonTitles.map { UIAction(title: $0, handler: { _ in }) }
+//        
+//        systemMenuButton.showsMenuAsPrimaryAction = true
+//        systemMenuButton.menu = UIMenu(children: elements + actions)
         
-        let subMenu = UIMenu(title: "Sub", options: .displayInline, children: [UIAction(title: "Title", handler: { _ in }),])
-        elements.append(subMenu)
         
-        let actions: [UIMenuElement] = buttonTitles.map { UIAction(title: $0, handler: { _ in }) }
         
-        systemMenuButton.showsMenuAsPrimaryAction = true
-        systemMenuButton.menu = UIMenu(children: elements + actions)
-        systemMenuButton.setTitle("UIMenu", for: .normal)
-        
-        view.addSubview(systemMenuButton)
-        systemMenuButton.center = .init(x: 30, y: 30)
-        systemMenuButton.sizeToFit()
         
         let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(didDrapButton))
         systemMenuButton.addGestureRecognizer(dragGesture)
@@ -78,9 +58,8 @@ final class DemoViewController: UITableViewController, UITextFieldDelegate {
     @objc func presentRingo(_ sender: UIButton) {
         let controller = RingoHostingController(
             sourceView: sender,
-            onDismiss: { print("RingoHostingController Dismissed.") },
             rootView: PopoverContent(
-                dismissAction: {[weak self] in
+                dismissAction: { [weak self] in
                     self?.dismiss(animated: true)
                 }
             )

@@ -9,6 +9,12 @@ import UIKit
 
 /// Protocol used by RingoPopover to calculate the final frame of the popover.
 public protocol FrameCalculator {
+    
+    /// This method returns the available size used for layout the content view.
+    /// - Parameter containerView: The container view provided by the presentation controller.
+    /// - Returns: The maximum available size for displaying the content view.
+    func availableContainerSize(containerView: UIView) -> CGSize
+    
     /// RingoPopover uses this method to determine the final frame of the popover.
     ///
     /// - Parameters:
@@ -28,7 +34,7 @@ public struct UIMenuFrameCalculator: FrameCalculator {
     /// The maximum width of the popover.
     ///
     /// The default value is 250. You can set this value to .infinity to indicate there is no width limitation.
-    public var maxWidth: CGFloat = .infinity
+    public var maxWidth: CGFloat = 250
     
     /// The maximum height of the popover.
     ///
@@ -39,6 +45,10 @@ public struct UIMenuFrameCalculator: FrameCalculator {
     public var spacingBetweenSourceView: CGFloat = 6
     
     public init() {}
+    
+    public func availableContainerSize(containerView: UIView) -> CGSize {
+        CGSize(width: availableWidth(containerView), height: availableHeight(containerView))
+    }
     
     public func calculateFrame(containerView: UIView, sourceView: UIView, preferredSize: CGSize) -> CGRect {
         let contentSize = CGSize(

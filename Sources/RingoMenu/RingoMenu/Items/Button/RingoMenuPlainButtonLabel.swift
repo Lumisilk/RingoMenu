@@ -40,6 +40,9 @@ public struct RingoMenuPlainButtonLabel: View {
                     }
                 }
                 .frame(width: checkmarkWidth)
+            } else {
+                Color.clear
+                    .frame(width: 8)
             }
             
             
@@ -58,6 +61,9 @@ public struct RingoMenuPlainButtonLabel: View {
                     }
                 }
                 .frame(width: trailingImageWidth)
+            } else {
+                Color.clear
+                    .frame(width: 4)
             }
         }
         .padding(EdgeInsets(top: 12, leading: 8, bottom: 12, trailing: 12))

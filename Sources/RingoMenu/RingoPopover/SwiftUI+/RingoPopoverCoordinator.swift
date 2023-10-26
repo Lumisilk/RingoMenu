@@ -11,23 +11,17 @@ import SwiftUI
 ///
 /// You can access RingoPopoverCoordinator from any child view of RingoMenu using the `ringoPopoverCoordinator` key in Environment,
 /// ```
-/// @Environment(\.ringoPopoverCoordinator) private var popoverCoordinator
+/// @Environment(\.ringoPopoverCoordinator) var popoverCoordinator
 /// ```
 ///
 /// If the view from which you access RingoPopoverCoordinator is not a descendant of RingoMenu, any methods called will have no effect.
 public class RingoPopoverCoordinator {
     
-    // For unknown reason, holding a reference to the RingoPresenter directly (even weak)
-    // will broke the dismissal animation.
-    // Therefore, hold RingoHostingController indirectly to circumvent this issue.
-    weak var hostingController: RingoHostingController?
-    var ringoPresenter: RingoPresenter? {
-        hostingController?.presentationController as? RingoPresenter
-    }
+    weak var ringoPresenter: RingoPresenter?
     
     /// Dismisses the popover. Note that this method also invokes the onDismiss closure from the popover configuration.
     public func dismiss() {
-        ringoPresenter?.dismissWithConfigDismissClosure()
+        ringoPresenter?.dismissWithDelegate()
     }
     
     /// Toggles the visibility of the background view and the shadow view behind the popover.

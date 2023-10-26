@@ -33,39 +33,62 @@ class RingoAnimator: NSObject {
     
     /// Present view AFTER UIKit's presentation transition completion.
     func present(_ presentedView: UIView, containerView: UIView, finalFrame: CGRect) {
-        setAnchorPoint(presentedView, containerView: containerView, finalFrame: finalFrame)
-        presentedView.frame = finalFrame
-        presentedView.bounds.size.height *= 0.2
-        presentedView.transform = CGAffineTransform(scaleX: 0.2, y: 1)
-        presentedView.layer.sublayerTransform = CATransform3DMakeAffineTransform(CGAffineTransform(scaleX: 1, y: 0.2))
+        ringoDebug("Present with animation prepare")
         
         let animator = UIViewPropertyAnimator(duration: presentingDuration, dampingRatio: 0.78)
         animator.isInterruptible = true
         presentingAnimator = animator
         
+        ringoDebug("finalFrame", finalFrame)
+        
+        // Reset presentedView to normal state
+        presentedView.alpha = 0
+        presentedView.transform = .identity
+        presentedView.layer.sublayerTransform = CATransform3DMakeAffineTransform(.identity)
+        setAnchorPoint(presentedView, containerView: containerView, finalFrame: finalFrame)
+        presentedView.frame = finalFrame
+        
+        // Set presentedView to animation start state
+        presentedView.bounds.size.height *= 0.2
+        presentedView.transform = CGAffineTransform(scaleX: 0.2, y: 1)
+        presentedView.layer.sublayerTransform = CATransform3DMakeAffineTransform(CGAffineTransform(scaleX: 1, y: 0.2))
+        
+        // Animate presentedView to normal state
         animator.addAnimations { [presentedView] in
             presentedView.alpha = 1
             presentedView.bounds.size.height = finalFrame.height
             presentedView.transform = .identity
             presentedView.layer.sublayerTransform = CATransform3DMakeAffineTransform(.identity)
         }
+        
         animator.addCompletion { [weak self] _ in
             self?.presentingAnimator = nil
             self?.state = .transitionComplete
+            ringoDebug("Present with animation end")
         }
+        
+        ringoDebug("Present with animation start")
         animator.startAnimation()
     }
     
     func resize(_ presentedView: UIView, containerView: UIView,  to finalFrame: CGRect) {
-        setAnchorPoint(presentedView, containerView: containerView, finalFrame: finalFrame)
-        
         switch state {
         case .willTransition:
-            presentedView.frame = finalFrame
+            if let presentingAnimator {
+                ringoDebug("resize during presenting", finalFrame)
+                // Cancel the current presenting animation if presented view resized during the presenting process
+                presentingAnimator.stopAnimation(true)
+                present(presentedView, containerView: containerView, finalFrame: finalFrame)
+            } else {
+                ringoDebug("resize without animation", finalFrame)
+                presentedView.frame = finalFrame
+            }
             
         case .transitionComplete:
+            ringoDebug("resize with animation")
             resizingAnimator?.stopAnimation(true)
-            let animator = UIViewPropertyAnimator(duration: resizingDuration, dampingRatio: 0.78)
+            setAnchorPoint(presentedView, containerView: containerView, finalFrame: finalFrame)
+            let animator = UIViewPropertyAnimator(duration: resizingDuration, dampingRatio: 1)
             animator.isInterruptible = true
             resizingAnimator = animator
             animator.addAnimations { [presentedView] in
@@ -110,7 +133,6 @@ extension RingoAnimator: UIViewControllerAnimatedTransitioning {
             guard let fromView = transitionContext.view(forKey: .from) else { return }
             presentingAnimator?.stopAnimation(true)
             setAnchorPoint(fromView, containerView: containerView, finalFrame: fromView.frame)
-            
             let duration = transitionDuration(using: transitionContext)
             let animator = UIViewPropertyAnimator(duration: duration, curve: .easeOut)
             animator.addAnimations { [fromView] in
