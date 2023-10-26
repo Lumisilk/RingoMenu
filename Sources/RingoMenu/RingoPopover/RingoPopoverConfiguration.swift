@@ -13,10 +13,10 @@ public struct RingoPopoverConfiguration {
     /// The background view for the popover.
     ///
     /// By default, it uses the system's material blur effect view.
-    public var backgroundView: UIView? = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
+    public var backgroundView: UIView?
     
     /// A protocol that calculates the final frame for the popover.
-    public var frameCalculator: FrameCalculator = UIMenuFrameCalculator()
+    public var frameCalculator: FrameCalculator
     
     public init(
         backgroundView: UIView? = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial)),

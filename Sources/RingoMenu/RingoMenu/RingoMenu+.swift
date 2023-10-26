@@ -8,25 +8,19 @@
 import SwiftUI
 
 public extension RingoMenu where Header == EmptyView {
-    init(@ViewBuilder content: () -> Content, @ViewBuilder footer: () -> Footer) {
-        self.content = content()
-        self.header = EmptyView()
-        self.footer = footer()
+    init(options: RingoMenuOptions = [], @ViewBuilder content: () -> Content, @ViewBuilder footer: () -> Footer) {
+        self.init(options: options, content: content, header: { EmptyView() }, footer: footer)
     }
 }
 
 public extension RingoMenu where Footer == EmptyView {
-    init(@ViewBuilder content: () -> Content, @ViewBuilder header: () -> Header) {
-        self.content = content()
-        self.header = header()
-        self.footer = EmptyView()
+    init(options: RingoMenuOptions = [], @ViewBuilder content: () -> Content, @ViewBuilder header: () -> Header) {
+        self.init(options: options, content: content, header: header, footer: { EmptyView() })
     }
 }
 
 public extension RingoMenu where Header == EmptyView, Footer == EmptyView {
-    init(@ViewBuilder content: () -> Content) {
-        self.content = content()
-        self.header = EmptyView()
-        self.footer = EmptyView()
+    init(options: RingoMenuOptions = [], @ViewBuilder content: () -> Content) {
+        self.init(options: options, content: content, header: { EmptyView() }, footer: { EmptyView() })
     }
 }

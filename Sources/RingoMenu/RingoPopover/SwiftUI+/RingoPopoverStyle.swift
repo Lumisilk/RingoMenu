@@ -15,16 +15,17 @@ public struct RingoPopoverStyle: PresentationStyle {
     public func makeHostingController(_ configuration: PresentationConfiguration) -> RingoHostingController {
         RingoHostingController(
             sourceView: configuration.anchorView,
-            config: config, 
-            onDismiss: { configuration.isPresented.wrappedValue = false },
-            rootView: configuration.content
+            rootView: configuration.content,
+            config: config,
+            onDismiss: { configuration.isPresented.wrappedValue = false }
         )
     }
     
     public func update(_ hostingController: RingoHostingController, configuration: PresentationConfiguration) {
-        hostingController.rootView = configuration.content
-        hostingController.ringoPopover.config = config
-        hostingController.onDismiss = { configuration.isPresented.wrappedValue = false }
+        hostingController.update(
+            rootView: configuration.content,
+            onDismiss: { configuration.isPresented.wrappedValue = false }
+        )
     }
 }
 

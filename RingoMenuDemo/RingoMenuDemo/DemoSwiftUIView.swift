@@ -51,7 +51,7 @@ struct DemoSwiftUIView: View {
 //                        RingoMenuButton(title: i.description, image: Image(systemName: "star"), action: {})
 //                    }
                 } footer: {
-                    RingoMenuSectionDivider()
+                    RingoMenuDivider()
                     RingoMenuButton(title: "Button", action: {})
                 }
             }

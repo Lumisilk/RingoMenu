@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct RingoMenuPlainButtonLabel: View {
+public struct RingoMenuPlainButtonLargeLabel: View {
     
     @Environment(\.ringoMenuContext) private var context
     
@@ -33,7 +33,7 @@ public struct RingoMenuPlainButtonLabel: View {
     
     public var body: some View {
         HStack(spacing: 4) {
-            if context.hasCheckmark {
+            if context.reserveCheckmarkArea {
                 Group {
                     if attributes.contains(.checkmark) {
                         Image(systemName: "checkmark")
@@ -59,7 +59,7 @@ public struct RingoMenuPlainButtonLabel: View {
             .multilineTextAlignment(.leading)
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            if context.hasTrailingImage {
+            if context.reserveImageArea {
                 Group {
                     if let image {
                         image
@@ -74,7 +74,6 @@ public struct RingoMenuPlainButtonLabel: View {
                     .frame(width: 4)
             }
         }
-        .backport.foregroundColor(attributes.contains(.destructive) ? Color.red: nil)
         .padding(EdgeInsets(top: 12, leading: 8, bottom: 12, trailing: 12))
         .contentShape(Rectangle())
         .fixedSize(horizontal: false, vertical: true)
@@ -114,38 +113,38 @@ struct RingoMenuButtonStyle: ButtonStyle {
 #Preview {
     VStack {
         Group {
-            RingoMenu { RingoMenuPlainButtonLabel(
+            RingoMenu { RingoMenuPlainButtonLargeLabel(
                 title: "Title"
             )}
             
-            RingoMenu { RingoMenuPlainButtonLabel(
+            RingoMenu { RingoMenuPlainButtonLargeLabel(
                 title: "Title",
                 subtitle: "Subtitle"
             )}
             
-            RingoMenu { RingoMenuPlainButtonLabel(
+            RingoMenu { RingoMenuPlainButtonLargeLabel(
                 title: String(repeating: "Title ", count: 20),
                 subtitle: String(repeating: "Subtitle ", count: 20)
             )}
             
-            RingoMenu { RingoMenuPlainButtonLabel(
+            RingoMenu { RingoMenuPlainButtonLargeLabel(
                 title: "Title",
                 attributes: .checkmark
             )}
             
-            RingoMenu { RingoMenuPlainButtonLabel(
+            RingoMenu { RingoMenuPlainButtonLargeLabel(
                 title: "Title",
                 image: Image(systemName: "star")
             )}
             
-            RingoMenu { RingoMenuPlainButtonLabel(
+            RingoMenu { RingoMenuPlainButtonLargeLabel(
                 title: "Title",
                 subtitle: "Subtitle",
                 image: Image(systemName: "star"),
                 attributes: [.destructive, .checkmark]
             )}
             
-            RingoMenu { RingoMenuPlainButtonLabel(
+            RingoMenu { RingoMenuPlainButtonLargeLabel(
                 title: String(repeating: "Title ", count: 20),
                 subtitle: String(repeating: "Subtitle ", count: 20),
                 image: Image(systemName: "star"),

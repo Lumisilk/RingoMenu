@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+public struct RingoMenuOptions: OptionSet {
+    public var rawValue: UInt8
+    public init(rawValue: UInt8) {
+        self.rawValue = rawValue
+    }
+    
+    public static let forceReserveCheckMarkArea = RingoMenuOptions(rawValue: 1 << 0)
+}
+
 public struct RingoMenu<
     Content: View,
     Header: View,
@@ -14,17 +23,22 @@ public struct RingoMenu<
 >: View {
     
     @StateObject internal var coordinator = RingoMenuCoordinator()
-    @State private var context = RingoMenuContext()
+    @State private var context: RingoMenuContext
     
+    let options: RingoMenuOptions
     let content: Content
     let header: Header
     let footer: Footer
     
     public init(
+        options: RingoMenuOptions = [],
         @ViewBuilder content: () -> Content,
         @ViewBuilder header: () -> Header,
         @ViewBuilder footer: () -> Footer
     ) {
+        self.options = options
+        let context = RingoMenuContext(reserveCheckmarkArea: options.contains(.forceReserveCheckMarkArea))
+        _context = .init(initialValue: context)
         self.content = content()
         self.header = header()
         self.footer = footer()
@@ -55,10 +69,10 @@ public struct RingoMenu<
         }
         .frame(maxWidth: 250)
         .onPreferenceChange(HasCheckmarkPreferenceKey.self) {
-            if $0 { context.hasCheckmark = true }
+            if $0 { context.reserveCheckmarkArea = true }
         }
         .onPreferenceChange(HasTrailingImagePreferenceKey.self) {
-            if $0 { context.hasTrailingImage = true }
+            if $0 { context.reserveImageArea = true }
         }
         .environment(\.ringoMenuContext, context)
     }
@@ -81,12 +95,12 @@ public struct RingoMenu<
         ForEach(5..<10) { i in
             RingoMenuButton(title: String(repeating: "Long", count: i), image: Image(systemName: "house.fill"), action: {})
         }
-        RingoMenuSectionDivider()
+        RingoMenuDivider()
         ForEach(10..<20) { i in
             RingoMenuButton(title: i.description, image: Image(systemName: "star"), action: {})
         }
     } footer: {
-        RingoMenuSectionDivider()
+        RingoMenuDivider()
         RingoMenuButton(title: "Button", action: {})
     }
     .backport.background {

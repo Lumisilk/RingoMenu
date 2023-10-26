@@ -8,8 +8,9 @@
 import SwiftUI
 
 public struct RingoMenuContext {
-    public var hasCheckmark = false
-    public var hasTrailingImage = false
+    public var reserveCheckmarkArea = false
+    public var reserveImageArea = false
+    public var embedInButtonRowStyle: RingoMenuButtonRowStyle? = nil
 }
 
 private struct RingoMenuContextEnvironmentKey: EnvironmentKey {

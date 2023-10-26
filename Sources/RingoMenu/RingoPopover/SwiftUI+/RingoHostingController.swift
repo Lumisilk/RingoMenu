@@ -14,9 +14,9 @@ public final class RingoHostingController: UIHostingController<AnyView> {
     
     public init(
         sourceView: UIView,
+        rootView: some View,
         config: RingoPopoverConfiguration = RingoPopoverConfiguration(),
-        onDismiss: (() -> Void)? = nil,
-        rootView: some View
+        onDismiss: (() -> Void)? = nil
     ) {
         ringoPopover = RingoPopover(sourceView: sourceView, config: config)
         self.onDismiss = onDismiss
@@ -28,6 +28,13 @@ public final class RingoHostingController: UIHostingController<AnyView> {
         modalPresentationStyle = .custom
         transitioningDelegate = ringoPopover
         ringoPopover.ringoPopoverDelegate = self
+    }
+    
+    func update(rootView: some View, onDismiss: @escaping () -> Void) {
+        self.rootView = rootView
+            .environment(\.ringoPopoverCoordinator, coordinator)
+            .eraseToAnyView()
+        self.onDismiss = onDismiss
     }
     
     public override func viewDidLoad() {

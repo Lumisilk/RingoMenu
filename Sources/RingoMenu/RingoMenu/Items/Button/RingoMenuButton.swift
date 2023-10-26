@@ -34,11 +34,12 @@ public struct RingoMenuButton<Label: View>: View {
         } label: {
             label
         }
+        .backport.foregroundColor(attributes.contains(.destructive) ? Color.red: nil)
         .buttonStyle(RingoMenuButtonStyle())
     }
 }
 
-public extension RingoMenuButton where Label == RingoMenuPlainButtonLabel {
+public extension RingoMenuButton where Label == RingoMenuButtonLabel {
     init(
         title: String,
         subtitle: String? = nil,
@@ -47,7 +48,7 @@ public extension RingoMenuButton where Label == RingoMenuPlainButtonLabel {
         action: @escaping () -> Void
     ) {
         self.init(attributes: attributes, action: action) {
-            RingoMenuPlainButtonLabel(title: title, image: image, attributes: attributes)
+            RingoMenuButtonLabel(title: title, subtitle: subtitle, image: image, attributes: attributes)
         }
     }
 }

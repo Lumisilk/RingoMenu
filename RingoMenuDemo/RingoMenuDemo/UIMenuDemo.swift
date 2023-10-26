@@ -45,9 +45,9 @@ final class UIMenuDemo: UIViewController {
     func setupComplexButton() {
         let elements: [UIMenuElement] = [
             UIAction(title: "Selected", state: .on, handler: { _ in }),
-            UIAction(title: "Multi-selected", state: .mixed, handler: { _ in }),
-            UIAction(title: "Multi-selected Image", image: UIImage(systemName: "filemenu.and.selection"), state: .mixed, handler: { _ in }),
-            UIAction(title: "Destructive", subtitle: "Subtitle", image: UIImage(systemName: "filemenu.and.selection"), attributes: .destructive, state: .on, handler: { _ in }),
+            UIAction(title: "Multi-selected", subtitle: "Subtitle", state: .mixed, handler: { _ in }),
+            UIAction(title: "Multi-selected Image", image: UIImage(systemName: "house.fill"), state: .mixed, handler: { _ in }),
+            UIAction(title: "Destructive", subtitle: "Subtitle", image: UIImage(systemName: "pencil.and.scribble"), attributes: .destructive, state: .on, handler: { _ in }),
             UIAction(title: "Disabled", attributes: .disabled, handler: { _ in }),
             UIAction(title: "Destructive and Disabled", attributes: [.disabled, .destructive], handler: { _ in }),
             
@@ -56,7 +56,8 @@ final class UIMenuDemo: UIViewController {
                 print("") // Breakpoint here to inspect the menu's view hierarchy.
             }),
         ]
-        complexMenuButton.menu = UIMenu(children: elements)
+        
+        complexMenuButton.menu = UIMenu(preferredElementSize: .medium, children: elements)
         complexMenuButton.setTitle("Complex", for: .normal)
         complexMenuButton.showsMenuAsPrimaryAction = true
     }
