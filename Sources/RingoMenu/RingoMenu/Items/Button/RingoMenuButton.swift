@@ -46,7 +46,7 @@ public extension RingoMenuButton where Label == RingoMenuPlainButtonLabel {
         attributes: RingoMenuButtonAttributes = [],
         action: @escaping () -> Void
     ) {
-        self.init(action: action) {
+        self.init(attributes: attributes, action: action) {
             RingoMenuPlainButtonLabel(title: title, image: image, attributes: attributes)
         }
     }

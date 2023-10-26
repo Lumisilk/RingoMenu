@@ -11,20 +11,19 @@ import SwiftUI
 struct RingoMenuDemoApp: App {
     var body: some Scene {
         WindowGroup {
-            TabView {
-                DemoSwiftUIView()
-                    .tabItem { Text("SwiftUI") }
-                
-                UIViewControllerAdaptor {
-                    UIMenuDemo()
+            NavigationStack {
+                List {
+                    NavigationLink("RingoMenu") {
+                        SimpleSwiftUIDemo()
+                    }
+                    
+                    NavigationLink("UIMenu") {
+                        UIViewControllerAdaptor {
+                            UIMenuDemo()
+                        }
+                    }
                 }
-                .tabItem { Text("UImenu") }
-                
-                UIViewControllerAdaptor {
-                    DemoViewController(style: .plain)
-                }
-                .tabItem { Text("UIKit") }
-                
+                .navigationTitle(Text("Ringo Menu"))
             }
         }
     }
