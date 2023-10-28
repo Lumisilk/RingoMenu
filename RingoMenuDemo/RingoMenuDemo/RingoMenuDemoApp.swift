@@ -13,9 +13,10 @@ struct RingoMenuDemoApp: App {
         WindowGroup {
             NavigationStack {
                 List {
-                    NavigationLink("RingoMenu") {
-                        SimpleSwiftUIDemo()
+                    Section("RingoMenu") {
+                        PlainRingoMenuDemo()
                     }
+                    .headerProminence(.increased)
                     
                     NavigationLink("UIMenu") {
                         UIViewControllerAdaptor {

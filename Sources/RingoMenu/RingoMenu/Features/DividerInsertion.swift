@@ -11,7 +11,7 @@ enum HideDividerTraitKey: _ViewTraitKey {
     static var defaultValue: Bool = false
 }
 
-extension RingoMenu {
+extension RingoMenuList {
     internal func needDividersAfterChild(_ children: _VariadicView_Children) -> [_VariadicView_Children.Element.ID: Bool] {
         var result: [_VariadicView_Children.Element.ID: Bool] = [:]
         for (previous, next) in children.adjacentPairs() {

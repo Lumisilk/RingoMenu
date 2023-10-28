@@ -9,6 +9,7 @@ import SwiftUI
 
 public struct RingoMenuPlainButtonLargeLabel: View {
     
+    @Environment(\.ringoMenuOption) private var option
     @Environment(\.ringoMenuContext) private var context
     
     @ScaledMetric(relativeTo: .body) var checkmarkWidth = 18
@@ -33,7 +34,7 @@ public struct RingoMenuPlainButtonLargeLabel: View {
     
     public var body: some View {
         HStack(spacing: 4) {
-            if context.reserveCheckmarkArea {
+            if option.reserveLeadingMarkArea {
                 Group {
                     if attributes.contains(.checkmark) {
                         Image(systemName: "checkmark")
@@ -59,7 +60,7 @@ public struct RingoMenuPlainButtonLargeLabel: View {
             .multilineTextAlignment(.leading)
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            if context.reserveImageArea {
+            if option.reserveTrailingImageArea {
                 Group {
                     if let image {
                         image
@@ -78,7 +79,7 @@ public struct RingoMenuPlainButtonLargeLabel: View {
         .contentShape(Rectangle())
         .fixedSize(horizontal: false, vertical: true)
         .buttonStyle(RingoMenuButtonStyle())
-        .preference(key: HasCheckmarkPreferenceKey.self, value: attributes.contains(.checkmark))
+        .preference(key: HasLeadingMarkPreferenceKey.self, value: attributes.contains(.checkmark))
         .preference(key: HasTrailingImagePreferenceKey.self, value: image != nil)
     }
 }
@@ -113,38 +114,38 @@ struct RingoMenuButtonStyle: ButtonStyle {
 #Preview {
     VStack {
         Group {
-            RingoMenu { RingoMenuPlainButtonLargeLabel(
+            RingoMenuList { RingoMenuPlainButtonLargeLabel(
                 title: "Title"
             )}
             
-            RingoMenu { RingoMenuPlainButtonLargeLabel(
+            RingoMenuList { RingoMenuPlainButtonLargeLabel(
                 title: "Title",
                 subtitle: "Subtitle"
             )}
             
-            RingoMenu { RingoMenuPlainButtonLargeLabel(
+            RingoMenuList { RingoMenuPlainButtonLargeLabel(
                 title: String(repeating: "Title ", count: 20),
                 subtitle: String(repeating: "Subtitle ", count: 20)
             )}
             
-            RingoMenu { RingoMenuPlainButtonLargeLabel(
+            RingoMenuList { RingoMenuPlainButtonLargeLabel(
                 title: "Title",
                 attributes: .checkmark
             )}
             
-            RingoMenu { RingoMenuPlainButtonLargeLabel(
+            RingoMenuList { RingoMenuPlainButtonLargeLabel(
                 title: "Title",
                 image: Image(systemName: "star")
             )}
             
-            RingoMenu { RingoMenuPlainButtonLargeLabel(
+            RingoMenuList { RingoMenuPlainButtonLargeLabel(
                 title: "Title",
                 subtitle: "Subtitle",
                 image: Image(systemName: "star"),
                 attributes: [.destructive, .checkmark]
             )}
             
-            RingoMenu { RingoMenuPlainButtonLargeLabel(
+            RingoMenuList { RingoMenuPlainButtonLargeLabel(
                 title: String(repeating: "Title ", count: 20),
                 subtitle: String(repeating: "Subtitle ", count: 20),
                 image: Image(systemName: "star"),
@@ -156,7 +157,7 @@ struct RingoMenuButtonStyle: ButtonStyle {
 }
 
 #Preview {
-    RingoMenu {
+    RingoMenuList {
         RingoMenuButton(
             title: String(repeating: "Title ", count: 20),
             subtitle: String(repeating: "Subtitle ", count: 20),

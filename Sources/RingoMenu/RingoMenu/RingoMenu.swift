@@ -2,114 +2,49 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Lumisilk on 2023/10/20.
+//  Created by Lumisilk on 2023/10/28.
 //
 
 import SwiftUI
 
-public struct RingoMenuOptions: OptionSet {
-    public var rawValue: UInt8
-    public init(rawValue: UInt8) {
-        self.rawValue = rawValue
-    }
+public struct RingoMenu<Content: View, Label: View>: View {
     
-    public static let forceReserveCheckMarkArea = RingoMenuOptions(rawValue: 1 << 0)
-}
-
-public struct RingoMenu<
-    Content: View,
-    Header: View,
-    Footer: View
->: View {
+    @Environment(\.ringoMenuOption) private var ringoMenuOption
     
-    @StateObject internal var coordinator = RingoMenuCoordinator()
-    @State private var context: RingoMenuContext
+    @State private var internalIsPresented: Bool
     
-    let options: RingoMenuOptions
-    let content: Content
-    let header: Header
-    let footer: Footer
+    var explicitIsPresented: Binding<Bool>?
+    let menuList: RingoMenuList<Content>
+    let label: Label
     
     public init(
-        options: RingoMenuOptions = [],
+        isPresented: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content,
-        @ViewBuilder header: () -> Header,
-        @ViewBuilder footer: () -> Footer
+        @ViewBuilder label: () -> Label
     ) {
-        self.options = options
-        let context = RingoMenuContext(reserveCheckmarkArea: options.contains(.forceReserveCheckMarkArea))
-        _context = .init(initialValue: context)
-        self.content = content()
-        self.header = header()
-        self.footer = footer()
+        self.explicitIsPresented = isPresented
+        self.menuList = RingoMenuList(content: content)
+        self.label = label()
+        _internalIsPresented = .init(initialValue: false)
+    }
+    
+    private var isPresented: Binding<Bool> {
+        explicitIsPresented ?? $internalIsPresented
     }
     
     public var body: some View {
-        VStack(spacing: 0) {
-            hideViewIfNeeded(header)
-            
-            CompressedScrollView {
-                VStack(spacing: 0) {
-                    content.variadic { children in
-                        let needDividersAfterChild = needDividersAfterChild(children)
-                        
-                        ForEach(children) { child in
-                            hideChildIfNeeded(child)
-                            
-                            if needDividersAfterChild[child.id] == true {
-                                hideViewIfNeeded(divider)
-                            }
-                        }
-                    }
-                }
-                .environmentObject(coordinator)
-            }
-            
-            hideViewIfNeeded(footer)
+        Button {
+            isPresented.wrappedValue = true
+        } label: {
+            label
         }
-        .frame(maxWidth: 250)
-        .onPreferenceChange(HasCheckmarkPreferenceKey.self) {
-            if $0 { context.reserveCheckmarkArea = true }
+        .present(isPresented: isPresented, style: .ringoPopover) {
+            menuList
+                .environment(\.ringoMenuOption, ringoMenuOption)
         }
-        .onPreferenceChange(HasTrailingImagePreferenceKey.self) {
-            if $0 { context.reserveImageArea = true }
-        }
-        .environment(\.ringoMenuContext, context)
     }
 }
 
 #Preview {
-    RingoMenu {
-        RingoMenuStepper(
-            value: .constant(100),
-            bounds: 50...150,
-            step: 10,
-            contentText: { "\($0.description)%" },
-            decrementText: "あ",
-            incrementText: "あ"
-        )
-        
-        RingoMenuButton(title: "Title", action: {})
-        RingoMenuButton(title: "Title", attributes: .checkmark, action: {})
-        
-        ForEach(5..<10) { i in
-            RingoMenuButton(title: String(repeating: "Long", count: i), image: Image(systemName: "house.fill"), action: {})
-        }
-        RingoMenuDivider()
-        ForEach(10..<20) { i in
-            RingoMenuButton(title: i.description, image: Image(systemName: "star"), action: {})
-        }
-    } footer: {
-        RingoMenuDivider()
-        RingoMenuButton(title: "Button", action: {})
-    }
-    .backport.background {
-        VisualEffectView.menuBackground
-    }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .backport.background {
-        Color.black
-            .ignoresSafeArea()
-    }
-    .environment(\.colorScheme, .dark)
+    RingoMenuPreview()
 }

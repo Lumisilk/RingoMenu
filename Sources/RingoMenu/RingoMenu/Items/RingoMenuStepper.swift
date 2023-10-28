@@ -53,7 +53,7 @@ public struct RingoMenuStepper<
         }
         .buttonStyle(RingoMenuButtonStyle())
         .fixedSize(horizontal: false, vertical: true)
-//        .focusOnThisItem(isOn: $focused, by: .removeOthers)
+        .focusOnThisItem(isOn: $focused, by: .removeOthers)
     }
 }
 

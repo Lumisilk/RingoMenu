@@ -1,16 +1,14 @@
 //
-//  RingoMenuContext.swift
+//  RingoMenuEnvironment.swift
 //  
 //
-//  Created by Lumisilk on 2023/10/23.
+//  Created by Lumisilk on 2023/10/28.
 //
 
 import SwiftUI
 
-public struct RingoMenuContext {
-    public var reserveCheckmarkArea = false
-    public var reserveImageArea = false
-    public var embedInButtonRowStyle: RingoMenuButtonRowStyle? = nil
+struct RingoMenuContext {
+    var embedInButtonRowStyle: RingoMenuButtonRowStyle? = nil
 }
 
 private struct RingoMenuContextEnvironmentKey: EnvironmentKey {
@@ -24,8 +22,8 @@ extension EnvironmentValues {
     }
 }
 
-// MARK: Children have checkmarks or images
-enum HasCheckmarkPreferenceKey: PreferenceKey {
+
+enum HasLeadingMarkPreferenceKey: PreferenceKey {
     static var defaultValue = false
     static func reduce(value: inout Bool, nextValue: () -> Bool) {
         value = value || nextValue()

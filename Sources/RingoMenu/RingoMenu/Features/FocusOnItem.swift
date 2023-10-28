@@ -61,7 +61,7 @@ public extension View {
     }
 }
 
-extension RingoMenu {
+extension RingoMenuList {
     @ViewBuilder
     internal func hideViewIfNeeded(_ view: some View) -> some View {
         let shouldHidden = coordinator.focusOnItemID != nil
