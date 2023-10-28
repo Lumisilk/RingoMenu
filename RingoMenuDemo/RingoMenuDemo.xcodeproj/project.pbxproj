@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB14C30A2AED2001000E2AEF /* FontSizeStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14C3092AED2001000E2AEF /* FontSizeStepper.swift */; };
 		BB4242C52AE1183E00ABBEA9 /* RingoMenu in Frameworks */ = {isa = PBXBuildFile; productRef = BB4242C42AE1183E00ABBEA9 /* RingoMenu */; };
 		BB77B62A2AE7AA0700EB60AE /* PlainRingoMenuDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB77B6292AE7AA0700EB60AE /* PlainRingoMenuDemo.swift */; };
 		BB77B62C2AE7AAEF00EB60AE /* UIMenuDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB77B62B2AE7AAEF00EB60AE /* UIMenuDemo.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB14C3092AED2001000E2AEF /* FontSizeStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSizeStepper.swift; sourceTree = "<group>"; };
 		BB77B6292AE7AA0700EB60AE /* PlainRingoMenuDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainRingoMenuDemo.swift; sourceTree = "<group>"; };
 		BB77B62B2AE7AAEF00EB60AE /* UIMenuDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIMenuDemo.swift; sourceTree = "<group>"; };
 		BB7DE9F32AD660B600A62380 /* RingoMenuDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RingoMenuDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -39,6 +41,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BB14C3082AED1FE0000E2AEF /* RingoMenu */ = {
+			isa = PBXGroup;
+			children = (
+				BB77B6292AE7AA0700EB60AE /* PlainRingoMenuDemo.swift */,
+				BB14C3092AED2001000E2AEF /* FontSizeStepper.swift */,
+			);
+			path = RingoMenu;
+			sourceTree = "<group>";
+		};
 		BB7DE9EA2AD660B600A62380 = {
 			isa = PBXGroup;
 			children = (
@@ -60,8 +71,8 @@
 		BB7DE9F52AD660B600A62380 /* RingoMenuDemo */ = {
 			isa = PBXGroup;
 			children = (
+				BB14C3082AED1FE0000E2AEF /* RingoMenu */,
 				BB7DE9F62AD660B600A62380 /* RingoMenuDemoApp.swift */,
-				BB77B6292AE7AA0700EB60AE /* PlainRingoMenuDemo.swift */,
 				BB77B62B2AE7AAEF00EB60AE /* UIMenuDemo.swift */,
 				BB7DEA092AD66BD800A62380 /* UIViewControllerAdaptor.swift */,
 				BB7DE9FA2AD660B700A62380 /* Assets.xcassets */,
@@ -169,6 +180,7 @@
 				BB7DEA0A2AD66BD800A62380 /* UIViewControllerAdaptor.swift in Sources */,
 				BB77B62C2AE7AAEF00EB60AE /* UIMenuDemo.swift in Sources */,
 				BB77B62A2AE7AA0700EB60AE /* PlainRingoMenuDemo.swift in Sources */,
+				BB14C30A2AED2001000E2AEF /* FontSizeStepper.swift in Sources */,
 				BB7DE9F72AD660B600A62380 /* RingoMenuDemoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

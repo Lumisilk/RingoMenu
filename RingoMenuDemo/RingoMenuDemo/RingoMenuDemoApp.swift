@@ -15,6 +15,10 @@ struct RingoMenuDemoApp: App {
                 List {
                     Section("RingoMenu") {
                         PlainRingoMenuDemo()
+                        
+                        NavigationLink("Custom Item Example") {
+                            FontSizeStepperDemo()
+                        }
                     }
                     .headerProminence(.increased)
                     

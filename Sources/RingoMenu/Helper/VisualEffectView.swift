@@ -8,17 +8,22 @@
 import UIKit
 import SwiftUI
 
-struct VisualEffectView: UIViewRepresentable {
+public struct VisualEffectView: UIViewRepresentable {
     let effect: UIVisualEffect
     var backgroundColor: UIColor? = nil
     
-    func makeUIView(context: Context) -> UIVisualEffectView {
+    public init(effect: UIVisualEffect, backgroundColor: UIColor? = nil) {
+        self.effect = effect
+        self.backgroundColor = backgroundColor
+    }
+    
+    public func makeUIView(context: Context) -> UIVisualEffectView {
         let view = UIVisualEffectView(effect: effect)
         view.contentView.backgroundColor = backgroundColor
         return view
     }
     
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+    public func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
         uiView.effect = effect
         uiView.contentView.backgroundColor = backgroundColor
     }

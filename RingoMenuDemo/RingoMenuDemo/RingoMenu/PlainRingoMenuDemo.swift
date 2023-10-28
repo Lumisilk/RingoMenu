@@ -16,17 +16,6 @@ struct PlainRingoMenuDemo: View {
     
     var body: some View {
         RingoMenu {
-            RingoMenuStepper(
-                value: $step,
-                bounds: 50...200,
-                step: 10,
-                contentText: { "\($0)%" },
-                decrementText: "あ",
-                incrementText: "あ"
-            )
-            
-            RingoMenuDivider()
-            
             RingoMenuButtonRow(style: .medium) {
                 RingoMenuButton(title: "Title", attributes: .destructive) {}
                 RingoMenuButton(title: "Title", subtitle: "Subtitle") {}
@@ -51,8 +40,6 @@ struct PlainRingoMenuDemo: View {
         } label: {
             Text("Plain Ringo Menu")
         }
-        .padding(.top, 32)
-        .frame(maxHeight: .infinity, alignment: .top)
     }
 }
 

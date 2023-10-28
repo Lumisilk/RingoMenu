@@ -56,7 +56,7 @@ public extension View {
     ///   - isOn: A binding that determines whether the focus effect is active.
     ///   - mode: The `FocusMode` to be applied. Choose between `.transparentOthers` to make other items transparent
     ///           or `.removeOthers` to remove other items from the list entirely.
-    func focusOnThisItem(isOn: Binding<Bool>, by mode: RingoMenuItemFocusMode) -> some View {
+    func focusOnRingoItem(isOn: Binding<Bool>, by mode: RingoMenuItemFocusMode) -> some View {
         modifier(FocusOnItemModifier(isOn: isOn, mode: mode))
     }
 }
