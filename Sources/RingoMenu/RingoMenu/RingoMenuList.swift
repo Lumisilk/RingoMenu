@@ -22,14 +22,16 @@ struct RingoMenuList<Content: View>: View {
     
     public var body: some View {
         VStack(spacing: 0) {
-//            hideViewIfNeeded(header)
-            
-            CompressedScrollView {
-                VStack(spacing: 0) {
-                    content.variadic { children in
-                        let needDividersAfterChild = needDividersAfterChild(children)
+            content.variadic { children in
+                let (top, bottom, notPinnedChildren) = separatePinnedView(children)
+                
+                hideViewIfNeeded(top)
+                
+                CompressedScrollView {
+                    VStack(spacing: 0) {
+                        let needDividersAfterChild = needDividersAfterChild(notPinnedChildren)
                         
-                        ForEach(children) { child in
+                        ForEach(notPinnedChildren) { child in
                             hideChildIfNeeded(child)
                             
                             if needDividersAfterChild[child.id] == true {
@@ -38,12 +40,12 @@ struct RingoMenuList<Content: View>: View {
                         }
                     }
                 }
-                .environmentObject(coordinator)
+                
+                hideViewIfNeeded(bottom)
             }
-            
-//            hideViewIfNeeded(footer)
         }
         .frame(maxWidth: 250)
+        .environmentObject(coordinator)
         .onPreferenceChange(HasLeadingMarkPreferenceKey.self) {
             if $0 { overrideReserveLeadingMarkArea = true }
         }

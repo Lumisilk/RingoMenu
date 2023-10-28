@@ -64,7 +64,13 @@ final class UIMenuDemo: UIViewController {
     
     func setupSubMenuButton() {
         var children: [UIMenuElement] = [
-            UIMenu(title: "Inline menu", options: .displayInline, children: makeActions(5)),
+            UIAction(title: "Inspect", attributes: .keepsMenuPresented, handler: { [view] _ in
+                let subviews = view!.window!.subviews
+                let backgroundBlur = subviews[3].subviews[0] as! UIVisualEffectView
+                dump(backgroundBlur)
+                print("") // Breakpoint here to inspect the menu's view hierarchy.
+            }),
+            UIMenu(title: "Inline menu", options: .displayInline, children: makeActions(10)),
             UIMenu(title: "Destructive menu", options: .destructive, children: makeActions(5)),
             UIMenu(title: "Singele selection menu", options: .singleSelection, children: makeActions(5)),
             UIMenu(title: "Second menu", children: makeActions(10))
@@ -74,7 +80,7 @@ final class UIMenuDemo: UIViewController {
                 UIMenu(title: "Palette menu", options: .displayAsPalette, children: makeActions(5))
             )
         }
-        subMenuButton.menu = UIMenu(title: "Main Menu", children: children)
+        subMenuButton.menu = UIMenu(children: children)
         subMenuButton.setTitle("SubMenu", for: .normal)
         subMenuButton.showsMenuAsPrimaryAction = true
     }

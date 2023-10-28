@@ -14,10 +14,23 @@ struct RingoMenuPreview: View {
     
     var body: some View {
         RingoMenu(isPresented: $isPresented) {
-            RingoMenuButtonRow(style: .medium) {
-                RingoMenuButton(title: "Sun", image: Image(systemName: "sun.max")) {}
-                RingoMenuButton(title: "Cloud", image: Image(systemName: "cloud.fill")) {}
-                RingoMenuButton(title: "Snow", image: Image(systemName: "snowflake")) {}
+            RingoMenuPinnedView(position: .top) {
+                RingoMenuButtonRow(style: .medium) {
+                    RingoMenuButton(title: "Header", image: Image(systemName: "sun.max")) {}
+                    RingoMenuButton(title: "Text", image: Image(systemName: "cloud.fill")) {}
+                    RingoMenuButton(title: "Button", image: Image(systemName: "snowflake")) {}
+                }
+            }
+            
+            ForEach(0..<20) { i in
+                RingoMenuButton(title: "Some Button \(i)", action: {})
+            }
+            
+            RingoMenuPinnedView(position: .bottom) {
+                RingoMenuButtonRow(style: .small) {
+                    RingoMenuButton(title: "Footer") {}
+                    RingoMenuButton(title: "Button") {}
+                }
             }
         } label: {
             Text("Ringo Menu")

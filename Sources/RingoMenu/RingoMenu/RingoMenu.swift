@@ -34,13 +34,27 @@ public struct RingoMenu<Content: View, Label: View>: View {
     
     public var body: some View {
         Button {
-            isPresented.wrappedValue = true
+            presentIfNeeded()
         } label: {
             label
         }
+        .simultaneousGesture(
+            LongPressGesture(minimumDuration: 0.3)
+                .onEnded { successed in
+                    if successed {
+                        presentIfNeeded()
+                    }
+                }
+        )
         .present(isPresented: isPresented, style: .ringoPopover) {
             menuList
                 .environment(\.ringoMenuOption, ringoMenuOption)
+        }
+    }
+    
+    private func presentIfNeeded() {
+        if !isPresented.wrappedValue {
+            isPresented.wrappedValue = true
         }
     }
 }
