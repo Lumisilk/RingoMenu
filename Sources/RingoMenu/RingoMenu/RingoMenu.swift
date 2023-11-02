@@ -11,7 +11,9 @@ public struct RingoMenu<Content: View, Label: View>: View {
     
     @Environment(\.ringoMenuOption) private var ringoMenuOption
     
-    @State private var internalIsPresented: Bool
+    @StateObject internal var coordinator = RingoMenuCoordinator()
+    
+    @State private var internalIsPresented: Bool = false
     
     var explicitIsPresented: Binding<Bool>?
     let menuList: RingoMenuList<Content>
@@ -25,7 +27,6 @@ public struct RingoMenu<Content: View, Label: View>: View {
         self.explicitIsPresented = isPresented
         self.menuList = RingoMenuList(content: content)
         self.label = label()
-        _internalIsPresented = .init(initialValue: false)
     }
     
     private var isPresented: Binding<Bool> {
@@ -38,22 +39,15 @@ public struct RingoMenu<Content: View, Label: View>: View {
         } label: {
             label
         }
-        .simultaneousGesture(
-            LongPressGesture(minimumDuration: 0.3)
-                .onEnded { successed in
-                    if successed {
-                        presentIfNeeded()
-                    }
-                }
-        )
-        .present(isPresented: isPresented, style: .ringoPopover) {
+        .present(isPresented: isPresented, style: RingoMenuPresentationStyle()) {
             menuList
                 .environment(\.ringoMenuOption, ringoMenuOption)
+                .environmentObject(coordinator)
         }
     }
     
     private func presentIfNeeded() {
-        if !isPresented.wrappedValue {
+        if isPresented.wrappedValue == false {
             isPresented.wrappedValue = true
         }
     }

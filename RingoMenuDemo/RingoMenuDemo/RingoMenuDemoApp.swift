@@ -13,14 +13,19 @@ struct RingoMenuDemoApp: App {
         WindowGroup {
             NavigationStack {
                 List {
-                    Section("RingoMenu") {
+                    Section {
                         PlainRingoMenuDemo()
                         
                         NavigationLink("Custom Item Example") {
                             FontSizeStepperDemo()
                         }
+                        
+                        NavigationLink("Use from UIKit") {
+                            UIViewControllerAdaptor {
+                                UseFromUIKitDemo()
+                            }
+                        }
                     }
-                    .headerProminence(.increased)
                     
                     NavigationLink("UIMenu") {
                         UIViewControllerAdaptor {

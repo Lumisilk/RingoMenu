@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BB14C30A2AED2001000E2AEF /* FontSizeStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14C3092AED2001000E2AEF /* FontSizeStepper.swift */; };
+		BB1F42362AED89C800754292 /* UseFromUIKitDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1F42352AED89C800754292 /* UseFromUIKitDemo.swift */; };
 		BB4242C52AE1183E00ABBEA9 /* RingoMenu in Frameworks */ = {isa = PBXBuildFile; productRef = BB4242C42AE1183E00ABBEA9 /* RingoMenu */; };
 		BB77B62A2AE7AA0700EB60AE /* PlainRingoMenuDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB77B6292AE7AA0700EB60AE /* PlainRingoMenuDemo.swift */; };
 		BB77B62C2AE7AAEF00EB60AE /* UIMenuDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB77B62B2AE7AAEF00EB60AE /* UIMenuDemo.swift */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		BB14C3092AED2001000E2AEF /* FontSizeStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSizeStepper.swift; sourceTree = "<group>"; };
+		BB1F42352AED89C800754292 /* UseFromUIKitDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseFromUIKitDemo.swift; sourceTree = "<group>"; };
 		BB77B6292AE7AA0700EB60AE /* PlainRingoMenuDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainRingoMenuDemo.swift; sourceTree = "<group>"; };
 		BB77B62B2AE7AAEF00EB60AE /* UIMenuDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIMenuDemo.swift; sourceTree = "<group>"; };
 		BB7DE9F32AD660B600A62380 /* RingoMenuDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RingoMenuDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,6 +48,7 @@
 			children = (
 				BB77B6292AE7AA0700EB60AE /* PlainRingoMenuDemo.swift */,
 				BB14C3092AED2001000E2AEF /* FontSizeStepper.swift */,
+				BB1F42352AED89C800754292 /* UseFromUIKitDemo.swift */,
 			);
 			path = RingoMenu;
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 			files = (
 				BB7DEA0A2AD66BD800A62380 /* UIViewControllerAdaptor.swift in Sources */,
 				BB77B62C2AE7AAEF00EB60AE /* UIMenuDemo.swift in Sources */,
+				BB1F42362AED89C800754292 /* UseFromUIKitDemo.swift in Sources */,
 				BB77B62A2AE7AA0700EB60AE /* PlainRingoMenuDemo.swift in Sources */,
 				BB14C30A2AED2001000E2AEF /* FontSizeStepper.swift in Sources */,
 				BB7DE9F72AD660B600A62380 /* RingoMenuDemoApp.swift in Sources */,

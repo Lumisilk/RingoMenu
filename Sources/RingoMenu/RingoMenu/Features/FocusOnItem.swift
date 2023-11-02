@@ -34,7 +34,10 @@ private struct FocusOnItemModifier: ViewModifier {
         content
             .trait(FocusOnItemTraitKey.self, isOn ? id : nil)
             .onChange(of: isOn, perform: update)
-            .compositingGroup()
+            .onDisappear {
+                isOn = false
+                update(false)
+            }
     }
     
     private func update(_ isOn: Bool) {

@@ -50,14 +50,12 @@ class RingoAnimator: NSObject {
         
         // Set presentedView to animation start state
         presentedView.bounds.size.height *= 0.2
-        presentedView.transform = CGAffineTransform(scaleX: 0.2, y: 1)
-        presentedView.layer.sublayerTransform = CATransform3DMakeAffineTransform(CGAffineTransform(scaleX: 1, y: 0.2))
+        presentedView.layer.sublayerTransform = CATransform3DMakeAffineTransform(CGAffineTransform(scaleX: 0.2, y: 0.2))
         
         // Animate presentedView to normal state
         animator.addAnimations { [presentedView] in
             presentedView.alpha = 1
             presentedView.bounds.size.height = finalFrame.height
-            presentedView.transform = .identity
             presentedView.layer.sublayerTransform = CATransform3DMakeAffineTransform(.identity)
         }
         

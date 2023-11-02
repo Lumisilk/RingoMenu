@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct RingoMenuList<Content: View>: View {
+public struct RingoMenuList<Content: View>: View {
     
-    @StateObject internal var coordinator = RingoMenuCoordinator()
+    @EnvironmentObject internal var coordinator: RingoMenuCoordinator
     
     @State private var overrideReserveLeadingMarkArea = false
     @State private var overrideReserveTrailingImageArea = false
     
     let content: Content
     
-    init(@ViewBuilder content: () -> Content) {
+    public init(@ViewBuilder content: () -> Content) {
         self.content = content()
     }
     
@@ -30,7 +30,6 @@ struct RingoMenuList<Content: View>: View {
                 CompressedScrollView {
                     VStack(spacing: 0) {
                         let needDividersAfterChild = needDividersAfterChild(notPinnedChildren)
-                        
                         ForEach(notPinnedChildren) { child in
                             hideChildIfNeeded(child)
                             
@@ -44,8 +43,8 @@ struct RingoMenuList<Content: View>: View {
                 hideViewIfNeeded(bottom)
             }
         }
+        .transition(.opacity)
         .frame(maxWidth: 250)
-        .environmentObject(coordinator)
         .onPreferenceChange(HasLeadingMarkPreferenceKey.self) {
             if $0 { overrideReserveLeadingMarkArea = true }
         }

@@ -13,6 +13,18 @@ public struct RingoMenuOption {
     
     public var backgroundView: AnyView?
     public var highlightedView: AnyView? = VisualEffectView.highlightedBackground.eraseToAnyView()
+    
+    public init(
+        reserveLeadingMarkArea: Bool = false,
+        reserveTrailingImageArea: Bool = false,
+        backgroundView: AnyView? = nil,
+        highlightedView: AnyView? = nil
+    ) {
+        self.reserveLeadingMarkArea = reserveLeadingMarkArea
+        self.reserveTrailingImageArea = reserveTrailingImageArea
+        self.backgroundView = backgroundView
+        self.highlightedView = highlightedView
+    }
 }
 
 public struct RingoMenuOptionKey: EnvironmentKey {
