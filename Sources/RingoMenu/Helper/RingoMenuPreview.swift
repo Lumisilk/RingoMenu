@@ -10,7 +10,7 @@ import SwiftUI
 #if DEBUG
 struct RingoMenuPreview: View {
     
-    @State var isPresented: Bool = true
+    @State var isPresented: Bool = false
     
     var body: some View {
         RingoMenu(isPresented: $isPresented) {
@@ -22,7 +22,7 @@ struct RingoMenuPreview: View {
                 }
             }
             
-            ForEach(0..<20) { i in
+            ForEach(0..<5) { i in
                 RingoMenuButton(title: "Some Button \(i)", action: {})
             }
             

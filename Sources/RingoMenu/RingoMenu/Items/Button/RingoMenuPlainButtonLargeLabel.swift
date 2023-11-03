@@ -76,38 +76,10 @@ public struct RingoMenuPlainButtonLargeLabel: View {
             }
         }
         .padding(EdgeInsets(top: 12, leading: 8, bottom: 12, trailing: 12))
-        .contentShape(Rectangle())
         .fixedSize(horizontal: false, vertical: true)
         .buttonStyle(RingoMenuButtonStyle())
         .preference(key: HasLeadingMarkPreferenceKey.self, value: attributes.contains(.checkmark))
         .preference(key: HasTrailingImagePreferenceKey.self, value: image != nil)
-    }
-}
-
-struct RingoMenuButtonStyle: ButtonStyle {
-    
-    @Environment(\.isEnabled) var isEnabled
-    
-    func makeBody(configuration: Configuration) -> some View {
-        Group {
-            if #available(iOS 15, *) {
-                configuration.label
-                    .background { background(highlighted: configuration.isPressed) }
-                    .foregroundStyle(isEnabled ? .primary : .secondary)
-            } else {
-                configuration.label
-                    .background(background(highlighted: configuration.isPressed))
-                    .foregroundColor(isEnabled ? .primary : .secondary)
-            }
-        }
-        .buttonStyle(.plain)
-    }
-    
-    @ViewBuilder
-    func background(highlighted: Bool) -> some View {
-        if highlighted {
-            VisualEffectView.highlightedBackground
-        }
     }
 }
 

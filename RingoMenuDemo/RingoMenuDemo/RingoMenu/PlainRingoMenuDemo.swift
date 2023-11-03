@@ -16,13 +16,13 @@ struct PlainRingoMenuDemo: View {
     
     var body: some View {
         RingoMenu {
-            RingoMenuButtonRow(style: .medium) {
-                RingoMenuButton(title: "Title", attributes: .destructive) {}
-                RingoMenuButton(title: "Title", subtitle: "Subtitle") {}
-                RingoMenuButton(title: "Title", image: Image(systemName: "star"), attributes: .destructive) {}
+            RingoMenuPinnedView(position: .top) {
+                RingoMenuButtonRow(style: .medium) {
+                    RingoMenuButton(title: "Title", attributes: .destructive) {}
+                    RingoMenuButton(title: "Title", subtitle: "Subtitle") {}
+                    RingoMenuButton(title: "Title", image: Image(systemName: "star"), attributes: .destructive) {}
+                }
             }
-            
-            RingoMenuDivider()
             
             RingoMenuButton(title: "Title") {}
             RingoMenuButton(title: "Title", subtitle: "Subtitle", image: Image(systemName: "star")) {}

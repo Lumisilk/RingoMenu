@@ -81,7 +81,7 @@ extension RingoMenuList {
     }
     
     @ViewBuilder
-    internal func hideChildIfNeeded(_ child: _VariadicView_Children.Element) -> some View {
+    internal func hideChildIfNeeded(_ child: ViewChildren.Element) -> some View {
         let shouldHidden: Bool =
         if let focusItemID = coordinator.focusOnItemID {
             child[FocusOnItemTraitKey.self] != focusItemID

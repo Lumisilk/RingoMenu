@@ -44,14 +44,14 @@ public struct RingoMenuPinnedView<Content: View>: View {
 }
 
 extension RingoMenuList {
-    internal func separatePinnedView(_ children: _VariadicView_Children) -> (
-        top: _VariadicView_Children.Element?,
-        bottom: _VariadicView_Children.Element?,
-        notPinnedChildren: [_VariadicView_Children.Element]
+    internal func separatePinnedView(_ children: ViewChildren) -> (
+        top: ViewChildren.Element?,
+        bottom: ViewChildren.Element?,
+        notPinnedChildren: [ViewChildren.Element]
     ) {
-        var top: _VariadicView_Children.Element?
-        var bottom: _VariadicView_Children.Element?
-        var notPinnedChildren: [_VariadicView_Children.Element] = []
+        var top: ViewChildren.Element?
+        var bottom: ViewChildren.Element?
+        var notPinnedChildren: [ViewChildren.Element] = []
         
         for child in children {
             switch child[RingoMenuPinnedTraitKey.self] {

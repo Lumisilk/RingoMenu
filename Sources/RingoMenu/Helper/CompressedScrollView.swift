@@ -12,9 +12,11 @@ struct CompressedScrollView<Content: View>: View {
     @State private var contentHeight: CGFloat?
     
     let content: Content
+    let isScrollableChanged: (Bool) -> Void
     
-    init(@ViewBuilder content: () -> Content) {
+    init(@ViewBuilder content: () -> Content, isScrollableChanged: @escaping (Bool) -> Void) {
         self.content = content()
+        self.isScrollableChanged = isScrollableChanged
     }
     
     var body: some View {
@@ -25,20 +27,22 @@ struct CompressedScrollView<Content: View>: View {
             }
             .frame(maxHeight: contentHeight, alignment: .top)
             .readSize(of: \.height) { scrollViewHeight = $0 }
-            .scrollDisabled(scrollDisabled)
+            .scrollDisabled(!scrollEnable)
+            .onChange(of: scrollEnable, perform: isScrollableChanged)
         } else {
-            ScrollView(scrollDisabled ? [] : .vertical) {
+            ScrollView(scrollEnable ? .vertical : []) {
                 content
                     .readSize(of: \.height) { contentHeight = $0 }
             }
             .frame(maxHeight: contentHeight, alignment: .top)
             .readSize(of: \.height) { scrollViewHeight = $0 }
+            .onChange(of: scrollEnable, perform: isScrollableChanged)
         }
     }
     
-    private var scrollDisabled: Bool {
+    private var scrollEnable: Bool {
         if let scrollViewHeight, let contentHeight {
-            scrollViewHeight >= contentHeight
+            scrollViewHeight.rounded(.up) < contentHeight.rounded(.down)
         } else {
             false
         }
@@ -62,7 +66,7 @@ struct CompressedScrollViewScrollView_Preview: PreviewProvider {
                         }
                     }
                     .border(.green)
-                }
+                } isScrollableChanged: { _ in }
                 .border(.red)
                 .frame(maxHeight: .infinity)
                 

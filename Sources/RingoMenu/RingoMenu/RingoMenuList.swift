@@ -38,6 +38,8 @@ public struct RingoMenuList<Content: View>: View {
                             }
                         }
                     }
+                } isScrollableChanged: {
+                    coordinator.isHoverGestureEnable = !$0
                 }
                 
                 hideViewIfNeeded(bottom)

@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+typealias ViewChildren = _VariadicView_Children
+
 extension View {
     func eraseToAnyView() -> AnyView {
         AnyView(self)

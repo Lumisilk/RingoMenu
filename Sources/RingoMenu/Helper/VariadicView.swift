@@ -8,16 +8,16 @@
 import SwiftUI
 
 private struct Root<Result: View>: _VariadicView_ViewRoot {
-    let childrenHandler: (_VariadicView_Children) -> Result
+    let childrenHandler: (ViewChildren) -> Result
     
-    func body(children: _VariadicView_Children) -> some View {
+    func body(children: ViewChildren) -> some View {
         childrenHandler(children)
     }
 }
 
 extension View {
     func variadic<Result: View>(
-        @ViewBuilder childrenHandler: @escaping (_VariadicView_Children) -> Result
+        @ViewBuilder childrenHandler: @escaping (ViewChildren) -> Result
     ) -> some View {
         _VariadicView.Tree(
             Root(childrenHandler: childrenHandler),

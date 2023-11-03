@@ -17,15 +17,16 @@ public struct RingoMenuButtonLabel: View {
     let attributes: RingoMenuButtonAttributes
     
     public var body: some View {
-        switch rowStyle {
-        case .small:
-            RingoMenuPlainButtonSmallLabel(title: title, image: image)
-            
-        case .medium:
-            RingoMenuPlainButtonMediumLabel(title: title, image: image)
-            
-        case nil:
-            RingoMenuPlainButtonLargeLabel(title: title, subtitle: subtitle, image: image, attributes: attributes)
+        Group {
+            switch rowStyle {
+            case .small:
+                RingoMenuPlainButtonSmallLabel(title: title, image: image)
+            case .medium:
+                RingoMenuPlainButtonMediumLabel(title: title, image: image)
+            case nil:
+                RingoMenuPlainButtonLargeLabel(title: title, subtitle: subtitle, image: image, attributes: attributes)
+            }
         }
+        .contentShape(Rectangle())
     }
 }
