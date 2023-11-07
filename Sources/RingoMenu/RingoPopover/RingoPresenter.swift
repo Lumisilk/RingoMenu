@@ -12,9 +12,8 @@ import Combine
 final class RingoPresenter: UIPresentationController {
     
     let sourceView: UIView
-    let foregroundContainerView = UIView()
-    let shadowView = ShadowView()
     var gestureFallbackView: GestureFallbackView!
+    let ringoContainer: RingoContainerView
     let animator: RingoAnimator
     
     let config: RingoPopoverConfiguration
@@ -34,12 +33,12 @@ final class RingoPresenter: UIPresentationController {
     ) {
         self.config = config
         self.sourceView = sourceView
+        self.ringoContainer = RingoContainerView(backgroundView: config.backgroundView)
         self.animator = animator
         self.ringoPopoverDelegate = ringoPopoverDelegate
         
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
         
-        shadowView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         gestureFallbackView = GestureFallbackView(
             backgroundView: presentingViewController.rootViewController.view!,
             action: { [weak self] in self?.dismissWithDelegate() }
@@ -47,7 +46,7 @@ final class RingoPresenter: UIPresentationController {
     }
     
     override var presentedView: UIView? {
-        foregroundContainerView
+        ringoContainer
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {
@@ -74,25 +73,7 @@ final class RingoPresenter: UIPresentationController {
         gestureFallbackView.frame = containerView.bounds
         containerView.addSubview(gestureFallbackView)
         
-        if let backgroundView = config.backgroundView {
-            backgroundView.frame = foregroundContainerView.bounds
-            backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            backgroundView.clipsToBounds = true
-            backgroundView.layer.cornerRadius = 13
-            backgroundView.layer.cornerCurve = .circular
-            foregroundContainerView.addSubview(backgroundView)
-        }
-        
-        shadowView.bounds.size = foregroundContainerView.bounds.size + CGSize(width: 300, height: 300)
-        shadowView.center = foregroundContainerView.center
-        foregroundContainerView.addSubview(shadowView)
-        
-        contentView.frame = foregroundContainerView.bounds
-        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 13
-        contentView.layer.cornerCurve = .circular
-        foregroundContainerView.addSubview(contentView)
+        ringoContainer.setupContentView(contentView)
     }
     
     override func presentationTransitionDidEnd(_ completed: Bool) {
@@ -103,19 +84,19 @@ final class RingoPresenter: UIPresentationController {
             .debounce(for: RunLoop.main.minimumTolerance, scheduler: RunLoop.main)
             .sink { [weak self] in
                 guard let self else { return }
-                animator.present(foregroundContainerView, containerView: containerView, finalFrame: frameOfPresentedViewInContainerView)
+                animator.present(ringoContainer, containerView: containerView, finalFrame: frameOfPresentedViewInContainerView)
                 cancellable = nil
             }
         
-        animator.resize(foregroundContainerView, containerView: containerView, to: frameOfPresentedViewInContainerView)
+        animator.resize(ringoContainer, containerView: containerView, to: frameOfPresentedViewInContainerView)
         waitForPresentPublisher.send(())
     }
     
     override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
         guard let containerView else { return }
         let finalFrame = frameOfPresentedViewInContainerView
-        if foregroundContainerView.frame != finalFrame {
-            animator.resize(foregroundContainerView, containerView: containerView, to: finalFrame)
+        if ringoContainer.frame != finalFrame {
+            animator.resize(ringoContainer, containerView: containerView, to: finalFrame)
             waitForPresentPublisher.send(())
         }
     }
@@ -126,14 +107,6 @@ final class RingoPresenter: UIPresentationController {
     func dismissWithDelegate() {
         presentingViewController.dismiss(animated: true) { [ringoPopoverDelegate] in
             ringoPopoverDelegate?.ringoPopoverDidDismissed()
-        }
-    }
-    
-    /// Toggles the visibility of the background view and the shadow view behind the popover.
-    public func setBackgroundViewHidden(_ isHidden: Bool) {
-        UIView.animate(withDuration: 0.3) {
-            self.shadowView.alpha = isHidden ? 0 : 0.1
-            self.config.backgroundView?.alpha = isHidden ? 0 : 1
         }
     }
 }

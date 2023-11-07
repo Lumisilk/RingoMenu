@@ -43,9 +43,6 @@ private struct FocusOnItemModifier: ViewModifier {
     private func update(_ isOn: Bool) {
         ringoMenuCoordinator.focusOnItemID = isOn ? id : nil
         ringoMenuCoordinator.focusMode = mode
-        if mode == .transparentOthers {
-            popoverCoordinator.setBackgroundHidden(isOn)
-        }
     }
 }
 

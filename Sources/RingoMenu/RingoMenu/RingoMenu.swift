@@ -108,15 +108,7 @@ private struct RingoMenuUIButtonBridge<Label: View>: UIViewRepresentable {
     }
 }
 
-@available(iOS 16.0, *)
-extension ProposedViewSize {
-    var cgSize: CGSize {
-        CGSize(
-            width: width ?? UIView.layoutFittingExpandedSize.width,
-            height: height ?? UIView.layoutFittingExpandedSize.height
-        )
-    }
-}
+
 
 public struct RingoMenu<Content: View, Label: View>: View {
     
@@ -152,30 +144,6 @@ public struct RingoMenu<Content: View, Label: View>: View {
         } onPresent: {
             presentIfNeeded()
         }
-
-//        Button {
-//            presentIfNeeded()
-//        } label: {
-//            label
-//                .contentShape(Rectangle())
-//        }
-//        .simultaneousGesture(
-//            LongPressGesture(minimumDuration: 0.3)
-//                .onEnded { _ in
-//                    presentIfNeeded()
-//                }
-//        )
-//        .simultaneousGesture(hoverGestureIfNeeded)
-//        .backport.overlay {
-//            RingoMenuUIButtonBridge {
-////                label
-//            } onHover: { location in
-//                coordinator.updateHoverGesture(location)
-//            } onPresent: {
-//                presentIfNeeded()
-//            }
-//        }
-        
         .present(isPresented: isPresented, style: RingoMenuPresentationStyle()) {
             menuList
                 .environment(\.ringoMenuOption, ringoMenuOption)
@@ -184,9 +152,8 @@ public struct RingoMenu<Content: View, Label: View>: View {
         }
     }
     
-    
     private var hoverGestureIfNeeded: some Gesture {
-        let drag = DragGesture(minimumDistance: 4, coordinateSpace: .global)
+        let drag = DragGesture(minimumDistance: 0, coordinateSpace: .global)
             .onChanged { value in
                 coordinator.updateHoverGesture(value.location)
             }

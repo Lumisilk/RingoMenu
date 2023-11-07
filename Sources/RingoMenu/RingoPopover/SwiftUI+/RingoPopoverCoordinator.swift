@@ -23,11 +23,6 @@ public class RingoPopoverCoordinator {
     public func dismiss() {
         ringoPresenter?.dismissWithDelegate()
     }
-    
-    /// Toggles the visibility of the background view and the shadow view behind the popover.
-    public func setBackgroundHidden(_ isHidden: Bool) {
-        ringoPresenter?.setBackgroundViewHidden(isHidden)
-    }
 }
 
 struct RingoPopoverCoordinatorEnvironmentKey: EnvironmentKey {

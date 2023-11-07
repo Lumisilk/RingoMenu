@@ -38,3 +38,13 @@ extension View {
         )
     }
 }
+
+@available(iOS 16.0, *)
+extension ProposedViewSize {
+    var cgSize: CGSize {
+        CGSize(
+            width: width ?? UIView.layoutFittingExpandedSize.width,
+            height: height ?? UIView.layoutFittingExpandedSize.height
+        )
+    }
+}

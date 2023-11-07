@@ -45,7 +45,6 @@ public struct RingoMenuList<Content: View>: View {
                 hideViewIfNeeded(bottom)
             }
         }
-        .transition(.opacity)
         .frame(maxWidth: 250)
         .onPreferenceChange(HasLeadingMarkPreferenceKey.self) {
             if $0 { overrideReserveLeadingMarkArea = true }
