@@ -25,16 +25,19 @@ public struct RingoMenuList<Content: View>: View {
             content.variadic { children in
                 let (top, bottom, notPinnedChildren) = separatePinnedView(children)
                 
-                hideViewIfNeeded(top)
+//                hideViewIfNeeded(top)
+                top
                 
                 CompressedScrollView {
                     VStack(spacing: 0) {
                         let needDividersAfterChild = needDividersAfterChild(notPinnedChildren)
                         ForEach(notPinnedChildren) { child in
-                            hideChildIfNeeded(child)
+//                            hideChildIfNeeded(child)
+                            child
                             
                             if needDividersAfterChild[child.id] == true {
-                                hideViewIfNeeded(divider)
+//                                hideViewIfNeeded(divider)
+                                divider
                             }
                         }
                     }
@@ -42,10 +45,12 @@ public struct RingoMenuList<Content: View>: View {
                     coordinator.isHoverGestureEnable = !$0
                 }
                 
-                hideViewIfNeeded(bottom)
+//                hideViewIfNeeded(bottom)
+                bottom
             }
         }
         .frame(maxWidth: 250)
+        .coordinateSpace(name: coordinator.menuListName)
         .onPreferenceChange(HasLeadingMarkPreferenceKey.self) {
             if $0 { overrideReserveLeadingMarkArea = true }
         }

@@ -21,7 +21,7 @@ extension RingoMenuList {
     }
     
     internal var divider: some View {
-        VisualEffectView.divider
+        Color.separator
             .frame(height: 1.0 / 3)
     }
 }

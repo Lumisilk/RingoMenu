@@ -14,7 +14,7 @@ extension View {
         AnyView(self)
     }
     
-    func readSize<Value: Equatable>(of keyPath: KeyPath<CGSize, Value>, onChange: @escaping (Value) -> Void) -> some View {
+    func readSize<Value: Equatable>(of keyPath: KeyPath<CGSize, Value> = \.self, onChange: @escaping (Value) -> Void) -> some View {
         background(
             GeometryReader { geo in
                 let value = geo.size[keyPath: keyPath]
@@ -26,7 +26,7 @@ extension View {
         )
     }
     
-    func readFrame<Value: Equatable>(of keyPath: KeyPath<CGRect, Value>, in space: CoordinateSpace, onChange: @escaping (Value) -> Void) -> some View {
+    func readFrame<Value: Equatable>(of keyPath: KeyPath<CGRect, Value> = \.self, in space: CoordinateSpace, onChange: @escaping (Value) -> Void) -> some View {
         background(
             GeometryReader { geo in
                 let value = geo.frame(in: space)[keyPath: keyPath]
@@ -36,6 +36,12 @@ extension View {
             }
             .hidden()
         )
+    }
+}
+
+extension Color {
+    static var separator: Color {
+        Color(UIColor.separator)
     }
 }
 

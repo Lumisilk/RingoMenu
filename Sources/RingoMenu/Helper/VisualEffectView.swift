@@ -43,14 +43,4 @@ extension VisualEffectView {
             backgroundColor: UIColor.white
         )
     }
-    
-    static var divider: VisualEffectView {
-        VisualEffectView(
-            effect: UIVibrancyEffect(
-                blurEffect: UIBlurEffect(style: .systemMaterial),
-                style: .separator
-            ),
-            backgroundColor: .white
-        )
-    }
 }

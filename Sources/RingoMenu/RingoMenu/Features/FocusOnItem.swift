@@ -18,21 +18,23 @@ public enum RingoMenuItemFocusMode {
     case removeOthers
 }
 
-struct FocusOnItemTraitKey: _ViewTraitKey {
-    static var defaultValue: UUID? = nil
-}
+//struct FocusOnItemTraitKey: _ViewTraitKey {
+//    static var defaultValue: UUID? = nil
+//}
 
 private struct FocusOnItemModifier: ViewModifier {
     
     @Environment(\.ringoPopoverCoordinator) private var popoverCoordinator
-    @EnvironmentObject private var ringoMenuCoordinator: RingoMenuCoordinator
-    @State private var id = UUID()
+    @EnvironmentObject private var menuCoordinator: RingoMenuCoordinator
+    @State private var frame: CGRect?
     @Binding var isOn: Bool
     var mode: RingoMenuItemFocusMode
     
     func body(content: Content) -> some View {
         content
-            .trait(FocusOnItemTraitKey.self, isOn ? id : nil)
+            .readFrame(in: .named(menuCoordinator.menuListName)) {
+                frame = $0
+            }
             .onChange(of: isOn, perform: update)
             .onDisappear {
                 isOn = false
@@ -41,8 +43,11 @@ private struct FocusOnItemModifier: ViewModifier {
     }
     
     private func update(_ isOn: Bool) {
-        ringoMenuCoordinator.focusOnItemID = isOn ? id : nil
-        ringoMenuCoordinator.focusMode = mode
+        if isOn, let frame {
+            popoverCoordinator.ringoContainer?.focusOnFrame(frame)
+        } else {
+            popoverCoordinator.ringoContainer?.unfocus()
+        }
     }
 }
 
@@ -62,38 +67,38 @@ public extension View {
 }
 
 extension RingoMenuList {
-    @ViewBuilder
-    internal func hideViewIfNeeded(_ view: some View) -> some View {
-        let shouldHidden = coordinator.focusOnItemID != nil
-        
-        switch coordinator.focusMode {
-        case .removeOthers:
-            if !shouldHidden {
-                view
-            }
-        case .transparentOthers:
-            view
-                .opacity(shouldHidden ? 0 : 1)
-        }
-    }
-    
-    @ViewBuilder
-    internal func hideChildIfNeeded(_ child: ViewChildren.Element) -> some View {
-        let shouldHidden: Bool =
-        if let focusItemID = coordinator.focusOnItemID {
-            child[FocusOnItemTraitKey.self] != focusItemID
-        } else {
-            false
-        }
-        
-        switch coordinator.focusMode {
-        case .removeOthers:
-            if !shouldHidden {
-                child
-            }
-        case .transparentOthers:
-            child
-                .opacity(shouldHidden ? 0 : 1)
-        }
-    }
+//    @ViewBuilder
+//    internal func hideViewIfNeeded(_ view: some View) -> some View {
+//        let shouldHidden = coordinator.focusOnItemID != nil
+//        
+//        switch coordinator.focusMode {
+//        case .removeOthers:
+//            if !shouldHidden {
+//                view
+//            }
+//        case .transparentOthers:
+//            view
+//                .opacity(shouldHidden ? 0 : 1)
+//        }
+//    }
+//    
+//    @ViewBuilder
+//    internal func hideChildIfNeeded(_ child: ViewChildren.Element) -> some View {
+//        let shouldHidden: Bool =
+//        if let focusItemID = coordinator.focusOnItemID {
+//            child[FocusOnItemTraitKey.self] != focusItemID
+//        } else {
+//            false
+//        }
+//        
+//        switch coordinator.focusMode {
+//        case .removeOthers:
+//            if !shouldHidden {
+//                child
+//            }
+//        case .transparentOthers:
+//            child
+//                .opacity(shouldHidden ? 0 : 1)
+//        }
+//    }
 }

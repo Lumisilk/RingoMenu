@@ -27,7 +27,7 @@ public struct RingoMenuButtonRow<Content: View>: View {
             Interleave {
                 content
             } separator: {
-                VisualEffectView.divider
+                Color.separator
                     .frame(width: 1.0 / 3)
             }
         }

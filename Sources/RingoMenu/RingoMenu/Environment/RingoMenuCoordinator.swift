@@ -10,6 +10,9 @@ import Combine
 
 @MainActor
 public class RingoMenuCoordinator: ObservableObject {
+    
+    let menuListName = UUID()
+    
     // Feature: Focus on item
     @Published var focusOnItemID: UUID?
     @Published var focusMode: RingoMenuItemFocusMode = .removeOthers
