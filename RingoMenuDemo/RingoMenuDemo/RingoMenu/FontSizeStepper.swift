@@ -48,7 +48,7 @@ struct FontSizeStepper: View {
             }
             .disabled(size <= bounds.lowerBound)
         }
-        .focusOnRingoItem(isOn: $isFocused, by: .removeOthers)
+        .focusOnRingoItem(isOn: $isFocused, by: .transparentOthers)
         .compositingGroup()
     }
 }

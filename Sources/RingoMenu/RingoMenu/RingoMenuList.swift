@@ -25,19 +25,16 @@ public struct RingoMenuList<Content: View>: View {
             content.variadic { children in
                 let (top, bottom, notPinnedChildren) = separatePinnedView(children)
                 
-//                hideViewIfNeeded(top)
-                top
+                hideViewIfNeeded(top)
                 
                 CompressedScrollView {
                     VStack(spacing: 0) {
                         let needDividersAfterChild = needDividersAfterChild(notPinnedChildren)
                         ForEach(notPinnedChildren) { child in
-//                            hideChildIfNeeded(child)
-                            child
+                            hideChildIfNeeded(child)
                             
                             if needDividersAfterChild[child.id] == true {
-//                                hideViewIfNeeded(divider)
-                                divider
+                                hideViewIfNeeded(divider)
                             }
                         }
                     }
@@ -45,8 +42,7 @@ public struct RingoMenuList<Content: View>: View {
                     coordinator.isHoverGestureEnable = !$0
                 }
                 
-//                hideViewIfNeeded(bottom)
-                bottom
+                hideViewIfNeeded(bottom)
             }
         }
         .frame(maxWidth: 250)

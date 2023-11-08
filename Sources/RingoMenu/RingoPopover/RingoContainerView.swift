@@ -90,6 +90,17 @@ final class RingoContainerView: UIView {
         focusAnimator?.startAnimation()
     }
     
+    func setBackgroundHidden(_ isHidden: Bool) {
+        focusAnimator?.stopAnimation(true)
+        focusAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 0.9)
+        focusAnimator?.addAnimations { [backgroundView, shadowView] in
+            backgroundView?.alpha = isHidden ? 0 : 1
+            shadowView.alpha = isHidden ? 0 : 0.1
+        }
+        focusAnimator?.startAnimation()
+        
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

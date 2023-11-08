@@ -27,6 +27,10 @@ public class RingoPopoverCoordinator {
     public func dismiss() {
         ringoPresenter?.dismissWithDelegate()
     }
+    
+    public func setBackgroundHidden(_ isHidden: Bool) {
+        ringoContainer?.setBackgroundHidden(isHidden)
+    }
 }
 
 struct RingoPopoverCoordinatorEnvironmentKey: EnvironmentKey {
