@@ -23,6 +23,6 @@ public struct RingoMenuDivider: View {
             )
         )
         .frame(height: 8)
-        .trait(HideDividerTraitKey.self, true)
+        .trait(DividerTraitKey.self, (.none, .none))
     }
 }

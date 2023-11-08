@@ -21,28 +21,33 @@ public struct RingoMenuList<Content: View>: View {
     }
     
     public var body: some View {
-        VStack(spacing: 0) {
-            content.variadic { children in
-                let (top, bottom, notPinnedChildren) = separatePinnedView(children)
-                
-                hideViewIfNeeded(top)
-                
-                CompressedScrollView {
-                    VStack(spacing: 0) {
-                        let needDividersAfterChild = needDividersAfterChild(notPinnedChildren)
-                        ForEach(notPinnedChildren) { child in
-                            hideChildIfNeeded(child)
+        content.variadic { children in
+            CompressedScrollView {
+                VStack(spacing: 0) {
+                    let dividersAfterChild = dividersAfterChild(children)
+                    
+                    ForEach(children) { child in
+                        child
+                            .pinnedIfNeeded(child: child)
+                            .frameReader(child: child)
+                            .hideIfNeeded(id: child.id)
+                        
+                        switch dividersAfterChild[child.id] {
+                        case .normal:
+                            normalDivider
+                                .hideIfNeeded(id: nil)
                             
-                            if needDividersAfterChild[child.id] == true {
-                                hideViewIfNeeded(divider)
-                            }
+                        case .thick:
+                            RingoMenuDivider()
+                                .hideIfNeeded(id: nil)
+                            
+                        default:
+                            EmptyView()
                         }
                     }
-                } isScrollableChanged: {
-                    coordinator.isHoverGestureEnable = !$0
                 }
-                
-                hideViewIfNeeded(bottom)
+            } isScrollableChanged: {
+                coordinator.isHoverGestureEnable = !$0
             }
         }
         .frame(maxWidth: 250)

@@ -71,29 +71,35 @@ private struct FocusOnItemModifier: ViewModifier {
     }
 }
 
-public extension View {
+private struct HideIfNeededModifier: ViewModifier {
+    @EnvironmentObject private var menuCoordinator: RingoMenuCoordinator
+    let id: AnyHashable?
+    
+    func body(content: Content) -> some View {
+        let shouldHidden =
+        if let focusID = menuCoordinator.transparentOtherItemID, focusID != id {
+            true
+        } else {
+            false
+        }
+        
+        content
+            .opacity(shouldHidden ? 0 : 1)
+    }
+}
+
+extension View {
     /// A SwiftUI View modifier that applies a focus effect on a RingoMenu's item.
     ///
     /// - Parameters:
     ///   - isOn: A binding that determines whether the focus effect is active.
     ///   - transition: The `FocusTransition` to be applied.
-    func focusOnRingoItem(isOn: Binding<Bool>, by transition: RingoMenuItemFocusTransition) -> some View {
+    public func focusOnRingoItem(isOn: Binding<Bool>, by transition: RingoMenuItemFocusTransition) -> some View {
         modifier(FocusOnItemModifier(isOn: isOn, transition: transition))
+    }
+    
+    internal func hideIfNeeded(id: AnyHashable?) -> some View {
+        modifier(HideIfNeededModifier(id: id))
     }
 }
 
-extension RingoMenuList {
-    @ViewBuilder
-    internal func hideViewIfNeeded(_ view: some View) -> some View {
-        let shouldHidden = coordinator.transparentOtherItemID != nil
-        view
-            .opacity(shouldHidden ? 0 : 1)
-    }
-    
-    @ViewBuilder
-    internal func hideChildIfNeeded(_ child: ViewChildren.Element) -> some View {
-        let shouldHidden = coordinator.transparentOtherItemID != child[TransparentOtherItemTraitKey.self]
-        child
-            .opacity(shouldHidden ? 0 : 1)
-    }
-}

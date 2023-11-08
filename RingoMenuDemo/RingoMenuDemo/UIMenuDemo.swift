@@ -80,7 +80,7 @@ final class UIMenuDemo: UIViewController {
                 UIMenu(title: "Palette menu", options: .displayAsPalette, children: makeActions(5))
             )
         }
-        subMenuButton.menu = UIMenu(children: children)
+        subMenuButton.menu = UIMenu(title: "SubMenu", children: children)
         subMenuButton.setTitle("SubMenu", for: .normal)
         subMenuButton.showsMenuAsPrimaryAction = true
     }

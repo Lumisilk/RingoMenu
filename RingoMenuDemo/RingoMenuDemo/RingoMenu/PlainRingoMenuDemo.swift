@@ -16,13 +16,13 @@ struct PlainRingoMenuDemo: View {
     
     var body: some View {
         RingoMenu {
-            RingoMenuPinnedView(position: .top) {
-                RingoMenuButtonRow(style: .medium) {
-                    RingoMenuButton(title: "Title", attributes: .destructive) {}
-                    RingoMenuButton(title: "Title", subtitle: "Subtitle") {}
-                    RingoMenuButton(title: "Title", image: Image(systemName: "star"), attributes: .destructive) {}
-                }
+            RingoMenuButtonRow(style: .medium) {
+                RingoMenuButton(title: "Title", attributes: .destructive) {}
+                RingoMenuButton(title: "Title", subtitle: "Subtitle") {}
+                RingoMenuButton(title: "Title", image: Image(systemName: "star"), attributes: .destructive) {}
             }
+            
+            RingoMenuDivider()
             
             RingoMenuButton(title: "Title") {}
             RingoMenuButton(title: "Title", subtitle: "Subtitle", image: Image(systemName: "star")) {}
@@ -36,6 +36,14 @@ struct PlainRingoMenuDemo: View {
             )
             RingoMenuButton(title: "Destructive", attributes: .destructive) {}
             RingoMenuButton(title: "KeepsMenuPresented", attributes: .keepsMenuPresented) {}
+            
+            ForEach(0..<5) { _ in
+                RingoMenuSection("Header") {
+                    ForEach(0..<5) { i in
+                        RingoMenuButton(title: "Some Button \(i)", action: {})
+                    }
+                }
+            }
             
         } label: {
             Text("Plain Ringo Menu")

@@ -14,22 +14,15 @@ struct RingoMenuPreview: View {
     
     var body: some View {
         RingoMenu(isPresented: $isPresented) {
-            RingoMenuPinnedView(position: .top) {
+            RingoMenuSection {
+                ForEach(0..<20) { i in
+                    RingoMenuButton(title: "Some Button \(i)", action: {})
+                }
+            } header: {
                 RingoMenuButtonRow(style: .medium) {
                     RingoMenuButton(title: "Header", image: Image(systemName: "sun.max")) {}
                     RingoMenuButton(title: "Text", image: Image(systemName: "cloud.fill")) {}
                     RingoMenuButton(title: "Button", image: Image(systemName: "snowflake")) {}
-                }
-            }
-            
-            ForEach(0..<5) { i in
-                RingoMenuButton(title: "Some Button \(i)", action: {})
-            }
-            
-            RingoMenuPinnedView(position: .bottom) {
-                RingoMenuButtonRow(style: .small) {
-                    RingoMenuButton(title: "Footer") {}
-                    RingoMenuButton(title: "Button") {}
                 }
             }
         } label: {

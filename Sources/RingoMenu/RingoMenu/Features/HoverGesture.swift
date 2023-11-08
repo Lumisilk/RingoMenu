@@ -45,7 +45,7 @@ struct HoverGestureModifier: ViewModifier {
     }
     
     private func updateFrame(_ frame: CGRect) {
-        coordinator.childrenFrame[id] = frame
+        coordinator.childrenGlobalFrame[id] = frame
     }
 }
 
