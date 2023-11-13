@@ -17,7 +17,6 @@ enum DividerTraitKey: _ViewTraitKey {
     static var defaultValue: (before: DividerType, after: DividerType) = (.normal, .normal)
 }
 
-
 extension RingoMenuList {
     internal func dividersAfterChild(_ children: some RandomAccessCollection<ViewChildren.Element>) -> [ViewChildren.Element.ID: DividerType] {
         var result: [ViewChildren.Element.ID: DividerType] = [:]

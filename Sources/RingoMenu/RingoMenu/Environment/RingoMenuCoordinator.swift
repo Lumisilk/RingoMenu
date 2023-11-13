@@ -12,8 +12,7 @@ import SwiftUI
 public class RingoMenuCoordinator: ObservableObject {
     
     let menuListName = UUID()
-    
-    
+    let blurGroupName = UUID().uuidString
     
     private var cancellable: AnyCancellable?
     
@@ -25,13 +24,19 @@ public class RingoMenuCoordinator: ObservableObject {
             }
     }
     
+    func reset() {
+        transparentOtherItemID = nil
+        childrenGlobalFrame = [:]
+        headerFrames = [:]
+    }
+    
     // Feature: Focus on item
     @Published var transparentOtherItemID: AnyHashable?
     
     // Feature: Hover gesture
     @Published var isHoverGestureEnable = true
     var childrenGlobalFrame: [AnyHashable: CGRect] = [:]
-    var hoveringIDPublisher = PassthroughSubject<AnyHashable?, Never>()
+    @CurrentValue var hoveringID: AnyHashable?
     var hoveringTriggerPublisher = PassthroughSubject<AnyHashable, Never>()
     
     private func hoveringViewID(_ location: CGPoint?) -> AnyHashable? {
@@ -44,14 +49,15 @@ public class RingoMenuCoordinator: ObservableObject {
             return nil
         }
     }
+    
     func updateHoverGesture(_ location: CGPoint?) {
         guard isHoverGestureEnable else { return }
-        hoveringIDPublisher.send(hoveringViewID(location))
+        hoveringID = hoveringViewID(location)
     }
     
     func triggerHoverGesture(_ location: CGPoint?) {
         guard isHoverGestureEnable else { return }
-        hoveringIDPublisher.send(nil)
+        hoveringID = nil
         if let id = hoveringViewID(location) {
             hoveringTriggerPublisher.send(id)
         }

@@ -50,14 +50,13 @@ final class RingoPresenter: UIPresentationController {
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {
-        guard let containerView, let contentView = presentedViewController.view else { return .zero }
+        guard let containerView else { return .zero }
         
         let preferredSize: CGSize
         if presentedViewController.preferredContentSize != .zero {
             preferredSize = presentedViewController.preferredContentSize
         } else {
-            let availableSize = config.frameCalculator.availableContainerSize(containerView: containerView)
-            preferredSize = contentView.systemLayoutSizeFitting(availableSize, withHorizontalFittingPriority: .defaultHigh, verticalFittingPriority: .defaultHigh)
+            preferredSize = config.frameCalculator.availableContainerSize(containerView: containerView)
         }
         
         return config.frameCalculator.calculateFrame(

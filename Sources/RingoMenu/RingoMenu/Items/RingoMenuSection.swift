@@ -32,6 +32,9 @@ public struct RingoMenuSection<Content: View, Header: View>: View {
 }
 
 public struct RingoMenuSectionTextHeader: View {
+    
+    @EnvironmentObject private var menuCoordinator: RingoMenuCoordinator
+    
     let title: String
     
     public var body: some View {
@@ -44,6 +47,9 @@ public struct RingoMenuSectionTextHeader: View {
             
             Color.separator
                 .frame(height: 1 / 3)
+        }
+        .backport.background {
+            VisualEffectView.menuBackground(groupName: menuCoordinator.blurGroupName)
         }
     }
 }

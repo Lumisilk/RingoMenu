@@ -21,15 +21,14 @@ public struct RingoMenuList<Content: View>: View {
     }
     
     public var body: some View {
-        content.variadic { children in
-            CompressedScrollView {
+        CompressedScrollView {
+            content.variadic { children in
                 VStack(spacing: 0) {
                     let dividersAfterChild = dividersAfterChild(children)
                     
                     ForEach(children) { child in
                         child
                             .pinnedIfNeeded(child: child)
-                            .frameReader(child: child)
                             .hideIfNeeded(id: child.id)
                         
                         switch dividersAfterChild[child.id] {
@@ -46,9 +45,9 @@ public struct RingoMenuList<Content: View>: View {
                         }
                     }
                 }
-            } isScrollableChanged: {
-                coordinator.isHoverGestureEnable = !$0
             }
+        } isScrollableChanged: { isScrollable in
+            coordinator.isHoverGestureEnable = !isScrollable
         }
         .frame(maxWidth: 250)
         .coordinateSpace(name: coordinator.menuListName)

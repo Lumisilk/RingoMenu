@@ -19,7 +19,7 @@ final class RingoContainerView: UIView {
     
     private var focusAnimator: UIViewPropertyAnimator?
     
-    init(backgroundView: UIView? = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))) {
+    init(backgroundView: UIView?) {
         self.backgroundView = backgroundView
         super.init(frame: .zero)
         

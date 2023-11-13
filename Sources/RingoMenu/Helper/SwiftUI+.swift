@@ -26,16 +26,18 @@ extension View {
         )
     }
     
-    func readFrame<Value: Equatable>(of keyPath: KeyPath<CGRect, Value> = \.self, in space: CoordinateSpace, onChange: @escaping (Value) -> Void) -> some View {
-        background(
-            GeometryReader { geo in
-                let value = geo.frame(in: space)[keyPath: keyPath]
-                Color.clear
-                    .onAppear { onChange(value) }
-                    .onChange(of: value, perform: onChange)
+    func readFrame<Value: Equatable>(of keyPath: KeyPath<CGRect, Value> = \.self, in space: CoordinateSpace, isEnable: Bool = true, onChange: @escaping (Value) -> Void) -> some View {
+        backport.background {
+            if isEnable {
+                GeometryReader { geo in
+                    let value = geo.frame(in: space)[keyPath: keyPath]
+                    Color.clear
+                        .onAppear { onChange(value) }
+                        .onChange(of: value, perform: onChange)
+                }
+                .hidden()
             }
-            .hidden()
-        )
+        }
     }
 }
 
@@ -52,5 +54,22 @@ extension ProposedViewSize {
             width: width ?? UIView.layoutFittingExpandedSize.width,
             height: height ?? UIView.layoutFittingExpandedSize.height
         )
+    }
+}
+
+// For iOS 15 and below
+extension _ProposedSize {
+    var cgSize: CGSize {
+        var width: CGFloat = 10000
+        var height: CGFloat = 10000
+        for (label, value) in Mirror(reflecting: self).children {
+            if label?.contains("width") == true, let value = value as? CGFloat {
+                width = value
+            }
+            if label?.contains("height") == true, let value = value as? CGFloat {
+                height = value
+            }
+        }
+        return CGSize(width: width, height: height)
     }
 }

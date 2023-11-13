@@ -23,6 +23,10 @@ public class RingoPopoverCoordinator {
         ringoPresenter?.ringoContainer
     }
     
+    var config: RingoPopoverConfiguration? {
+        ringoPresenter?.config
+    }
+    
     /// Dismisses the popover. Note that this method also invokes the onDismiss closure from the popover configuration.
     public func dismiss() {
         ringoPresenter?.dismissWithDelegate()

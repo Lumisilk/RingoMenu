@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  RingoMenuButton.swift
+//
 //
 //  Created by Lumisilk on 2023/10/23.
 //
@@ -10,6 +10,7 @@ import SwiftUI
 public struct RingoMenuButton<Label: View>: View {
     
     @Environment(\.ringoPopoverCoordinator) private var popoverCoordinator
+    @Namespace private var id
     
     let label: Label
     let attributes: RingoMenuButtonAttributes
@@ -26,16 +27,18 @@ public struct RingoMenuButton<Label: View>: View {
     }
     
     public var body: some View {
-        Button {
-            action()
-            if !attributes.contains(.keepsMenuPresented) {
-                popoverCoordinator.dismiss()
-            }
-        } label: {
+        Button(action: onTrigger) {
             label
         }
         .backport.foregroundColor(attributes.contains(.destructive) ? Color.red: nil)
-        .buttonStyle(RingoMenuButtonStyle())
+        .buttonStyle(RingoMenuButtonStyle(id: id, action: onTrigger))
+    }
+    
+    private func onTrigger() {
+        action()
+        if !attributes.contains(.keepsMenuPresented) {
+            popoverCoordinator.dismiss()
+        }
     }
 }
 

@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-#if DEBUG
 struct RingoMenuPreview: View {
     
     @State var isPresented: Bool = false
@@ -15,7 +14,7 @@ struct RingoMenuPreview: View {
     var body: some View {
         RingoMenu(isPresented: $isPresented) {
             RingoMenuSection {
-                ForEach(0..<20) { i in
+                ForEach(0..<5) { i in
                     RingoMenuButton(title: "Some Button \(i)", action: {})
                 }
             } header: {
@@ -34,4 +33,3 @@ struct RingoMenuPreview: View {
 #Preview {
     RingoMenuPreview()
 }
-#endif

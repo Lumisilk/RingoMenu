@@ -17,6 +17,10 @@ extension CGRect {
     var center: CGPoint {
         CGPoint(x: midX, y: midY)
     }
+    
+    var debugRounded: CGRect {
+        CGRect(x: minX.rounded(), y: minY.rounded(), width: width.rounded(), height: height.rounded())
+    }
 }
 
 extension UIView {    
@@ -42,5 +46,23 @@ extension UIViewController {
             current = next
         }
         return current
+    }
+}
+
+extension UIVisualEffectView {
+    func setGroupName(_ name: String) {
+        ringoDebug(#function, name)
+        let selector = NSSelectorFromString("_" + ["Name", "Group", "set"].reversed().joined() + ":")
+        if responds(to: selector) {
+            perform(selector, with: name as NSString)
+        } else {
+            ringoDebug("Cannot set group name on UIVisualEffectView.")
+        }
+    }
+    
+    static func menuBackground(groupName: String) -> UIVisualEffectView {
+        let blur = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
+        blur.setGroupName(groupName)
+        return blur
     }
 }

@@ -77,7 +77,6 @@ public struct RingoMenuPlainButtonLargeLabel: View {
         }
         .padding(EdgeInsets(top: 12, leading: 8, bottom: 12, trailing: 12))
         .fixedSize(horizontal: false, vertical: true)
-        .buttonStyle(RingoMenuButtonStyle())
         .preference(key: HasLeadingMarkPreferenceKey.self, value: attributes.contains(.checkmark))
         .preference(key: HasTrailingImagePreferenceKey.self, value: image != nil)
     }
@@ -139,7 +138,7 @@ public struct RingoMenuPlainButtonLargeLabel: View {
         )
     }
     .backport.background {
-        VisualEffectView.menuBackground
+        VisualEffectView.menuBackground()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .backport.background {

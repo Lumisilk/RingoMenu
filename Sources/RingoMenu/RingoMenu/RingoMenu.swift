@@ -12,13 +12,19 @@ private class RingoMenuUIButton: UIButton {
     var labelHostingController: UIHostingController<AnyView>
     var onHover: (CGPoint) -> Void
     var onPresent: () -> Void
+    var onRelease: (CGPoint) -> Void
     
-    init(@ViewBuilder label: () -> some View, onHover: @escaping (CGPoint) -> Void, onPresent: @escaping () -> Void) {
+    init(
+        @ViewBuilder label: () -> some View,
+        onHover: @escaping (CGPoint) -> Void,
+        onPresent: @escaping () -> Void,
+        onRelease: @escaping (CGPoint) -> Void
+    ) {
         labelHostingController = .init(rootView: label().eraseToAnyView())
         self.onHover = onHover
         self.onPresent = onPresent
+        self.onRelease = onRelease
         super.init(frame: .zero)
-        
         
         let view = labelHostingController.view!
         view.backgroundColor = nil
@@ -43,10 +49,6 @@ private class RingoMenuUIButton: UIButton {
         addGestureRecognizer(longPressGesture)
     }
     
-//    override var intrinsicContentSize: CGSize {
-//        systemLayoutSizeFitting(UIView.layoutFittingExpandedSize)
-//    }
-    
     override var isHighlighted: Bool {
         didSet {
             UIView.animate(withDuration: 0.3) {
@@ -57,18 +59,12 @@ private class RingoMenuUIButton: UIButton {
     
     @objc private func onGestureChange(gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
-        case .possible:
-            print("possible")
         case .began:
             onPresent()
         case .changed:
             onHover(gesture.location(in: nil))
-        case .cancelled:
-            print("cancelled")
-        case .failed:
-            print("failed")
         case .recognized:
-            print("recognized")
+            onRelease(gesture.location(in: nil))
         default:
             break
         }
@@ -87,36 +83,52 @@ private struct RingoMenuUIButtonBridge<Label: View>: UIViewRepresentable {
     @ViewBuilder let label: () -> Label
     let onHover: (CGPoint) -> Void
     let onPresent: () -> Void
+    let onRelease: (CGPoint) -> Void
     
     func makeUIView(context: Context) -> RingoMenuUIButton {
         RingoMenuUIButton(
             label: { label().environment(\.self, context.environment) },
             onHover: onHover,
-            onPresent: onPresent
+            onPresent: onPresent,
+            onRelease: onRelease
         )
     }
     
     func updateUIView(_ uiView: RingoMenuUIButton, context: Context) {
-        uiView.labelHostingController.rootView = label().environment(\.self, context.environment).eraseToAnyView()
+        uiView.labelHostingController.rootView = label()
+            .environment(\.self, context.environment)
+            .eraseToAnyView()
         uiView.onHover = onHover
         uiView.onPresent = onPresent
+        uiView.onRelease = onRelease
     }
     
     @available(iOS 16, *)
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: RingoMenuUIButton, context: Context) -> CGSize? {
-        uiView.systemLayoutSizeFitting(proposal.cgSize, withHorizontalFittingPriority: .defaultHigh, verticalFittingPriority: .defaultHigh)
+        uiView.labelHostingController.view.systemLayoutSizeFitting(
+            proposal.cgSize,
+            withHorizontalFittingPriority: .fittingSizeLevel,
+            verticalFittingPriority: .fittingSizeLevel
+        )
+    }
+    
+    // Fallback to this method on iOS 15 and below
+    func _overrideSizeThatFits(_ size: inout CoreFoundation.CGSize, in proposedSize: SwiftUI._ProposedSize, uiView: Self.UIViewType) {
+        size = uiView.labelHostingController.view.systemLayoutSizeFitting(
+            proposedSize.cgSize,
+            withHorizontalFittingPriority: .fittingSizeLevel,
+            verticalFittingPriority: .fittingSizeLevel
+        )
     }
 }
-
-
 
 public struct RingoMenu<Content: View, Label: View>: View {
     
     @Environment(\.ringoMenuOption) private var ringoMenuOption
     
-    @StateObject internal var coordinator = RingoMenuCoordinator()
+    @StateObject internal var menuCoordinator = RingoMenuCoordinator()
     
-    @State private var internalIsPresented: Bool = false
+    @State private var defaultIsPresented = false
     
     var explicitIsPresented: Binding<Bool>?
     let menuList: RingoMenuList<Content>
@@ -133,34 +145,39 @@ public struct RingoMenu<Content: View, Label: View>: View {
     }
     
     private var isPresented: Binding<Bool> {
-        explicitIsPresented ?? $internalIsPresented
+        explicitIsPresented ?? $defaultIsPresented
     }
     
     public var body: some View {
         RingoMenuUIButtonBridge {
             label
         } onHover: { location in
-            coordinator.updateHoverGesture(location)
+            menuCoordinator.updateHoverGesture(location)
         } onPresent: {
             presentIfNeeded()
+        } onRelease: { location in
+            menuCoordinator.triggerHoverGesture(location)
         }
-        .present(isPresented: isPresented, style: RingoMenuPresentationStyle()) {
+        .present(
+            isPresented: isPresented,
+            style: RingoMenuPresentationStyle(menuCoordinator: menuCoordinator)
+        ) {
             menuList
-                .environment(\.ringoMenuOption, ringoMenuOption)
-                .environmentObject(coordinator)
                 .simultaneousGesture(hoverGestureIfNeeded)
+                .environment(\.ringoMenuOption, ringoMenuOption)
         }
     }
     
     private var hoverGestureIfNeeded: some Gesture {
-        let drag = DragGesture(minimumDistance: 0, coordinateSpace: .global)
+        menuCoordinator.isHoverGestureEnable ?
+        DragGesture(minimumDistance: 0, coordinateSpace: .global)
             .onChanged { value in
-                coordinator.updateHoverGesture(value.location)
+                menuCoordinator.updateHoverGesture(value.location)
             }
             .onEnded { value in
-                coordinator.triggerHoverGesture(value.location)
+                menuCoordinator.triggerHoverGesture(value.location)
             }
-        return coordinator.isHoverGestureEnable ? drag : nil
+        : nil
     }
     
     private func presentIfNeeded() {

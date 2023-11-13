@@ -67,7 +67,7 @@ final class UIMenuDemo: UIViewController {
             UIAction(title: "Inspect", attributes: .keepsMenuPresented, handler: { [view] _ in
                 let subviews = view!.window!.subviews
                 let backgroundBlur = subviews[3].subviews[0] as! UIVisualEffectView
-                dump(backgroundBlur)
+//                dump(backgroundBlur)
                 print("") // Breakpoint here to inspect the menu's view hierarchy.
             }),
             UIMenu(title: "Inline menu", options: .displayInline, children: makeActions(10)),

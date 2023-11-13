@@ -37,14 +37,13 @@ struct PlainRingoMenuDemo: View {
             RingoMenuButton(title: "Destructive", attributes: .destructive) {}
             RingoMenuButton(title: "KeepsMenuPresented", attributes: .keepsMenuPresented) {}
             
-            ForEach(0..<5) { _ in
-                RingoMenuSection("Header") {
-                    ForEach(0..<5) { i in
-                        RingoMenuButton(title: "Some Button \(i)", action: {})
-                    }
-                }
-            }
-            
+//            ForEach(0..<5) { _ in
+//                RingoMenuSection("Header") {
+//                    ForEach(0..<5) { i in
+//                        RingoMenuButton(title: "Some Button \(i)", action: {})
+//                    }
+//                }
+//            }
         } label: {
             Text("Plain Ringo Menu")
         }
