@@ -28,8 +28,8 @@ public struct RingoMenuList<Content: View>: View {
                     
                     ForEach(children) { child in
                         child
-                            .pinnedIfNeeded(child: child)
                             .hideIfNeeded(id: child.id)
+                            .zIndex(child[PinnedTraitKey.self] ? 1: 0)
                         
                         switch dividersAfterChild[child.id] {
                         case .normal:

@@ -8,7 +8,6 @@
 import SwiftUI
 
 public struct RingoMenuSection<Content: View, Header: View>: View {
-
     let content: Content
     let header: Header
     
@@ -19,8 +18,8 @@ public struct RingoMenuSection<Content: View, Header: View>: View {
     
     public var body: some View {
         header
-            .trait(IsHeaderTraitKey.self, true)
             .trait(DividerTraitKey.self, (.thick, .none))
+            .modifier(PinnedModifier())
         
         content.variadic { children in
             ForEach(children) { child in

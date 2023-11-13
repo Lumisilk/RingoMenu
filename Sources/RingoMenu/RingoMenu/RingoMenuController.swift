@@ -87,7 +87,9 @@ public class RingoMenuController: UIHostingController<AnyView> {
 extension RingoMenuController: RingoPopoverDelegate {
     public func ringoPopoverDidDismissed() {
         isPresented?.wrappedValue = false
-        menuCoordinator.reset()
+        Task {
+            menuCoordinator.reset()
+        }
     }
 }
 

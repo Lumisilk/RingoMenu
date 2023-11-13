@@ -17,7 +17,7 @@ class RingoAnimator: NSObject {
     }
     
     private let presentingDuration: TimeInterval = 0.5
-    private let dismissalDuration: TimeInterval = 0.2
+    private let dismissalDuration: TimeInterval = 0.3
     private let resizingDuration: TimeInterval = 0.5
     
     private var sourceView: UIView
@@ -132,7 +132,7 @@ extension RingoAnimator: UIViewControllerAnimatedTransitioning {
             presentingAnimator?.stopAnimation(true)
             setAnchorPoint(fromView, containerView: containerView, finalFrame: fromView.frame)
             let duration = transitionDuration(using: transitionContext)
-            let animator = UIViewPropertyAnimator(duration: duration, curve: .easeOut)
+            let animator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1)
             animator.addAnimations { [fromView] in
                 fromView.alpha = 0
                 fromView.transform = CGAffineTransform(scaleX: 0.2, y: 1)

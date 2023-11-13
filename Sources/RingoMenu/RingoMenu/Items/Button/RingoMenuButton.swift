@@ -10,6 +10,7 @@ import SwiftUI
 public struct RingoMenuButton<Label: View>: View {
     
     @Environment(\.ringoPopoverCoordinator) private var popoverCoordinator
+    @EnvironmentObject private var menuCoordinator: RingoMenuCoordinator
     @Namespace private var id
     
     let label: Label
@@ -27,7 +28,11 @@ public struct RingoMenuButton<Label: View>: View {
     }
     
     public var body: some View {
-        Button(action: onTrigger) {
+        Button {
+            if !menuCoordinator.isHoverGestureEnable {
+                action()
+            }
+        } label: {
             label
         }
         .backport.foregroundColor(attributes.contains(.destructive) ? Color.red: nil)

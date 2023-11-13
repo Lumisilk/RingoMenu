@@ -15,7 +15,7 @@ struct PlainRingoMenuDemo: View {
     @State private var step: Int = 100
     
     var body: some View {
-        RingoMenu {
+        RingoMenu(isPresented: $isPresented) {
             RingoMenuButtonRow(style: .medium) {
                 RingoMenuButton(title: "Title", attributes: .destructive) {}
                 RingoMenuButton(title: "Title", subtitle: "Subtitle") {}

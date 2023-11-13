@@ -64,11 +64,11 @@ public class RingoMenuCoordinator: ObservableObject {
     }
     
     // Feature: Pinned header
-    @CurrentValue var headerFrames: [AnyHashable: CGRect] = [:]
-    @CurrentValue var headerOffsets: [AnyHashable: CGFloat] = [:]
+    @CurrentValue var headerFrames: [Namespace.ID: CGRect] = [:]
+    @CurrentValue var headerOffsets: [Namespace.ID: CGFloat] = [:]
     
-    private func update(headerFrames: [AnyHashable: CGRect]) {
-        var newHeaderOffsets: [AnyHashable: CGFloat] = [:]
+    private func update(headerFrames: [Namespace.ID: CGRect]) {
+        var newHeaderOffsets: [Namespace.ID: CGFloat] = [:]
         defer { headerOffsets = newHeaderOffsets }
 
         let headerFramePairs = headerFrames

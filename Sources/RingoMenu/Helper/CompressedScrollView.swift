@@ -20,24 +20,23 @@ struct CompressedScrollView<Content: View>: View {
     }
     
     var body: some View {
-        if #available(iOS 16, *) {
-            ScrollView {
-                content
-                    .readSize(of: \.height) { contentHeight = $0 }
+        Group {
+            if #available(iOS 16, *) {
+                ScrollView {
+                    content
+                        .readSize(of: \.height) { contentHeight = $0 }
+                }
+                .scrollDisabled(!scrollEnable)
+            } else {
+                ScrollView(scrollEnable ? .vertical : []) {
+                    content
+                        .readSize(of: \.height) { contentHeight = $0 }
+                }
             }
-            .frame(maxHeight: contentHeight, alignment: .top)
-            .readSize(of: \.height) { scrollViewHeight = $0 }
-            .scrollDisabled(!scrollEnable)
-            .onChange(of: scrollEnable, perform: isScrollableChanged)
-        } else {
-            ScrollView(scrollEnable ? .vertical : []) {
-                content
-                    .readSize(of: \.height) { contentHeight = $0 }
-            }
-            .frame(maxHeight: contentHeight, alignment: .top)
-            .readSize(of: \.height) { scrollViewHeight = $0 }
-            .onChange(of: scrollEnable, perform: isScrollableChanged)
         }
+        .frame(maxHeight: contentHeight, alignment: .top)
+        .readSize(of: \.height) { scrollViewHeight = $0 }
+        .onChange(of: scrollEnable, perform: isScrollableChanged)
     }
     
     private var scrollEnable: Bool {

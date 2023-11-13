@@ -34,6 +34,6 @@ struct HoverGestureModifier: ViewModifier {
     private var hoverTriggerSubscriber: some Publisher<Void, Never> {
         coordinator.hoveringTriggerPublisher
             .filter { id == $0 }
-            .map { _ in onTrigger() }
+            .map { _ in }
     }
 }
