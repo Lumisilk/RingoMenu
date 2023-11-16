@@ -20,6 +20,7 @@ public class RingoMenuController: UIHostingController<AnyView> {
     // For SwiftUIPresent
     init(menuCoordinator: RingoMenuCoordinator?, configuration: PresentationConfiguration) {
         self.menuCoordinator = menuCoordinator ?? RingoMenuCoordinator()
+        self.menuCoordinator.popoverCoordinator = ringoPopoverCoordinator
         self.isPresented = configuration.isPresented
         let config = RingoPopoverConfiguration(backgroundView: UIVisualEffectView.menuBackground(groupName: self.menuCoordinator.blurGroupName))
         ringoPopover = RingoPopover(sourceView: configuration.anchorView, config: config)
@@ -51,6 +52,7 @@ public class RingoMenuController: UIHostingController<AnyView> {
         @ViewBuilder menuList: () -> some View
     ) {
         menuCoordinator = RingoMenuCoordinator()
+        menuCoordinator.popoverCoordinator = ringoPopoverCoordinator
         let config = RingoPopoverConfiguration(backgroundView: UIVisualEffectView.menuBackground(groupName: menuCoordinator.blurGroupName))
         ringoPopover = RingoPopover(sourceView: sourceView, config: config)
         

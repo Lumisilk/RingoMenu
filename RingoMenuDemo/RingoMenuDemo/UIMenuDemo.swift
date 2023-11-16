@@ -98,7 +98,7 @@ final class UIMenuDemo: UIViewController {
     }
     
     func setupDragMenuButton() {
-        dragMenuButton.menu = UIMenu(title: "Main Menu", children: makeActions(20))
+        dragMenuButton.menu = UIMenu(title: "Main Menu", children: makeActions(5))
         dragMenuButton.setTitle("Drag Button", for: .normal)
         dragMenuButton.showsMenuAsPrimaryAction = true
         

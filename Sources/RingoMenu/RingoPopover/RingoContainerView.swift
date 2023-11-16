@@ -17,8 +17,6 @@ final class RingoContainerView: UIView {
     
     private var contentView: UIView!
     
-    private var focusAnimator: UIViewPropertyAnimator?
-    
     init(backgroundView: UIView?) {
         self.backgroundView = backgroundView
         super.init(frame: .zero)
@@ -50,6 +48,9 @@ final class RingoContainerView: UIView {
         contentView.layer.cornerCurve = .circular
         addSubview(contentView)
     }
+    
+    // Feature: Focus
+    private var focusAnimator: UIViewPropertyAnimator?
     
     func focusOnFrame(_ frame: CGRect) {
         let mask = UIView(frame: contentView.bounds)
@@ -98,7 +99,43 @@ final class RingoContainerView: UIView {
             shadowView.alpha = isHidden ? 0 : 0.1
         }
         focusAnimator?.startAnimation()
+    }
+    
+    // Feature: Hover scale
+    
+    private var isHovering = false
+    private var scaleAnimator: UIViewPropertyAnimator?
+    private var originalFrame: CGRect = .zero
+    
+    // start to shrink: extend side 45pt, other size: 0pt
+    // stop to shrink: extend side 110, other size 65
+    // scale ratio: 0.8
+    func hoverGestureLocationChanged(_ location: CGPoint) {
+        if !isHovering {
+            originalFrame = convert(bounds, to: nil)
+            isHovering = true
+        }
         
+        let distance = originalFrame.chebyshevDistance(to: location)
+        let shrinkRatio = min(1, distance / 65.0)
+        let scale = 1 - 0.2 * shrinkRatio
+        
+        scaleAnimator?.stopAnimation(true)
+        scaleAnimator = UIViewPropertyAnimator(duration: 0.2, dampingRatio: 1)
+        scaleAnimator?.addAnimations {
+            self.transform = .init(scaleX: scale, y: scale)
+        }
+        scaleAnimator?.startAnimation()
+    }
+    
+    func hoverGestureReleased() {
+        isHovering = false
+        scaleAnimator?.stopAnimation(true)
+        scaleAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 0.95)
+        scaleAnimator?.addAnimations {
+            self.transform = .identity
+        }
+        scaleAnimator?.startAnimation()
     }
     
     required init?(coder: NSCoder) {

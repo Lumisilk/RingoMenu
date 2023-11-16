@@ -14,6 +14,8 @@ public class RingoMenuCoordinator: ObservableObject {
     let menuListName = UUID()
     let blurGroupName = UUID().uuidString
     
+    var popoverCoordinator: RingoPopoverCoordinator?
+    
     private var cancellable: AnyCancellable?
     
     init() {
@@ -50,13 +52,15 @@ public class RingoMenuCoordinator: ObservableObject {
         }
     }
     
-    func updateHoverGesture(_ location: CGPoint?) {
+    func updateHoverGesture(_ location: CGPoint) {
         guard isHoverGestureEnable else { return }
+        popoverCoordinator?.ringoContainer?.hoverGestureLocationChanged(location)
         hoveringID = hoveringViewID(location)
     }
     
-    func triggerHoverGesture(_ location: CGPoint?) {
+    func triggerHoverGesture(_ location: CGPoint) {
         guard isHoverGestureEnable else { return }
+        popoverCoordinator?.ringoContainer?.hoverGestureReleased()
         hoveringID = nil
         if let id = hoveringViewID(location) {
             hoveringTriggerPublisher.send(id)

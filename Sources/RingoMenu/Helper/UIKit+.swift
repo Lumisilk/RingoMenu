@@ -21,6 +21,31 @@ extension CGRect {
     var debugRounded: CGRect {
         CGRect(x: minX.rounded(), y: minY.rounded(), width: width.rounded(), height: height.rounded())
     }
+    
+    /// Chebyshev Distance
+    func chebyshevDistance(to point: CGPoint) -> CGFloat {
+        let xDistance: CGFloat =
+        switch point.x {
+        case ..<minX:
+            minX - point.x
+        case maxX...:
+            point.x - maxX
+        default:
+            0
+        }
+        
+        let yDistance: CGFloat =
+        switch point.y {
+        case ..<minY:
+            minY - point.y
+        case maxY...:
+            point.y - maxY
+        default:
+            0
+        }
+        
+        return max(xDistance, yDistance)
+    }
 }
 
 extension UIView {    
