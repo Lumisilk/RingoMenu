@@ -17,7 +17,7 @@ public enum RingoMenuItemFocusTransition {
 }
 
 struct TransparentOtherItemTraitKey: _ViewTraitKey {
-    static var defaultValue: AnyHashable? = nil
+    static var defaultValue: Bool = false
 }
 
 private struct FocusOnItemModifier: ViewModifier {
@@ -33,21 +33,10 @@ private struct FocusOnItemModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .backport.background {
-                if transition == .animateFocusTo {
-                    GeometryReader { geo in
-                        let frame = geo.frame(in: .named(menuCoordinator.menuListName))
-                        Color.clear
-                            .onAppear { self.frame = frame }
-                            .onChange(of: frame) { self.frame = $0 }
-                    }
-                    .hidden()
-                }
+            .readFrame(in: .named(menuCoordinator.menuListName), isEnable: transition == .animateFocusTo) {
+                frame = $0
             }
-            .trait(
-                TransparentOtherItemTraitKey.self,
-                transition == .transparentOthers && isOn ? id : nil
-            )
+            .trait(TransparentOtherItemTraitKey.self, transition == .transparentOthers && isOn)
             .onChange(of: isOn, perform: update)
             .onDisappear {
                 isOn = false
@@ -65,7 +54,7 @@ private struct FocusOnItemModifier: ViewModifier {
             }
             
         case .transparentOthers:
-            menuCoordinator.transparentOtherItemID = isOn ? id : nil
+            menuCoordinator.transparentOtherItemEnable = isOn
             popoverCoordinator.setBackgroundHidden(isOn)
         }
     }
@@ -73,16 +62,10 @@ private struct FocusOnItemModifier: ViewModifier {
 
 private struct HideIfNeededModifier: ViewModifier {
     @EnvironmentObject private var menuCoordinator: RingoMenuCoordinator
-    let id: AnyHashable?
+    let child: ViewChildren.Element?
     
     func body(content: Content) -> some View {
-        let shouldHidden =
-        if let focusID = menuCoordinator.transparentOtherItemID, focusID != id {
-            true
-        } else {
-            false
-        }
-        
+        let shouldHidden = menuCoordinator.transparentOtherItemEnable && child?[TransparentOtherItemTraitKey.self] != true
         content
             .opacity(shouldHidden ? 0 : 1)
     }
@@ -98,8 +81,8 @@ extension View {
         modifier(FocusOnItemModifier(isOn: isOn, transition: transition))
     }
     
-    internal func hideIfNeeded(id: AnyHashable?) -> some View {
-        modifier(HideIfNeededModifier(id: id))
+    internal func hideIfNeeded(child: ViewChildren.Element?) -> some View {
+        modifier(HideIfNeededModifier(child: child))
     }
 }
 

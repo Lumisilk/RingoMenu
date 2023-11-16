@@ -22,7 +22,6 @@ extension CGRect {
         CGRect(x: minX.rounded(), y: minY.rounded(), width: width.rounded(), height: height.rounded())
     }
     
-    /// Chebyshev Distance
     func chebyshevDistance(to point: CGPoint) -> CGFloat {
         let xDistance: CGFloat =
         switch point.x {

@@ -11,6 +11,7 @@ import SwiftUI
 struct RingoMenuButtonStyle: ButtonStyle {
     
     @EnvironmentObject private var coordinator: RingoMenuCoordinator
+    @Environment(\.ringoMenuOption) private var option
     @Environment(\.isEnabled) private var isEnabled
     
     var id: AnyHashable
@@ -19,12 +20,16 @@ struct RingoMenuButtonStyle: ButtonStyle {
     let action: () -> Void
     
     func makeBody(configuration: Configuration) -> some View {
-        let isHighlighted = coordinator.isHoverGestureEnable ? isHovered : configuration.isPressed
+        let isHighlighted = isEnabled && coordinator.isHoverGestureEnable ? isHovered : configuration.isPressed
         
         configuration.label
             .backport.background {
                 if isHighlighted {
-                    VisualEffectView.highlightedBackground
+                    if let highlightedView = option.highlightedView {
+                        highlightedView
+                    } else {
+                        VisualEffectView.highlightedBackground
+                    }
                 }
             }
             .backport.foregroundColor(isEnabled ? .primary : .secondary)

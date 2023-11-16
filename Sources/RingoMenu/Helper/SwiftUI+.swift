@@ -14,6 +14,10 @@ extension View {
         AnyView(self)
     }
     
+    func toUIView() -> UIView {
+        _UIHostingView(rootView: self)
+    }
+    
     func readSize<Value: Equatable>(of keyPath: KeyPath<CGSize, Value> = \.self, onChange: @escaping (Value) -> Void) -> some View {
         background(
             GeometryReader { geo in

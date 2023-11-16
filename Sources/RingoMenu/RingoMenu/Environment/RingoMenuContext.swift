@@ -1,6 +1,6 @@
 //
-//  RingoMenuEnvironment.swift
-//  
+//  RingoMenuContext.swift
+//
 //
 //  Created by Lumisilk on 2023/10/28.
 //
@@ -21,7 +21,6 @@ extension EnvironmentValues {
         set { self[RingoMenuContextEnvironmentKey.self] = newValue }
     }
 }
-
 
 enum HasLeadingMarkPreferenceKey: PreferenceKey {
     static var defaultValue = false

@@ -49,7 +49,6 @@ struct FontSizeStepper: View {
             .disabled(size <= bounds.lowerBound)
         }
         .focusOnRingoItem(isOn: $isFocused, by: .animateFocusTo)
-        .compositingGroup()
     }
 }
 

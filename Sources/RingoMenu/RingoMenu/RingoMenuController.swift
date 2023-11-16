@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  RingoMenuController.swift
+//
 //
 //  Created by Lumisilk on 2023/10/29.
 //
@@ -18,11 +18,14 @@ public class RingoMenuController: UIHostingController<AnyView> {
     private var isPresented: Binding<Bool>?
     
     // For SwiftUIPresent
-    init(menuCoordinator: RingoMenuCoordinator?, configuration: PresentationConfiguration) {
+    init(menuCoordinator: RingoMenuCoordinator?, menuOption: RingoMenuOption, configuration: PresentationConfiguration) {
         self.menuCoordinator = menuCoordinator ?? RingoMenuCoordinator()
         self.menuCoordinator.popoverCoordinator = ringoPopoverCoordinator
         self.isPresented = configuration.isPresented
-        let config = RingoPopoverConfiguration(backgroundView: UIVisualEffectView.menuBackground(groupName: self.menuCoordinator.blurGroupName))
+        
+        let config = RingoPopoverConfiguration(
+            backgroundView: menuOption.backgroundView?.toUIView() ?? UIVisualEffectView.menuBackground(groupName: self.menuCoordinator.blurGroupName)
+        )
         ringoPopover = RingoPopover(sourceView: configuration.anchorView, config: config)
         
         super.init(
@@ -53,7 +56,10 @@ public class RingoMenuController: UIHostingController<AnyView> {
     ) {
         menuCoordinator = RingoMenuCoordinator()
         menuCoordinator.popoverCoordinator = ringoPopoverCoordinator
-        let config = RingoPopoverConfiguration(backgroundView: UIVisualEffectView.menuBackground(groupName: menuCoordinator.blurGroupName))
+        
+        let config = RingoPopoverConfiguration(
+            backgroundView: option.backgroundView?.toUIView() ?? UIVisualEffectView.menuBackground(groupName: menuCoordinator.blurGroupName)
+        )
         ringoPopover = RingoPopover(sourceView: sourceView, config: config)
         
         super.init(
@@ -98,10 +104,11 @@ extension RingoMenuController: RingoPopoverDelegate {
 // SwiftUIPresent Protocol
 struct RingoMenuPresentationStyle: PresentationStyle {
     
+    let menuOption: RingoMenuOption
     let menuCoordinator: RingoMenuCoordinator
     
     func makeHostingController(_ configuration: PresentationConfiguration) -> RingoMenuController {
-        RingoMenuController(menuCoordinator: menuCoordinator, configuration: configuration)
+        RingoMenuController(menuCoordinator: menuCoordinator, menuOption: menuOption, configuration: configuration)
     }
     
     func update(_ hostingController: RingoMenuController, configuration: PresentationConfiguration) {

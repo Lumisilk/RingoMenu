@@ -10,7 +10,7 @@ import RingoMenu
 
 struct PlainRingoMenuDemo: View {
     
-    @State private var isPresented = true
+    @State private var isPresented = false
     @State private var isChecked = true
     @State private var step: Int = 100
     
@@ -53,6 +53,12 @@ struct PlainRingoMenuDemo: View {
         } label: {
             Text("Plain Ringo Menu")
         }
+        .ringoMenuOption(\.self,
+            RingoMenuOption(
+                backgroundView: AnyView(Color(.secondarySystemBackground)),
+                highlightedView: AnyView(Color(.systemGray3))
+            )
+        )
     }
 }
 

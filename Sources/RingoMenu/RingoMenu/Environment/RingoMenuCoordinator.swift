@@ -9,7 +9,7 @@ import Combine
 import SwiftUI
 
 @MainActor
-public class RingoMenuCoordinator: ObservableObject {
+class RingoMenuCoordinator: ObservableObject {
     
     let menuListName = UUID()
     let blurGroupName = UUID().uuidString
@@ -27,7 +27,7 @@ public class RingoMenuCoordinator: ObservableObject {
     }
     
     func reset() {
-        transparentOtherItemID = nil
+        transparentOtherItemEnable = false
         childrenGlobalFrame = [:]
         headerFrames = [:]
     }
@@ -39,7 +39,7 @@ public class RingoMenuCoordinator: ObservableObject {
     var trailingImageWidth: Double = 30
     
     // MARK: Focus on item
-    @Published var transparentOtherItemID: AnyHashable?
+    @Published var transparentOtherItemEnable = false
     
     // MARK: Hover gesture
     @Published var isHoverGestureEnable = true

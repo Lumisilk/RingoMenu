@@ -30,17 +30,17 @@ public struct RingoMenuList<Content: View, Footer: View>: View {
                         
                         ForEach(children) { child in
                             child
-                                .hideIfNeeded(id: child.id)
-                                .zIndex(child[PinnedTraitKey.self] ? 1: 0)
-                            
+                                .hideIfNeeded(child: child)
+                                .zIndex(child[PinnedTraitKey.self] ? 1 : 0)
+//                            
                             switch dividersAfterChild[child.id] {
                             case .normal:
                                 normalDivider
-                                    .hideIfNeeded(id: nil)
+                                    .hideIfNeeded(child: nil)
                                 
                             case .thick:
                                 RingoMenuDivider()
-                                    .hideIfNeeded(id: nil)
+                                    .hideIfNeeded(child: nil)
                                 
                             default:
                                 EmptyView()

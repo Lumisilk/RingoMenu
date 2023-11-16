@@ -12,9 +12,9 @@ struct CompressedScrollView<Content: View>: View {
     @State private var contentHeight: CGFloat?
     
     let content: Content
-    let isScrollableChanged: (Bool) -> Void
+    let isScrollableChanged: ((Bool) -> Void)?
     
-    init(@ViewBuilder content: () -> Content, isScrollableChanged: @escaping (Bool) -> Void) {
+    init(@ViewBuilder content: () -> Content, isScrollableChanged: ((Bool) -> Void)? = nil) {
         self.content = content()
         self.isScrollableChanged = isScrollableChanged
     }
@@ -36,7 +36,9 @@ struct CompressedScrollView<Content: View>: View {
         }
         .frame(maxHeight: contentHeight, alignment: .top)
         .readSize(of: \.height) { scrollViewHeight = $0 }
-        .onChange(of: scrollEnable, perform: isScrollableChanged)
+        .onChange(of: scrollEnable) {
+            isScrollableChanged?($0)
+        }
     }
     
     private var scrollEnable: Bool {
@@ -65,7 +67,7 @@ struct CompressedScrollViewScrollView_Preview: PreviewProvider {
                         }
                     }
                     .border(.green)
-                } isScrollableChanged: { _ in }
+                }
                 .border(.red)
                 .frame(maxHeight: .infinity)
                 
