@@ -30,16 +30,16 @@ public struct RingoMenuButton<Label: View>: View {
     public var body: some View {
         Button {
             if !menuCoordinator.isHoverGestureEnable {
-                action()
+                triggerThenDismissIfNeeded()
             }
         } label: {
             label
         }
         .backport.foregroundColor(config.isDestructive ? Color.red: nil)
-        .buttonStyle(RingoMenuButtonStyle(id: id, action: onTrigger))
+        .buttonStyle(RingoMenuButtonStyle(id: id, action: triggerThenDismissIfNeeded))
     }
     
-    private func onTrigger() {
+    private func triggerThenDismissIfNeeded() {
         action()
         if !config.keepsMenuPresented {
             popoverCoordinator.dismiss()
