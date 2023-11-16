@@ -47,7 +47,11 @@ extension CGRect {
     }
 }
 
-extension UIView {    
+extension UIView { 
+    var globalFrame: CGRect {
+        convert(bounds, to: nil)
+    }
+    
     var safeAreaWidth: CGFloat {
         bounds.width - safeAreaInsets.left - safeAreaInsets.right
     }

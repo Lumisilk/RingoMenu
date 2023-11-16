@@ -33,7 +33,7 @@ final class RingoPresenter: UIPresentationController {
     ) {
         self.config = config
         self.sourceView = sourceView
-        self.ringoContainer = RingoContainerView(backgroundView: config.backgroundView)
+        self.ringoContainer = RingoContainerView(sourceView: sourceView, backgroundView: config.backgroundView)
         self.animator = animator
         self.ringoPopoverDelegate = ringoPopoverDelegate
         

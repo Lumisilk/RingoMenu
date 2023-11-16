@@ -11,13 +11,13 @@ final class RingoContainerView: UIView {
     
     private let cornerRadius: CGFloat = 13
     
+    private let sourceView: UIView
     private let backgroundView: UIView?
-    
     private let shadowView = ShadowView()
-    
     private var contentView: UIView!
     
-    init(backgroundView: UIView?) {
+    init(sourceView: UIView, backgroundView: UIView?) {
+        self.sourceView = sourceView
         self.backgroundView = backgroundView
         super.init(frame: .zero)
         
@@ -112,11 +112,12 @@ final class RingoContainerView: UIView {
     // scale ratio: 0.8
     func hoverGestureLocationChanged(_ location: CGPoint) {
         if !isHovering {
-            originalFrame = convert(bounds, to: nil)
+            originalFrame = globalFrame
             isHovering = true
         }
-        
-        let distance = originalFrame.chebyshevDistance(to: location)
+        let distanceToSourceView = sourceView.globalFrame.chebyshevDistance(to: location)
+        let distanceToContainer = originalFrame.chebyshevDistance(to: location)
+        let distance = min(distanceToSourceView, distanceToContainer)
         let shrinkRatio = min(1, distance / 65.0)
         let scale = 1 - 0.2 * shrinkRatio
         
