@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct RingoMenuList<Content: View>: View {
+public struct RingoMenuList<Content: View, Footer: View>: View {
     
     @EnvironmentObject internal var coordinator: RingoMenuCoordinator
     
@@ -15,39 +15,45 @@ public struct RingoMenuList<Content: View>: View {
     @State private var overrideReserveTrailingImageArea = false
     
     let content: Content
+    let footer: Footer
     
-    public init(@ViewBuilder content: () -> Content) {
+    public init(@ViewBuilder content: () -> Content, @ViewBuilder footer: () -> Footer) {
         self.content = content()
+        self.footer = footer()
     }
     
     public var body: some View {
-        CompressedScrollView {
-            content.variadic { children in
-                VStack(spacing: 0) {
-                    let dividersAfterChild = dividersAfterChild(children)
-                    
-                    ForEach(children) { child in
-                        child
-                            .hideIfNeeded(id: child.id)
-                            .zIndex(child[PinnedTraitKey.self] ? 1: 0)
+        VStack(spacing: 0) {
+            CompressedScrollView {
+                content.variadic { children in
+                    VStack(spacing: 0) {
+                        let dividersAfterChild = dividersAfterChild(children)
                         
-                        switch dividersAfterChild[child.id] {
-                        case .normal:
-                            normalDivider
-                                .hideIfNeeded(id: nil)
+                        ForEach(children) { child in
+                            child
+                                .hideIfNeeded(id: child.id)
+                                .zIndex(child[PinnedTraitKey.self] ? 1: 0)
                             
-                        case .thick:
-                            RingoMenuDivider()
-                                .hideIfNeeded(id: nil)
-                            
-                        default:
-                            EmptyView()
+                            switch dividersAfterChild[child.id] {
+                            case .normal:
+                                normalDivider
+                                    .hideIfNeeded(id: nil)
+                                
+                            case .thick:
+                                RingoMenuDivider()
+                                    .hideIfNeeded(id: nil)
+                                
+                            default:
+                                EmptyView()
+                            }
                         }
                     }
                 }
+            } isScrollableChanged: { isScrollable in
+                coordinator.isHoverGestureEnable = !isScrollable
             }
-        } isScrollableChanged: { isScrollable in
-            coordinator.isHoverGestureEnable = !isScrollable
+            
+            footer
         }
         .frame(maxWidth: 250)
         .coordinateSpace(name: coordinator.menuListName)

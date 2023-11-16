@@ -122,7 +122,7 @@ private struct RingoMenuUIButtonBridge<Label: View>: UIViewRepresentable {
     }
 }
 
-public struct RingoMenu<Content: View, Label: View>: View {
+public struct RingoMenu<Content: View, Footer: View, Label: View>: View {
     
     @Environment(\.ringoMenuOption) private var ringoMenuOption
     
@@ -131,16 +131,17 @@ public struct RingoMenu<Content: View, Label: View>: View {
     @State private var defaultIsPresented = false
     
     var explicitIsPresented: Binding<Bool>?
-    let menuList: RingoMenuList<Content>
+    let menuList: RingoMenuList<Content, Footer>
     let label: Label
     
     public init(
         isPresented: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content,
+        @ViewBuilder footer: () -> Footer,
         @ViewBuilder label: () -> Label
     ) {
         self.explicitIsPresented = isPresented
-        self.menuList = RingoMenuList(content: content)
+        self.menuList = RingoMenuList(content: content, footer: footer)
         self.label = label()
     }
     

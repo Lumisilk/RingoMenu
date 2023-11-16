@@ -10,7 +10,7 @@ import RingoMenu
 
 struct PlainRingoMenuDemo: View {
     
-    @State private var isPresented = false
+    @State private var isPresented = true
     @State private var isChecked = true
     @State private var step: Int = 100
     
@@ -37,13 +37,19 @@ struct PlainRingoMenuDemo: View {
             RingoMenuButton(title: "Destructive", attributes: .destructive) {}
             RingoMenuButton(title: "KeepsMenuPresented", attributes: .keepsMenuPresented) {}
             
-//            ForEach(0..<5) { _ in
-//                RingoMenuSection("Header") {
-//                    ForEach(0..<5) { i in
-//                        RingoMenuButton(title: "Some Button \(i)", action: {})
-//                    }
-//                }
-//            }
+            ForEach(0..<5) { _ in
+                RingoMenuSection("Header") {
+                    ForEach(0..<5) { i in
+                        RingoMenuButton(title: "Some Button \(i)", action: {})
+                    }
+                }
+            }
+        } footer: {
+            Divider()
+            RingoMenuButtonRow(style: .small) {
+                RingoMenuButton(title: "Footer 1", action: {})
+                RingoMenuButton(title: "Footer 2", action: {})
+            }
         } label: {
             Text("Plain Ringo Menu")
         }
