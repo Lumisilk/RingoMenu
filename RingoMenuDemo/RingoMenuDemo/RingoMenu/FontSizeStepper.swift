@@ -20,7 +20,7 @@ struct FontSizeStepper: View {
     
     var body: some View {
         RingoMenuButtonRow(style: .small) {
-            RingoMenuButton(attributes: .keepsMenuPresented) {
+            RingoMenuButton(config: .keepsMenuPresented) {
                 size = max(bounds.lowerBound, size - step)
                 isFocused = true
             } label: {
@@ -31,13 +31,13 @@ struct FontSizeStepper: View {
             }
             .disabled(size <= bounds.lowerBound)
             
-            RingoMenuButton(title: "\(size)%", attributes: .keepsMenuPresented) {
+            RingoMenuButton(title: "\(size)%", config: .keepsMenuPresented) {
                 size = defaultSize
                 isFocused = false
             }
             .disabled(size == defaultSize)
             
-            RingoMenuButton(attributes: .keepsMenuPresented) {
+            RingoMenuButton(config: .keepsMenuPresented) {
                 size = min(bounds.upperBound, size + step)
                 isFocused = true
             } label: {

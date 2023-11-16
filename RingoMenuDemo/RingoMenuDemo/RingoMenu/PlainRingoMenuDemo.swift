@@ -17,9 +17,9 @@ struct PlainRingoMenuDemo: View {
     var body: some View {
         RingoMenu(isPresented: $isPresented) {
             RingoMenuButtonRow(style: .medium) {
-                RingoMenuButton(title: "Title", attributes: .destructive) {}
+                RingoMenuButton(title: "Title", config: .init(isDestructive: true)) {}
                 RingoMenuButton(title: "Title", subtitle: "Subtitle") {}
-                RingoMenuButton(title: "Title", image: Image(systemName: "star"), attributes: .destructive) {}
+                RingoMenuButton(title: "Title", image: Image(systemName: "star"), config: .destructive) {}
             }
             
             RingoMenuDivider()
@@ -31,11 +31,11 @@ struct PlainRingoMenuDemo: View {
             
             RingoMenuButton(
                 title: "Checkmark",
-                attributes: isChecked ? [.checkmark, .keepsMenuPresented] : [.keepsMenuPresented],
+                config: .init(leadingMark: isChecked ? .checkmark : nil, keepsMenuPresented: true),
                 action: { isChecked.toggle() }
             )
-            RingoMenuButton(title: "Destructive", attributes: .destructive) {}
-            RingoMenuButton(title: "KeepsMenuPresented", attributes: .keepsMenuPresented) {}
+            RingoMenuButton(title: "Destructive", config: .destructive) {}
+            RingoMenuButton(title: "KeepsMenuPresented", config: .keepsMenuPresented) {}
             
             ForEach(0..<5) { _ in
                 RingoMenuSection("Header") {

@@ -10,9 +10,8 @@ import SwiftUI
 public struct RingoMenuList<Content: View, Footer: View>: View {
     
     @EnvironmentObject internal var coordinator: RingoMenuCoordinator
-    
-    @State private var overrideReserveLeadingMarkArea = false
-    @State private var overrideReserveTrailingImageArea = false
+    @ScaledMetric(relativeTo: .body) private var leadingMarkWidth = 18
+    @ScaledMetric(relativeTo: .body) private var trailingImageWidth = 30
     
     let content: Content
     let footer: Footer
@@ -58,16 +57,22 @@ public struct RingoMenuList<Content: View, Footer: View>: View {
         .frame(maxWidth: 250)
         .coordinateSpace(name: coordinator.menuListName)
         .onPreferenceChange(HasLeadingMarkPreferenceKey.self) {
-            if $0 { overrideReserveLeadingMarkArea = true }
+            if $0 {
+                coordinator.reserveLeadingMarkArea = true
+                coordinator.leadingMarkWidth = leadingMarkWidth
+            }
         }
         .onPreferenceChange(HasTrailingImagePreferenceKey.self) {
-            if $0 { overrideReserveTrailingImageArea = true }
+            if $0 {
+                coordinator.reserveTrailingImageArea = true
+                coordinator.trailingImageWidth = trailingImageWidth
+            }
         }
         .transformEnvironment(\.ringoMenuOption) { option in
-            if overrideReserveLeadingMarkArea {
+            if coordinator.reserveLeadingMarkArea {
                 option.reserveLeadingMarkArea = true
             }
-            if overrideReserveTrailingImageArea {
+            if coordinator.reserveTrailingImageArea {
                 option.reserveTrailingImageArea = true
             }
         }

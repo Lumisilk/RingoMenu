@@ -32,10 +32,16 @@ public class RingoMenuCoordinator: ObservableObject {
         headerFrames = [:]
     }
     
-    // Feature: Focus on item
+    // MARK: Leading trailing alignment
+    var reserveLeadingMarkArea = false
+    var reserveTrailingImageArea = false
+    var leadingMarkWidth: Double = 18
+    var trailingImageWidth: Double = 30
+    
+    // MARK: Focus on item
     @Published var transparentOtherItemID: AnyHashable?
     
-    // Feature: Hover gesture
+    // MARK: Hover gesture
     @Published var isHoverGestureEnable = true
     var childrenGlobalFrame: [AnyHashable: CGRect] = [:]
     @CurrentValue var hoveringID: AnyHashable?
@@ -67,7 +73,7 @@ public class RingoMenuCoordinator: ObservableObject {
         }
     }
     
-    // Feature: Pinned header
+    // MARK: Pinned header
     @CurrentValue var headerFrames: [Namespace.ID: CGRect] = [:]
     @CurrentValue var headerOffsets: [Namespace.ID: CGFloat] = [:]
     

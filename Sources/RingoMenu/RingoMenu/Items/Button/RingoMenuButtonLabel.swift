@@ -14,7 +14,7 @@ public struct RingoMenuButtonLabel: View {
     let title: String
     let subtitle: String?
     let image: Image?
-    let attributes: RingoMenuButtonAttributes
+    let config: RingoMenuButtonConfiguration
     
     public var body: some View {
         Group {
@@ -24,7 +24,7 @@ public struct RingoMenuButtonLabel: View {
             case .medium:
                 RingoMenuPlainButtonMediumLabel(title: title, image: image)
             case nil:
-                RingoMenuPlainButtonLargeLabel(title: title, subtitle: subtitle, image: image, attributes: attributes)
+                RingoMenuPlainButtonLargeLabel(title: title, subtitle: subtitle, image: image, config: config)
             }
         }
         .contentShape(Rectangle())

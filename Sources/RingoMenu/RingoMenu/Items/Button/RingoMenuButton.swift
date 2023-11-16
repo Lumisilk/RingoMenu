@@ -13,17 +13,17 @@ public struct RingoMenuButton<Label: View>: View {
     @EnvironmentObject private var menuCoordinator: RingoMenuCoordinator
     @Namespace private var id
     
+    let config: RingoMenuButtonConfiguration
     let label: Label
-    let attributes: RingoMenuButtonAttributes
     let action: () -> Void
     
     public init(
-        attributes: RingoMenuButtonAttributes = [],
+        config: RingoMenuButtonConfiguration = .init(),
         action: @escaping () -> Void,
         @ViewBuilder label: () -> Label
     ) {
+        self.config = config
         self.label = label()
-        self.attributes = attributes
         self.action = action
     }
     
@@ -35,13 +35,13 @@ public struct RingoMenuButton<Label: View>: View {
         } label: {
             label
         }
-        .backport.foregroundColor(attributes.contains(.destructive) ? Color.red: nil)
+        .backport.foregroundColor(config.isDestructive ? Color.red: nil)
         .buttonStyle(RingoMenuButtonStyle(id: id, action: onTrigger))
     }
     
     private func onTrigger() {
         action()
-        if !attributes.contains(.keepsMenuPresented) {
+        if !config.keepsMenuPresented {
             popoverCoordinator.dismiss()
         }
     }
@@ -52,11 +52,11 @@ public extension RingoMenuButton where Label == RingoMenuButtonLabel {
         title: String,
         subtitle: String? = nil,
         image: Image? = nil,
-        attributes: RingoMenuButtonAttributes = [],
+        config: RingoMenuButtonConfiguration = .init(),
         action: @escaping () -> Void
     ) {
-        self.init(attributes: attributes, action: action) {
-            RingoMenuButtonLabel(title: title, subtitle: subtitle, image: image, attributes: attributes)
+        self.init(config: config, action: action) {
+            RingoMenuButtonLabel(title: title, subtitle: subtitle, image: image, config: config)
         }
     }
 }

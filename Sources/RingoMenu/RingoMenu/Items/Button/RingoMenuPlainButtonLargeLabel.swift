@@ -11,39 +11,25 @@ public struct RingoMenuPlainButtonLargeLabel: View {
     
     @Environment(\.ringoMenuOption) private var option
     @Environment(\.ringoMenuContext) private var context
-    
-    @ScaledMetric(relativeTo: .body) var checkmarkWidth = 18
-    @ScaledMetric(relativeTo: .body) var trailingImageWidth = 30
+    @EnvironmentObject private var menuCoordinator: RingoMenuCoordinator
     
     let title: String
-    let subtitle: String?
-    let image: Image?
-    let attributes: RingoMenuButtonAttributes
-    
-    init(
-        title: String,
-        subtitle: String? = nil,
-        image: Image? = nil,
-        attributes: RingoMenuButtonAttributes = []
-    ) {
-        self.title = title
-        self.subtitle = subtitle
-        self.image = image
-        self.attributes = attributes
-    }
+    var subtitle: String?
+    var image: Image?
+    var config = RingoMenuButtonConfiguration()
     
     public var body: some View {
         HStack(spacing: 4) {
             if option.reserveLeadingMarkArea {
                 Group {
-                    if attributes.contains(.checkmark) {
-                        Image(systemName: "checkmark")
+                    if let imageName = config.leadingMark?.systemImageName {
+                        Image(systemName: imageName)
                             .font(.footnote.weight(.semibold))
                     } else {
                         Color.clear
                     }
                 }
-                .frame(width: checkmarkWidth)
+                .frame(width: menuCoordinator.leadingMarkWidth)
             } else {
                 Color.clear
                     .frame(width: 8)
@@ -64,12 +50,11 @@ public struct RingoMenuPlainButtonLargeLabel: View {
                 Group {
                     if let image {
                         image
-                            .frame(width: trailingImageWidth)
                     } else {
                         Color.clear
                     }
                 }
-                .frame(width: trailingImageWidth)
+                .frame(width: menuCoordinator.trailingImageWidth)
             } else {
                 Color.clear
                     .frame(width: 4)
@@ -77,7 +62,7 @@ public struct RingoMenuPlainButtonLargeLabel: View {
         }
         .padding(EdgeInsets(top: 12, leading: 8, bottom: 12, trailing: 12))
         .fixedSize(horizontal: false, vertical: true)
-        .preference(key: HasLeadingMarkPreferenceKey.self, value: attributes.contains(.checkmark))
+        .preference(key: HasLeadingMarkPreferenceKey.self, value: config.leadingMark != nil)
         .preference(key: HasTrailingImagePreferenceKey.self, value: image != nil)
     }
 }
@@ -101,7 +86,7 @@ public struct RingoMenuPlainButtonLargeLabel: View {
             
             RingoMenuList { RingoMenuPlainButtonLargeLabel(
                 title: "Title",
-                attributes: .checkmark
+                config: .init(leadingMark: .checkmark)
             )}
             
             RingoMenuList { RingoMenuPlainButtonLargeLabel(
@@ -113,14 +98,14 @@ public struct RingoMenuPlainButtonLargeLabel: View {
                 title: "Title",
                 subtitle: "Subtitle",
                 image: Image(systemName: "star"),
-                attributes: [.destructive, .checkmark]
+                config: .init(leadingMark: .checkmark, isDestructive: true)
             )}
             
             RingoMenuList { RingoMenuPlainButtonLargeLabel(
                 title: String(repeating: "Title ", count: 20),
                 subtitle: String(repeating: "Subtitle ", count: 20),
                 image: Image(systemName: "star"),
-                attributes: .checkmark
+                config: .init(leadingMark: .checkmark)
             )}
         }
         .border(.red)
@@ -133,7 +118,7 @@ public struct RingoMenuPlainButtonLargeLabel: View {
             title: String(repeating: "Title ", count: 20),
             subtitle: String(repeating: "Subtitle ", count: 20),
             image: Image(systemName: "star"),
-            attributes: .checkmark,
+            config: .init(leadingMark: .checkmark),
             action: {}
         )
     }

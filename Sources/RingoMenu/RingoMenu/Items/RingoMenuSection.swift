@@ -42,7 +42,14 @@ public struct RingoMenuSectionTextHeader: View {
                 .font(.caption)
                 .backport.foregroundColor(.secondary)
                 .multilineTextAlignment(.leading)
-                .padding(EdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16))
+                .padding(
+                    EdgeInsets(
+                        top: 10,
+                        leading: menuCoordinator.reserveLeadingMarkArea ? 8 + menuCoordinator.leadingMarkWidth + 4 : 16,
+                        bottom: 10,
+                        trailing: 16
+                    )
+                )
             
             Color.separator
                 .frame(height: 1 / 3)
