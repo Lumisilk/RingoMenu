@@ -53,6 +53,7 @@ struct FontSizeStepper: View {
 }
 
 struct FontSizeStepperDemo: View {
+    @State private var text = ""
     @State private var sizeRatio: Int = 100
     
     var body: some View {
@@ -65,13 +66,19 @@ struct FontSizeStepperDemo: View {
             
             RingoMenu {
                 ForEach(1..<6) { i in
-                    RingoMenuButton(title: "Other \(i)", action: {})
+                    RingoMenuButton(title: "Add \(i*4)-length text to source button", config: .keepsMenuPresented) {
+                        text = String(repeating: "AAAA", count: i)
+                    }
                 }
                 FontSizeStepper(size: $sizeRatio)
             } label: {
-                Text("FontSizeStepper Example")
+                Text("FontSizeStepper Example " + text)
+                    .padding()
+                    .background {
+                        Color(.secondarySystemBackground)
+                    }
+                    .animation(.default, value: text)
             }
-            .padding()
         }
     }
 }

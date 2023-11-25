@@ -32,6 +32,7 @@ public class RingoMenuController: UIHostingController<AnyView> {
             rootView: configuration.content
                 .environmentObject(self.menuCoordinator)
                 .environment(\.ringoPopoverCoordinator, ringoPopoverCoordinator)
+                .environment(\.ringoMenuOption, menuOption)
                 .eraseToAnyView()
         )
         
@@ -40,11 +41,12 @@ public class RingoMenuController: UIHostingController<AnyView> {
         ringoPopover.ringoPopoverDelegate = self
     }
     
-    func update(configuration: PresentationConfiguration) {
+    func update(configuration: PresentationConfiguration, menuOption: RingoMenuOption) {
         isPresented = configuration.isPresented
         rootView = configuration.content
             .environmentObject(menuCoordinator)
             .environment(\.ringoPopoverCoordinator, ringoPopoverCoordinator)
+            .environment(\.ringoMenuOption, menuOption)
             .eraseToAnyView()
     }
     
@@ -84,7 +86,7 @@ public class RingoMenuController: UIHostingController<AnyView> {
     
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        updatePreferredContentSizeBasedOnRingoPopover()
+        updatePreferredContentSize()
     }
     
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
@@ -112,6 +114,6 @@ struct RingoMenuPresentationStyle: PresentationStyle {
     }
     
     func update(_ hostingController: RingoMenuController, configuration: PresentationConfiguration) {
-        hostingController.update(configuration: configuration)
+        hostingController.update(configuration: configuration, menuOption: menuOption)
     }
 }

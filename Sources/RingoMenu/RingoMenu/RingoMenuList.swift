@@ -32,7 +32,7 @@ public struct RingoMenuList<Content: View, Footer: View>: View {
                             child
                                 .hideIfNeeded(child: child)
                                 .zIndex(child[PinnedTraitKey.self] ? 1 : 0)
-//                            
+                            
                             switch dividersAfterChild[child.id] {
                             case .normal:
                                 normalDivider
@@ -56,6 +56,7 @@ public struct RingoMenuList<Content: View, Footer: View>: View {
         }
         .frame(maxWidth: 250)
         .coordinateSpace(name: coordinator.menuListName)
+        .simultaneousGesture(hoverGestureIfNeeded)
         .onPreferenceChange(HasLeadingMarkPreferenceKey.self) {
             if $0 {
                 coordinator.reserveLeadingMarkArea = true
@@ -76,6 +77,18 @@ public struct RingoMenuList<Content: View, Footer: View>: View {
                 option.reserveTrailingImageArea = true
             }
         }
+    }
+    
+    private var hoverGestureIfNeeded: some Gesture {
+        coordinator.isHoverGestureEnable ?
+        DragGesture(minimumDistance: 0, coordinateSpace: .global)
+            .onChanged { value in
+                coordinator.updateHoverGesture(value.location)
+            }
+            .onEnded { value in
+                coordinator.triggerHoverGesture(value.location)
+            }
+        : nil
     }
 }
 

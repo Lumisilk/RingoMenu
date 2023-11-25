@@ -35,7 +35,6 @@ class RingoMenuUIButton: UIButton {
         view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         addSubview(view)
-        translatesAutoresizingMaskIntoConstraints = false
         view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             view.topAnchor.constraint(equalTo: topAnchor),
@@ -102,23 +101,16 @@ struct RingoMenuUIButtonBridge<Label: View>: UIViewRepresentable {
         uiView.onHover = onHover
         uiView.onPresent = onPresent
         uiView.onRelease = onRelease
+        uiView.labelHostingController.view.invalidateIntrinsicContentSize()
     }
     
     @available(iOS 16, *)
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: RingoMenuUIButton, context: Context) -> CGSize? {
-        uiView.labelHostingController.view.systemLayoutSizeFitting(
-            proposal.cgSize,
-            withHorizontalFittingPriority: .fittingSizeLevel,
-            verticalFittingPriority: .fittingSizeLevel
-        )
+        uiView.labelHostingController.sizeThatFits(in: proposal.cgSize)
     }
     
     // Fallback to this method on iOS 15 and below
     func _overrideSizeThatFits(_ size: inout CoreFoundation.CGSize, in proposedSize: SwiftUI._ProposedSize, uiView: Self.UIViewType) {
-        size = uiView.labelHostingController.view.systemLayoutSizeFitting(
-            proposedSize.cgSize,
-            withHorizontalFittingPriority: .fittingSizeLevel,
-            verticalFittingPriority: .fittingSizeLevel
-        )
+        size = uiView.labelHostingController.sizeThatFits(in: proposedSize.cgSize)
     }
 }

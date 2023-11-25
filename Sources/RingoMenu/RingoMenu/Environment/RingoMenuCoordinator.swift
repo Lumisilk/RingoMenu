@@ -42,7 +42,7 @@ class RingoMenuCoordinator: ObservableObject {
     @Published var transparentOtherItemEnable = false
     
     // MARK: Hover gesture
-    @Published var isHoverGestureEnable = true
+    var isHoverGestureEnable = true
     var childrenGlobalFrame: [AnyHashable: CGRect] = [:]
     @CurrentValue var hoveringID: AnyHashable?
     var hoveringTriggerPublisher = PassthroughSubject<AnyHashable, Never>()

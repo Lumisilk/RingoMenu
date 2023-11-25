@@ -49,21 +49,7 @@ public struct RingoMenu<Content: View, Footer: View, Label: View>: View {
             style: RingoMenuPresentationStyle(menuOption: menuOption, menuCoordinator: menuCoordinator)
         ) {
             menuList
-                .simultaneousGesture(hoverGestureIfNeeded)
-                .environment(\.ringoMenuOption, menuOption)
         }
-    }
-    
-    private var hoverGestureIfNeeded: some Gesture {
-        menuCoordinator.isHoverGestureEnable ?
-        DragGesture(minimumDistance: 0, coordinateSpace: .global)
-            .onChanged { value in
-                menuCoordinator.updateHoverGesture(value.location)
-            }
-            .onEnded { value in
-                menuCoordinator.triggerHoverGesture(value.location)
-            }
-        : nil
     }
     
     private func presentIfNeeded() {
