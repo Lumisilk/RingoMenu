@@ -12,6 +12,7 @@ import SwiftUIPresent
 public class RingoMenuController: UIHostingController<AnyView> {
     
     private let menuCoordinator: RingoMenuCoordinator
+    private var menuOption: RingoMenuOption
     
     private let ringoPopover: RingoPopover
     private let ringoPopoverCoordinator = RingoPopoverCoordinator()
@@ -19,6 +20,7 @@ public class RingoMenuController: UIHostingController<AnyView> {
     
     // For SwiftUIPresent
     init(menuCoordinator: RingoMenuCoordinator?, menuOption: RingoMenuOption, configuration: PresentationConfiguration) {
+        self.menuOption = menuOption
         self.menuCoordinator = menuCoordinator ?? RingoMenuCoordinator()
         self.menuCoordinator.popoverCoordinator = ringoPopoverCoordinator
         self.isPresented = configuration.isPresented
@@ -43,6 +45,7 @@ public class RingoMenuController: UIHostingController<AnyView> {
     
     func update(configuration: PresentationConfiguration, menuOption: RingoMenuOption) {
         isPresented = configuration.isPresented
+        self.menuOption = menuOption
         rootView = configuration.content
             .environmentObject(menuCoordinator)
             .environment(\.ringoPopoverCoordinator, ringoPopoverCoordinator)
@@ -56,6 +59,7 @@ public class RingoMenuController: UIHostingController<AnyView> {
         option: RingoMenuOption = RingoMenuOption(),
         @ViewBuilder menuList: () -> some View
     ) {
+        self.menuOption = option
         menuCoordinator = RingoMenuCoordinator()
         menuCoordinator.popoverCoordinator = ringoPopoverCoordinator
         
@@ -97,6 +101,7 @@ public class RingoMenuController: UIHostingController<AnyView> {
 extension RingoMenuController: RingoPopoverDelegate {
     public func ringoPopoverDidDismissed() {
         isPresented?.wrappedValue = false
+        menuOption.onDismiss?()
         Task {
             menuCoordinator.reset()
         }

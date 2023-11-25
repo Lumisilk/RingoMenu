@@ -12,18 +12,22 @@ public struct RingoMenuOption {
     public var reserveTrailingImageArea = false
     
     public var backgroundView: AnyView?
-    public var highlightedView: AnyView? = VisualEffectView.highlightedBackground.eraseToAnyView()
+    public var highlightedView: AnyView?
+    
+    public var onDismiss: (() -> Void)?
     
     public init(
         reserveLeadingMarkArea: Bool = false,
         reserveTrailingImageArea: Bool = false,
         backgroundView: AnyView? = nil,
-        highlightedView: AnyView? = nil
+        highlightedView: AnyView? = nil,
+        onDismiss: (() -> Void)? = nil
     ) {
         self.reserveLeadingMarkArea = reserveLeadingMarkArea
         self.reserveTrailingImageArea = reserveTrailingImageArea
         self.backgroundView = backgroundView
         self.highlightedView = highlightedView
+        self.onDismiss = onDismiss
     }
 }
 

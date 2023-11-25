@@ -56,7 +56,8 @@ struct PlainRingoMenuDemo: View {
         .ringoMenuOption(\.self,
             RingoMenuOption(
                 backgroundView: AnyView(Color(.secondarySystemBackground)),
-                highlightedView: AnyView(Color(.systemGray3))
+                highlightedView: AnyView(Color(.systemGray3)),
+                onDismiss: { print("RingoMenu dismissed.") }
             )
         )
     }
